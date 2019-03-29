@@ -1,0 +1,94 @@
+[Service]
+Host = "device-virtual"
+Port = 49988
+ConnectRetries = 3
+Labels = []
+OpenMsg = "device virtual started"
+ReadMaxLimit = 256
+Timeout = 5000
+EnableAsyncReadings = true
+AsyncBufferSize = 16
+
+[Registry]
+Type = "consul"
+Host = "edgex-core-consul"
+Port = 8500
+CheckInterval = "10s"
+FailLimit = 3
+FailWaitTime = 10
+
+[Logging]
+EnableRemote = false
+File = "./device-virtual.log"
+
+[Writable]
+LogLevel = 'INFO'
+
+[Clients]
+  [Clients.Data]
+  Name = "edgex-core-data"
+  Protocol = "http"
+  Host = "edgex-core-data"
+  Port = 48080
+  Timeout = 5000
+
+  [Clients.Metadata]
+  Name = "edgex-core-metadata"
+  Protocol = "http"
+  Host = "edgex-core-metadata"
+  Port = 48081
+  Timeout = 5000
+
+  [Clients.Logging]
+  Name = "edgex-support-logging"
+  Protocol = "http"
+  Host = "edgex-support-logging"
+  Port = 48061
+
+[Device]
+  DataTransform = true
+  InitCmd = ""
+  InitCmdArgs = ""
+  MaxCmdOps = 128
+  MaxCmdValueLen = 256
+  RemoveCmd = ""
+  RemoveCmdArgs = ""
+  ProfilesDir = "./res"
+
+# Pre-define Devices
+[[DeviceList]]
+  Name = "Random-Boolean-Generator01"
+  Profile = "Random-Boolean-Generator"
+  Description = "Example of Device Virtual"
+  Labels = [ "device-virtual-example" ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+      Address = "device-virtual-bool-01"
+      Port = "300"
+[[DeviceList]]
+  Name = "Random-Integer-Generator01"
+  Profile = "Random-Integer-Generator"
+  Description = "Example of Device Virtual"
+  Labels = [ "device-virtual-example" ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+      Address = "device-virtual-int-01"
+      Protocol = "300"
+[[DeviceList]]
+  Name = "Random-UnsignedInteger-Generator01"
+  Profile = "Random-UnsignedInteger-Generator"
+  Description = "Example of Device Virtual"
+  Labels = [ "device-virtual-example" ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+      Address = "device-virtual-uint-01"
+      Protocol = "300"
+[[DeviceList]]
+  Name = "Random-Float-Generator01"
+  Profile = "Random-Float-Generator"
+  Description = "Example of Device Virtual"
+  Labels = [ "device-virtual-example" ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+      Address = "device-virtual-float-01"
+      Protocol = "300"

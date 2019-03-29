@@ -1,0 +1,58 @@
+name: "Random-Boolean-Generator"
+manufacturer: "IOTech"
+model: "Device-Virtual-01"
+labels:
+- "device-virtual-example"
+description: "Example of Device-Virtual"
+
+deviceResources:
+-
+  name: "Enable_Randomization"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "RandomValue_Bool"
+  description: "Generate random boolean value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "R", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random bool value" }
+
+resources:
+-
+  name: "RandomValue_Bool"
+  get:
+    - { operation: "get", object: "RandomValue_Bool", property: "value", parameter: "RandomValue_Bool" }
+  set:
+    - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Bool" }
+    - { operation: "set", object: "RandomValue_Bool", property: "value", parameter: "RandomValue_Bool", resource: "RandomValue_Bool" }
+
+commands:
+-
+  name: "RandomValue_Bool"
+  get:
+    path: "/api/v1/device/{deviceId}/RandomValue_Bool"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["RandomValue_Bool"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/RandomValue_Bool"
+    parameterNames: ["RandomValue_Bool","Enable_Randomization"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
