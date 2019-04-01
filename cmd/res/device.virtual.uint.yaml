@@ -1,0 +1,172 @@
+name: "Random-UnsignedInteger-Generator"
+manufacturer: "IOTech"
+model: "Device-Virtual-01"
+labels:
+- "device-virtual-example"
+description: "Example of Device-Virtual"
+
+deviceResources:
+-
+  name: "Enable_Randomization"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "RandomValue_Uint8"
+  description: "Generate random uint8 value"
+  properties:
+    value:
+      { type: "Uint8", readWrite: "R", defaultValue: "0" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random uint8 value" }
+-
+  name: "RandomValue_Uint16"
+  description: "Generate random uint16 value"
+  properties:
+    value:
+      { type: "Uint16", readWrite: "R", defaultValue: "0" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random uint16 value" }
+-
+  name: "RandomValue_Uint32"
+  description: "Generate random uint32 value"
+  properties:
+    value:
+      { type: "Uint32", readWrite: "R", defaultValue: "0" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random uint32 value" }
+-
+  name: "RandomValue_Uint64"
+  description: "Generate random uint64 value"
+  properties:
+    value:
+      { type: "Uint64", readWrite: "R", defaultValue: "0" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random uint64 value" }
+
+resources:
+-
+  name: "RandomValue_Uint8"
+  get:
+  - { operation: "get", object: "RandomValue_Uint8", property: "value", parameter: "RandomValue_Uint8" }
+  set:
+  - { operation: "set", object: "RandomValue_Uint8", property: "value", parameter: "RandomValue_Uint8", resource: "RandomValue_Uint8" }
+  - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Uint8" }
+-
+  name: "RandomValue_Uint16"
+  get:
+  - { operation: "get", object: "RandomValue_Uint16", property: "value", parameter: "RandomValue_Uint16" }
+  set:
+  - { operation: "set", object: "RandomValue_Uint16", property: "value", parameter: "RandomValue_Uint16", resource: "RandomValue_Uint16" }
+  - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Uint16" }
+-
+  name: "RandomValue_Uint32"
+  get:
+  - { operation: "get", object: "RandomValue_Uint32", property: "value", parameter: "RandomValue_Uint32" }
+  set:
+  - { operation: "set", object: "RandomValue_Uint32", property: "value", parameter: "RandomValue_Uint32", resource: "RandomValue_Uint32" }
+  - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Uint32" }
+-
+  name: "RandomValue_Uint64"
+  get:
+    - { operation: "get", object: "RandomValue_Uint64", property: "value", parameter: "RandomValue_Uint64" }
+  set:
+    - { operation: "set", object: "RandomValue_Uint64", property: "value", parameter: "RandomValue_Uint64", resource: "RandomValue_Uint64" }
+    - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Uint64" }
+
+commands:
+-
+  name: "RandomValue_Uint8"
+  get:
+    path: "/api/v1/device/{deviceId}/RandomValue_Uint8"
+    responses:
+    -
+      code: "200"
+      description: ""
+      expectedValues: ["RandomValue_Uint8"]
+    -
+      code: "503"
+      description: "service unavailable"
+      expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/RandomValue_Uint8"
+    parameterNames: ["RandomValue_Uint8","Enable_Randomization"]
+    responses:
+    -
+      code: "200"
+      description: ""
+    -
+      code: "503"
+      description: "service unavailable"
+-
+  name: "RandomValue_Uint16"
+  get:
+    path: "/api/v1/device/{deviceId}/RandomValue_Uint16"
+    responses:
+    -
+      code: "200"
+      description: ""
+      expectedValues: ["RandomValue_Uint16"]
+    -
+      code: "503"
+      description: "service unavailable"
+      expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/RandomValue_Uint16"
+    parameterNames: ["RandomValue_Uint16","Enable_Randomization"]
+    responses:
+    -
+      code: "200"
+      description: ""
+    -
+      code: "503"
+      description: "service unavailable"
+-
+  name: "RandomValue_Uint32"
+  get:
+    path: "/api/v1/device/{deviceId}/RandomValue_Uint32"
+    responses:
+    -
+      code: "200"
+      description: ""
+      expectedValues: ["RandomValue_Uint32"]
+    -
+      code: "503"
+      description: "service unavailable"
+      expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/RandomValue_Uint32"
+    parameterNames: ["RandomValue_Uint32","Enable_Randomization"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "RandomValue_Uint64"
+  get:
+    path: "/api/v1/device/{deviceId}/RandomValue_Uint64"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["RandomValue_Uint64"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/RandomValue_Uint64"
+    parameterNames: ["RandomValue_Uint64","Enable_Randomization"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
