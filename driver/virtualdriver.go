@@ -10,7 +10,6 @@ package driver
 
 import (
 	"fmt"
-	"os"
 	"sync"
 
 	sdk "github.com/edgexfoundry/device-sdk-go"
@@ -46,10 +45,6 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 	d.lc = lc
 	d.asyncCh = asyncCh
 	d.virtualDevices = make(map[string]*virtualDevice)
-
-	if _, err := os.Stat(qlDatabaseDir); os.IsNotExist(err) {
-		os.Mkdir(qlDatabaseDir, os.ModeDir)
-	}
 
 	d.db = getDb()
 	if err := d.db.openDb(); err != nil {

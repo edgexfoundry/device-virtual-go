@@ -42,12 +42,9 @@ func getDb() *db {
 
 func (db *db) openDb() error {
 	db.locker.Lock()
-	if _, err := os.Stat(db.path); os.IsNotExist(err) {
-		os.Mkdir(db.path, os.ModeDir)
-		os.Chmod(db.path, 0777)
-	}
 	d, err := sql.Open(db.driverName, db.path+db.name)
 	if err == nil {
+		os.Chmod(db.path, 0777)
 		db.connection = d
 	}
 	return err
