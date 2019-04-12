@@ -47,7 +47,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "random int64 value" }
 
-resources:
+deviceCommands:
 -
   name: "RandomValue_Int8"
   get:
@@ -77,7 +77,7 @@ resources:
     - { operation: "set", object: "RandomValue_Int64", property: "value", parameter: "RandomValue_Int64", resource: "RandomValue_Int64" }
     - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Int64" }
 
-commands:
+coreCommands:
 -
   name: "RandomValue_Int8"
   get:
