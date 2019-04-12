@@ -71,8 +71,8 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 	service := sdk.RunningService()
 	devices := service.Devices()
 	for _, device := range devices {
-		for _, r := range device.Profile.Resources {
-			for _, ro := range r.Get {
+		for _, dc := range device.Profile.DeviceCommands {
+			for _, ro := range dc.Get {
 				for _, dr := range device.Profile.DeviceResources {
 					if ro.Object == dr.Name {
 						/*
