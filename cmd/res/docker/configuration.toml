@@ -65,6 +65,10 @@ LogLevel = 'INFO'
     [DeviceList.Protocols.other]
       Address = "device-virtual-bool-01"
       Port = "300"
+  [[DeviceList.AutoEvents]]
+    Frequency = "10s"
+    OnChange = false
+    Resource = "RandomValue_Bool"
 [[DeviceList]]
   Name = "Random-Integer-Generator01"
   Profile = "Random-Integer-Generator"
@@ -74,6 +78,22 @@ LogLevel = 'INFO'
     [DeviceList.Protocols.other]
       Address = "device-virtual-int-01"
       Protocol = "300"
+  [[DeviceList.AutoEvents]]
+    Frequency = "15s"
+    OnChange = false
+    Resource = "RandomValue_Int8"
+  [[DeviceList.AutoEvents]]
+    Frequency = "15s"
+    OnChange = false
+    Resource = "RandomValue_Int16"
+  [[DeviceList.AutoEvents]]
+    Frequency = "15s"
+    OnChange = false
+    Resource = "RandomValue_Int32"
+  [[DeviceList.AutoEvents]]
+    Frequency = "15s"
+    OnChange = false
+    Resource = "RandomValue_Int64"
 [[DeviceList]]
   Name = "Random-UnsignedInteger-Generator01"
   Profile = "Random-UnsignedInteger-Generator"
@@ -83,6 +103,22 @@ LogLevel = 'INFO'
     [DeviceList.Protocols.other]
       Address = "device-virtual-uint-01"
       Protocol = "300"
+  [[DeviceList.AutoEvents]]
+    Frequency = "20s"
+    OnChange = false
+    Resource = "RandomValue_Uint8"
+  [[DeviceList.AutoEvents]]
+    Frequency = "20s"
+    OnChange = false
+    Resource = "RandomValue_Uint16"
+  [[DeviceList.AutoEvents]]
+    Frequency = "20s"
+    OnChange = false
+    Resource = "RandomValue_Uint32"
+  [[DeviceList.AutoEvents]]
+    Frequency = "20s"
+    OnChange = false
+    Resource = "RandomValue_Uint64"
 [[DeviceList]]
   Name = "Random-Float-Generator01"
   Profile = "Random-Float-Generator"
@@ -92,3 +128,11 @@ LogLevel = 'INFO'
     [DeviceList.Protocols.other]
       Address = "device-virtual-float-01"
       Protocol = "300"
+  [[DeviceList.AutoEvents]]
+    Frequency = "30s"
+    OnChange = false
+    Resource = "RandomValue_Float32"
+  [[DeviceList.AutoEvents]]
+    Frequency = "30s"
+    OnChange = false
+    Resource = "RandomValue_Float64"
