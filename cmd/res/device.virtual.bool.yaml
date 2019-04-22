@@ -27,10 +27,10 @@ deviceCommands:
 -
   name: "RandomValue_Bool"
   get:
-    - { operation: "get", object: "RandomValue_Bool", property: "value", parameter: "RandomValue_Bool" }
+    - { operation: "get", object: "RandomValue_Bool", parameter: "RandomValue_Bool" }
   set:
-    - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Bool" }
-    - { operation: "set", object: "RandomValue_Bool", property: "value", parameter: "RandomValue_Bool", resource: "RandomValue_Bool" }
+    - { operation: "set", object: "Enable_Randomization", parameter: "Enable_Randomization", resource: "RandomValue_Bool" }
+    - { operation: "set", object: "RandomValue_Bool", parameter: "RandomValue_Bool", resource: "RandomValue_Bool" }
 
 coreCommands:
 -
