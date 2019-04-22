@@ -51,31 +51,31 @@ deviceCommands:
 -
   name: "RandomValue_Uint8"
   get:
-  - { operation: "get", object: "RandomValue_Uint8", property: "value", parameter: "RandomValue_Uint8" }
+  - { operation: "get", object: "RandomValue_Uint8", parameter: "RandomValue_Uint8" }
   set:
-  - { operation: "set", object: "RandomValue_Uint8", property: "value", parameter: "RandomValue_Uint8", resource: "RandomValue_Uint8" }
-  - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Uint8" }
+  - { operation: "set", object: "RandomValue_Uint8", parameter: "RandomValue_Uint8", resource: "RandomValue_Uint8" }
+  - { operation: "set", object: "Enable_Randomization", parameter: "Enable_Randomization", resource: "RandomValue_Uint8" }
 -
   name: "RandomValue_Uint16"
   get:
-  - { operation: "get", object: "RandomValue_Uint16", property: "value", parameter: "RandomValue_Uint16" }
+  - { operation: "get", object: "RandomValue_Uint16", parameter: "RandomValue_Uint16" }
   set:
-  - { operation: "set", object: "RandomValue_Uint16", property: "value", parameter: "RandomValue_Uint16", resource: "RandomValue_Uint16" }
-  - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Uint16" }
+  - { operation: "set", object: "RandomValue_Uint16", parameter: "RandomValue_Uint16", resource: "RandomValue_Uint16" }
+  - { operation: "set", object: "Enable_Randomization", parameter: "Enable_Randomization", resource: "RandomValue_Uint16" }
 -
   name: "RandomValue_Uint32"
   get:
-  - { operation: "get", object: "RandomValue_Uint32", property: "value", parameter: "RandomValue_Uint32" }
+  - { operation: "get", object: "RandomValue_Uint32", parameter: "RandomValue_Uint32" }
   set:
-  - { operation: "set", object: "RandomValue_Uint32", property: "value", parameter: "RandomValue_Uint32", resource: "RandomValue_Uint32" }
-  - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Uint32" }
+  - { operation: "set", object: "RandomValue_Uint32", parameter: "RandomValue_Uint32", resource: "RandomValue_Uint32" }
+  - { operation: "set", object: "Enable_Randomization", parameter: "Enable_Randomization", resource: "RandomValue_Uint32" }
 -
   name: "RandomValue_Uint64"
   get:
-    - { operation: "get", object: "RandomValue_Uint64", property: "value", parameter: "RandomValue_Uint64" }
+    - { operation: "get", object: "RandomValue_Uint64", parameter: "RandomValue_Uint64" }
   set:
-    - { operation: "set", object: "RandomValue_Uint64", property: "value", parameter: "RandomValue_Uint64", resource: "RandomValue_Uint64" }
-    - { operation: "set", object: "Enable_Randomization", property: "value", parameter: "Enable_Randomization", resource: "RandomValue_Uint64" }
+    - { operation: "set", object: "RandomValue_Uint64", parameter: "RandomValue_Uint64", resource: "RandomValue_Uint64" }
+    - { operation: "set", object: "Enable_Randomization", parameter: "Enable_Randomization", resource: "RandomValue_Uint64" }
 
 coreCommands:
 -
