@@ -11,7 +11,7 @@ DOCKERS=docker_device_virtual_go
 
 VERSION=$(shell cat ./VERSION)
 GIT_SHA=$(shell git rev-parse HEAD)
-GOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual.Version=$(VERSION)"
+GOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)"
 
 build: $(MICROSERVICES)
 	$(GO) build ./...
