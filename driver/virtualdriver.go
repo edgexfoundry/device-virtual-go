@@ -10,6 +10,7 @@ package driver
 
 import (
 	"fmt"
+	"os"
 	"sync"
 
 	sdk "github.com/edgexfoundry/device-sdk-go"
@@ -24,10 +25,12 @@ type VirtualDriver struct {
 	asyncCh        chan<- *dsModels.AsyncValues
 	virtualDevices map[string]*virtualDevice
 	db             *db
+	locker         sync.Mutex
 }
 
 var once sync.Once
 var driver *VirtualDriver
+var sdkService sdk.Service
 
 func NewVirtualDeviceDriver() dsModels.ProtocolDriver {
 	once.Do(func() {
@@ -45,6 +48,13 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 	d.lc = lc
 	d.asyncCh = asyncCh
 	d.virtualDevices = make(map[string]*virtualDevice)
+
+	if _, err := os.Stat(qlDatabaseDir); os.IsNotExist(err) {
+		if err := os.Mkdir(qlDatabaseDir, os.ModeDir); err != nil {
+			d.lc.Info(fmt.Sprintf("mkdir failed: %v", err))
+			return err
+		}
+	}
 
 	d.db = getDb()
 	if err := d.db.openDb(); err != nil {
@@ -95,6 +105,11 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 }
 
 func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[string]models.ProtocolProperties, reqs []dsModels.CommandRequest) (res []*dsModels.CommandValue, err error) {
+	d.locker.Lock()
+	defer func() {
+		d.locker.Unlock()
+	}()
+
 	vd, ok := d.virtualDevices[deviceName]
 	if !ok {
 		vd = newVirtualDevice()
@@ -115,12 +130,15 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 	}()
 
 	for i, req := range reqs {
-		v, err := vd.read(&req.RO, deviceName, req.DeviceResource.Name, req.DeviceResource.Properties.Value.Minimum,
-			req.DeviceResource.Properties.Value.Maximum, d.db)
-		if err != nil {
-			return nil, err
+		if dr, ok := sdkService.DeviceResource(deviceName, req.DeviceResourceName, ""); ok {
+			if v, err := vd.read(deviceName, req.DeviceResourceName, dr.Properties.Value.Minimum, dr.Properties.Value.Maximum, d.db); err != nil {
+				return nil, err
+			} else {
+				res[i] = v
+			}
+		} else {
+			return nil, fmt.Errorf("cannot find device resource %s from device %s in cache", req.DeviceResourceName, deviceName)
 		}
-		res[i] = v
 	}
 
 	return res, nil
@@ -128,6 +146,11 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 
 func (d *VirtualDriver) HandleWriteCommands(deviceName string, protocols map[string]models.ProtocolProperties, reqs []dsModels.CommandRequest,
 	params []*dsModels.CommandValue) error {
+	d.locker.Lock()
+	defer func() {
+		d.locker.Unlock()
+	}()
+
 	vd, ok := d.virtualDevices[deviceName]
 	if !ok {
 		vd = newVirtualDevice()

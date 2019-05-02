@@ -8,12 +8,11 @@ import (
 	"time"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/models"
 )
 
 type resourceFloat struct{}
 
-func (rf *resourceFloat) value(db *db, ro *models.ResourceOperation, deviceName, deviceResourceName, minimum,
+func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 	maximum string) (*dsModels.CommandValue, error) {
 
 	result := &dsModels.CommandValue{}
@@ -41,7 +40,7 @@ func (rf *resourceFloat) value(db *db, ro *models.ResourceOperation, deviceName,
 		} else if newValueFloat, err = strconv.ParseFloat(currentValue, 32); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewFloat32Value(ro, now, float32(newValueFloat))
+		result, err = dsModels.NewFloat32Value(deviceResourceName, now, float32(newValueFloat))
 	case typeFloat64:
 		bitSize = 64
 		if enableRandomization {
@@ -53,7 +52,7 @@ func (rf *resourceFloat) value(db *db, ro *models.ResourceOperation, deviceName,
 		} else if newValueFloat, err = strconv.ParseFloat(currentValue, 64); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewFloat64Value(ro, now, newValueFloat)
+		result, err = dsModels.NewFloat64Value(deviceResourceName, now, newValueFloat)
 	}
 
 	if err != nil {
@@ -105,37 +104,32 @@ func parseFloatMinimumMaximum(minimum, maximum, dataType string) (float64, float
 }
 
 func (rf *resourceFloat) write(param *dsModels.CommandValue, deviceName string, db *db) error {
-	var err error
-	switch param.RO.Object {
-	case deviceResourceEnableRandomization:
-		v, err := param.BoolValue()
-		if err != nil {
+	switch param.DeviceResourceName {
+	case deviceResourceEnableRandomizationFloat32:
+		if v, err := param.BoolValue(); err == nil {
+			return db.updateResourceRandomization(v, deviceName, deviceResourceFloat32)
+		} else {
 			return fmt.Errorf("resourceFloat.write: %v", err)
 		}
-		if err := db.updateResourceRandomization(v, deviceName, param.RO.Resource); err != nil {
-			return fmt.Errorf("resourceFloat.write: %v", err)
+	case deviceResourceEnableRandomizationFloat64:
+		if v, err := param.BoolValue(); err == nil {
+			return db.updateResourceRandomization(v, deviceName, deviceResourceFloat64)
 		} else {
-			return nil
+			return fmt.Errorf("resourceFloat.write: %v", err)
 		}
 	case deviceResourceFloat32:
 		if v, err := param.Float32Value(); err == nil {
-			return db.updateResourceValue(strconv.FormatFloat(float64(v), 'e', -1, 32), deviceName, param.RO.Resource, true)
+			return db.updateResourceValue(strconv.FormatFloat(float64(v), 'e', -1, 32), deviceName, param.DeviceResourceName, true)
 		} else {
-			return err
+			return fmt.Errorf("resourceFloat.write: %v", err)
 		}
 	case deviceResourceFloat64:
 		if v, err := param.Float64Value(); err == nil {
-			return db.updateResourceValue(strconv.FormatFloat(float64(v), 'e', -1, 64), deviceName, param.RO.Resource, true)
+			return db.updateResourceValue(strconv.FormatFloat(float64(v), 'e', -1, 64), deviceName, param.DeviceResourceName, true)
 		} else {
-			return err
+			return fmt.Errorf("resourceFloat.write: %v", err)
 		}
 	default:
-		err = fmt.Errorf("resourceFloat.write: unknown device resource: %s", param.RO.Object)
-	}
-
-	if err == nil {
-		return fmt.Errorf("resourceFloat.write: %v", err)
-	} else {
-		return err
+		return fmt.Errorf("resourceFloat.write: unknown device resource: %s", param.DeviceResourceName)
 	}
 }

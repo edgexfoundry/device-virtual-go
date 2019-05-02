@@ -7,7 +7,7 @@ description: "Example of Device-Virtual"
 
 deviceResources:
 -
-  name: "Enable_Randomization"
+  name: "EnableRandomization_Bool"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -29,8 +29,8 @@ deviceCommands:
   get:
     - { operation: "get", object: "RandomValue_Bool", parameter: "RandomValue_Bool" }
   set:
-    - { operation: "set", object: "Enable_Randomization", parameter: "Enable_Randomization", resource: "RandomValue_Bool" }
-    - { operation: "set", object: "RandomValue_Bool", parameter: "RandomValue_Bool", resource: "RandomValue_Bool" }
+    - { operation: "set", object: "EnableRandomization_Bool", parameter: "EnableRandomization_Bool" }
+    - { operation: "set", object: "RandomValue_Bool", parameter: "RandomValue_Bool" }
 
 coreCommands:
 -
@@ -48,7 +48,7 @@ coreCommands:
         expectedValues: []
   put:
     path: "/api/v1/device/{deviceId}/RandomValue_Bool"
-    parameterNames: ["RandomValue_Bool","Enable_Randomization"]
+    parameterNames: ["RandomValue_Bool","EnableRandomization_Bool"]
     responses:
       -
         code: "200"

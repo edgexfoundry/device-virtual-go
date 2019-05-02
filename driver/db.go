@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"sync"
 )
 
 const (
@@ -27,7 +26,6 @@ type db struct {
 	driverName  string
 	path        string
 	name        string
-	locker      sync.Mutex
 	connection  *sql.DB
 	transaction *sql.Tx
 }
@@ -41,10 +39,9 @@ func getDb() *db {
 }
 
 func (db *db) openDb() error {
-	db.locker.Lock()
 	d, err := sql.Open(db.driverName, db.path+db.name)
 	if err == nil {
-		os.Chmod(db.path, 0777)
+		err = os.Chmod(db.path, 0777)
 		db.connection = d
 	}
 	return err
@@ -52,7 +49,7 @@ func (db *db) openDb() error {
 
 func (db *db) startTransaction() error {
 	if db.connection == nil {
-		return fmt.Errorf("Lost DB connection, forgot to openDb()?")
+		return fmt.Errorf("Lost DB connection, forgot to openDb()? ")
 	}
 	if tx, err := db.connection.Begin(); err != nil {
 		return err
@@ -64,17 +61,17 @@ func (db *db) startTransaction() error {
 
 func (db *db) query(sqlStatement string, args ...interface{}) (*sql.Rows, error) {
 	if db.connection == nil {
-		return nil, fmt.Errorf("Lost DB connection, forgot to openDb()?")
+		return nil, fmt.Errorf("Lost DB connection, forgot to openDb()? ")
 	}
 	return db.connection.Query(sqlStatement, args...)
 }
 
 func (db *db) exec(sqlStatement string, args ...interface{}) error {
 	if db.connection == nil {
-		return fmt.Errorf("Lost DB connection, forgot to openDb()?")
+		return fmt.Errorf("Lost DB connection, forgot to openDb()? ")
 	}
 	if t, err := db.connection.Begin(); err != nil {
-		return fmt.Errorf("Start transaction failed: %v", err)
+		return fmt.Errorf("Start transaction failed: %v ", err)
 	} else {
 		db.transaction = t
 	}
@@ -86,18 +83,17 @@ func (db *db) exec(sqlStatement string, args ...interface{}) error {
 
 func (db *db) commit() error {
 	if db.transaction == nil {
-		return fmt.Errorf("DB transaction not found, forgot to startTransaction()?")
+		return fmt.Errorf("DB transaction not found, forgot to startTransaction()? ")
 	}
 	return db.transaction.Commit()
 }
 
 func (db *db) closeDb() error {
 	if db.connection == nil {
-		return fmt.Errorf("Lost DB connection, forgot to openDb()?")
+		return fmt.Errorf("Lost DB connection, forgot to openDb()? ")
 	}
 
 	defer func() {
-		db.locker.Unlock()
 		db.transaction = nil
 		db.connection = nil
 	}()
@@ -114,7 +110,9 @@ func (db *db) getVirtualResourceData(deviceName, deviceResourceName string) (boo
 			rows.Close()
 			return false, "", "", err
 		}
-		rows.Close()
+		if err = rows.Close(); err != nil {
+			return false, "", "", err
+		}
 	}
 
 	enableRandomization, err := strconv.ParseBool(data.EnableRandomization)

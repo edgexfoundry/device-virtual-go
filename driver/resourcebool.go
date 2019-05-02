@@ -7,12 +7,11 @@ import (
 	"time"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/models"
 )
 
 type resourceBool struct{}
 
-func (rb *resourceBool) value(db *db, ro *models.ResourceOperation, deviceName, deviceResourceName string) (*dsModels.CommandValue, error) {
+func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*dsModels.CommandValue, error) {
 	result := &dsModels.CommandValue{}
 
 	enableRandomization, currentValue, _, err := db.getVirtualResourceData(deviceName, deviceResourceName)
@@ -30,7 +29,7 @@ func (rb *resourceBool) value(db *db, ro *models.ResourceOperation, deviceName, 
 		}
 	}
 	now := time.Now().UnixNano() / int64(time.Millisecond)
-	if result, err = dsModels.NewBoolValue(ro, now, newValueBool); err != nil {
+	if result, err = dsModels.NewBoolValue(deviceResourceName, now, newValueBool); err != nil {
 		return result, err
 	}
 	if err := db.updateResourceValue(result.ValueToString(), deviceName, deviceResourceName, false); err != nil {
@@ -41,28 +40,20 @@ func (rb *resourceBool) value(db *db, ro *models.ResourceOperation, deviceName, 
 }
 
 func (rb *resourceBool) write(param *dsModels.CommandValue, deviceName string, db *db) error {
-	switch param.RO.Object {
-	case deviceResourceEnableRandomization:
-		v, err := param.BoolValue()
-		if err != nil {
-			return fmt.Errorf("resourceBool.write: %v", err)
-		}
-		if err := db.updateResourceRandomization(v, deviceName, param.RO.Resource); err != nil {
-			return fmt.Errorf("resourceBool.write: %v", err)
+	switch param.DeviceResourceName {
+	case deviceResourceEnableRandomizationBool:
+		if v, err := param.BoolValue(); err == nil {
+			return db.updateResourceRandomization(v, deviceName, deviceResourceBool)
 		} else {
-			return nil
+			return fmt.Errorf("resourceBool.write: %v", err)
 		}
 	case deviceResourceBool:
 		if _, err := param.BoolValue(); err == nil {
-			if err := db.updateResourceValue(param.ValueToString(), deviceName, param.RO.Resource, true); err != nil {
-				return fmt.Errorf("resourceBool.write: %v", err)
-			} else {
-				return nil
-			}
+			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceBool, true)
 		} else {
 			return fmt.Errorf("resourceBool.write: %v", err)
 		}
 	default:
-		return fmt.Errorf("resourceBool.write: unknown device resource: %s", param.RO.Object)
+		return fmt.Errorf("resourceBool.write: unknown device resource: %s", param.DeviceResourceName)
 	}
 }
