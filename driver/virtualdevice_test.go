@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/models"
 )
 
 const (
@@ -27,8 +26,11 @@ const (
 )
 
 func init() {
-	if _, err := os.Stat(qlDatabaseDriverName); os.IsNotExist(err) {
-		os.Mkdir(qlDatabaseDir, os.ModeDir)
+	if _, err := os.Stat(qlDatabaseDir); os.IsNotExist(err) {
+		if err := os.Mkdir(qlDatabaseDir, os.ModeDir); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	}
 
 	db := getDb()
@@ -87,7 +89,7 @@ func TestValue_Bool(t *testing.T) {
 	}()
 
 	vd := newVirtualDevice()
-	v1, err := vd.read(&models.ResourceOperation{}, deviceName, deviceResourceBool, "", "", db)
+	v1, err := vd.read(deviceName, deviceResourceBool, "", "", db)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -101,7 +103,7 @@ func TestValue_Bool(t *testing.T) {
 	rounds := 20
 	//EnableRandomization = true
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(&models.ResourceOperation{}, deviceName, deviceResourceBool, "", "", db)
+		v2, _ := vd.read(deviceName, deviceResourceBool, "", "", db)
 		b2, _ := v2.BoolValue()
 		if b1 != b2 {
 			break
@@ -116,10 +118,10 @@ func TestValue_Bool(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	v1, _ = vd.read(&models.ResourceOperation{}, deviceName, deviceResourceBool, "", "", db)
+	v1, _ = vd.read(deviceName, deviceResourceBool, "", "", db)
 	b1, _ = v1.BoolValue()
 	for x := 0; x <= rounds; x++ {
-		v2, _ := vd.read(&models.ResourceOperation{}, deviceName, deviceResourceBool, "", "", db)
+		v2, _ := vd.read(deviceName, deviceResourceBool, "", "", db)
 		b2, _ := v2.BoolValue()
 		if b1 != b2 {
 			t.Fatalf("EnableRandomization is false, but got different read")
@@ -181,7 +183,7 @@ func ValueIntx(t *testing.T, dr, minStr, maxStr string) {
 
 	var i1 int64
 	for x := 1; x <= rounds; x++ {
-		vn, err := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+		vn, err := vd.read(deviceName, dr, minStr, maxStr, db)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -200,7 +202,7 @@ func ValueIntx(t *testing.T, dr, minStr, maxStr string) {
 
 	//generate read 100 times
 	for x := 1; x <= rounds; x++ {
-		v, err := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+		v, err := vd.read(deviceName, dr, minStr, maxStr, db)
 
 		if err != nil {
 			t.Fatal(err)
@@ -221,10 +223,10 @@ func ValueIntx(t *testing.T, dr, minStr, maxStr string) {
 		t.Fatal(err)
 	}
 
-	v1, _ := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+	v1, _ := vd.read(deviceName, dr, minStr, maxStr, db)
 	i1 = getIntValue(v1)
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+		v2, _ := vd.read(deviceName, dr, minStr, maxStr, db)
 		i2 := getIntValue(v2)
 		if i1 != i2 {
 			t.Fatalf("EnableRandomization is false, but got different read")
@@ -257,7 +259,7 @@ func ValueUintx(t *testing.T, dr, minStr, maxStr string) {
 
 	var i1 uint64
 	for x := 1; x <= rounds; x++ {
-		vn, _ := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+		vn, _ := vd.read(deviceName, dr, minStr, maxStr, db)
 		in := getUintValue(vn)
 
 		if x == 1 {
@@ -273,7 +275,7 @@ func ValueUintx(t *testing.T, dr, minStr, maxStr string) {
 
 	//generate read 100 times
 	for x := 1; x <= rounds; x++ {
-		v, err := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+		v, err := vd.read(deviceName, dr, minStr, maxStr, db)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -293,10 +295,10 @@ func ValueUintx(t *testing.T, dr, minStr, maxStr string) {
 		t.Fatal(err)
 	}
 
-	v1, _ := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+	v1, _ := vd.read(deviceName, dr, minStr, maxStr, db)
 	i1 = getUintValue(v1)
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+		v2, _ := vd.read(deviceName, dr, minStr, maxStr, db)
 		i2 := getUintValue(v2)
 		if i1 != i2 {
 			t.Fatalf("EnableRandomization is false, but got different read")
@@ -329,7 +331,7 @@ func ValueFloatx(t *testing.T, dr, minStr, maxStr string) {
 
 	var f1 float64
 	for x := 1; x <= rounds; x++ {
-		vn, _ := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+		vn, _ := vd.read(deviceName, dr, minStr, maxStr, db)
 		fn := getFloatValue(vn)
 		if x == 1 {
 			f1 = fn
@@ -344,7 +346,7 @@ func ValueFloatx(t *testing.T, dr, minStr, maxStr string) {
 
 	//generate read 100 times
 	for x := 1; x <= rounds; x++ {
-		v, err := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+		v, err := vd.read(deviceName, dr, minStr, maxStr, db)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -364,10 +366,10 @@ func ValueFloatx(t *testing.T, dr, minStr, maxStr string) {
 		t.Fatal(err)
 	}
 
-	v1, _ := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+	v1, _ := vd.read(deviceName, dr, minStr, maxStr, db)
 	f1 = getFloatValue(v1)
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(&models.ResourceOperation{}, deviceName, dr, minStr, maxStr, db)
+		v2, _ := vd.read(deviceName, dr, minStr, maxStr, db)
 		f2 := getFloatValue(v2)
 		if f1 != f2 {
 			t.Fatalf("EnableRandomization is false, but got different read")

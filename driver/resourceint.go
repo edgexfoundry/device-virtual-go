@@ -8,12 +8,11 @@ import (
 	"time"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/models"
 )
 
 type resourceInt struct{}
 
-func (ri *resourceInt) value(db *db, ro *models.ResourceOperation, deviceName, deviceResourceName, minimum,
+func (ri *resourceInt) value(db *db, deviceName, deviceResourceName, minimum,
 	maximum string) (*dsModels.CommandValue, error) {
 
 	result := &dsModels.CommandValue{}
@@ -40,7 +39,7 @@ func (ri *resourceInt) value(db *db, ro *models.ResourceOperation, deviceName, d
 		} else if newValueInt, err = strconv.ParseInt(currentValue, 10, 8); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewInt8Value(ro, now, int8(newValueInt))
+		result, err = dsModels.NewInt8Value(deviceResourceName, now, int8(newValueInt))
 	case typeInt16:
 		if enableRandomization {
 			if err == nil {
@@ -51,7 +50,7 @@ func (ri *resourceInt) value(db *db, ro *models.ResourceOperation, deviceName, d
 		} else if newValueInt, err = strconv.ParseInt(currentValue, 10, 16); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewInt16Value(ro, now, int16(newValueInt))
+		result, err = dsModels.NewInt16Value(deviceResourceName, now, int16(newValueInt))
 	case typeInt32:
 		if enableRandomization {
 			if err == nil {
@@ -62,7 +61,7 @@ func (ri *resourceInt) value(db *db, ro *models.ResourceOperation, deviceName, d
 		} else if newValueInt, err = strconv.ParseInt(currentValue, 10, 32); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewInt32Value(ro, now, int32(newValueInt))
+		result, err = dsModels.NewInt32Value(deviceResourceName, now, int32(newValueInt))
 	case typeInt64:
 		if enableRandomization {
 			if err == nil {
@@ -73,7 +72,7 @@ func (ri *resourceInt) value(db *db, ro *models.ResourceOperation, deviceName, d
 		} else if newValueInt, err = strconv.ParseInt(currentValue, 10, 64); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewInt64Value(ro, now, newValueInt)
+		result, err = dsModels.NewInt64Value(deviceResourceName, now, newValueInt)
 	}
 
 	if err != nil {
@@ -153,37 +152,56 @@ func randomInt(min, max int64) int64 {
 }
 
 func (ri *resourceInt) write(param *dsModels.CommandValue, deviceName string, db *db) error {
-	var err error
-	switch param.RO.Object {
-	case deviceResourceEnableRandomization:
-		v, err := param.BoolValue()
-		if err != nil {
+	switch param.DeviceResourceName {
+	case deviceResourceEnableRandomizationInt8:
+		if v, err := param.BoolValue(); err == nil {
+			return db.updateResourceRandomization(v, deviceName, deviceResourceInt8)
+		} else {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-		if err := db.updateResourceRandomization(v, deviceName, param.RO.Resource); err != nil {
-			return fmt.Errorf("resourceInt.write: %v", err)
+	case deviceResourceEnableRandomizationInt16:
+		if v, err := param.BoolValue(); err == nil {
+			return db.updateResourceRandomization(v, deviceName, deviceResourceInt16)
 		} else {
-			return nil
+			return fmt.Errorf("resourceInt.write: %v", err)
+		}
+	case deviceResourceEnableRandomizationInt32:
+		if v, err := param.BoolValue(); err == nil {
+			return db.updateResourceRandomization(v, deviceName, deviceResourceInt32)
+		} else {
+			return fmt.Errorf("resourceInt.write: %v", err)
+		}
+	case deviceResourceEnableRandomizationInt64:
+		if v, err := param.BoolValue(); err == nil {
+			return db.updateResourceRandomization(v, deviceName, deviceResourceInt64)
+		} else {
+			return fmt.Errorf("resourceInt.write: %v", err)
 		}
 	case deviceResourceInt8:
-		_, err = param.Int8Value()
-	case deviceResourceInt16:
-		_, err = param.Int16Value()
-	case deviceResourceInt32:
-		_, err = param.Int32Value()
-	case deviceResourceInt64:
-		_, err = param.Int64Value()
-	default:
-		err = fmt.Errorf("resourceInt.write: unknown device resource: %s", param.RO.Object)
-	}
-
-	if err == nil {
-		if err = db.updateResourceValue(param.ValueToString(), deviceName, param.RO.Resource, true); err != nil {
-			return fmt.Errorf("resourceInt.write: %v", err)
+		if _, err := param.Int8Value(); err == nil {
+			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceInt8, true)
 		} else {
-			return nil
+			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	} else {
-		return err
+	case deviceResourceInt16:
+		if _, err := param.Int16Value(); err == nil {
+			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceInt16, true)
+		} else {
+			return fmt.Errorf("resourceInt.write: %v", err)
+		}
+	case deviceResourceInt32:
+		if _, err := param.Int32Value(); err == nil {
+			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceInt32, true)
+		} else {
+			return fmt.Errorf("resourceInt.write: %v", err)
+		}
+	case deviceResourceInt64:
+		if _, err := param.Int64Value(); err == nil {
+			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceInt64, true)
+		} else {
+			return fmt.Errorf("resourceInt.write: %v", err)
+		}
+	default:
+		return fmt.Errorf("resourceInt.write: unknown device resource: %s", param.DeviceResourceName)
 	}
 }

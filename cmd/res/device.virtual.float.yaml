@@ -7,7 +7,15 @@ description: "Example of Device-Virtual"
 
 deviceResources:
 -
-  name: "Enable_Randomization"
+  name: "EnableRandomization_Float32"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "EnableRandomization_Float64"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -19,7 +27,7 @@ deviceResources:
   description: "Generate random float32 value"
   properties:
     value:
-      { type: "Float32", readWrite: "R", defaultValue: "0" }
+      { type: "Float32", readWrite: "R", defaultValue: "0", floatEncoding: "Base64" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random float32 value" }
 -
@@ -27,7 +35,7 @@ deviceResources:
   description: "Generate random float64 value"
   properties:
     value:
-      { type: "Float64", readWrite: "R", defaultValue: "0" }
+      { type: "Float64", readWrite: "R", defaultValue: "0", floatEncoding: "eNotation" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random float64 value" }
 
@@ -37,15 +45,15 @@ deviceCommands:
   get:
     - { operation: "get", object: "RandomValue_Float32", parameter: "RandomValue_Float32" }
   set:
-    - { operation: "set", object: "RandomValue_Float32", parameter: "RandomValue_Float32", resource: "RandomValue_Float32" }
-    - { operation: "set", object: "Enable_Randomization", parameter: "Enable_Randomization", resource: "RandomValue_Float32" }
+    - { operation: "set", object: "RandomValue_Float32", parameter: "RandomValue_Float32" }
+    - { operation: "set", object: "EnableRandomization_Float32", parameter: "EnableRandomization_Float32"}
 -
   name: "RandomValue_Float64"
   get:
     - { operation: "get", object: "RandomValue_Float64", parameter: "RandomValue_Float64" }
   set:
-    - { operation: "set", object: "RandomValue_Float64", parameter: "RandomValue_Float64", resource: "RandomValue_Float64" }
-    - { operation: "set", object: "Enable_Randomization", parameter: "Enable_Randomization", resource: "RandomValue_Float64" }
+    - { operation: "set", object: "RandomValue_Float64", parameter: "RandomValue_Float64"}
+    - { operation: "set", object: "EnableRandomization_Float64", parameter: "EnableRandomization_Float64"}
 
 coreCommands:
 -
@@ -63,7 +71,7 @@ coreCommands:
         expectedValues: []
   put:
     path: "/api/v1/device/{deviceId}/RandomValue_Float32"
-    parameterNames: ["RandomValue_Float32","Enable_Randomization"]
+    parameterNames: ["RandomValue_Float32","EnableRandomization_Float32"]
     responses:
       -
         code: "200"
@@ -86,7 +94,7 @@ coreCommands:
         expectedValues: []
   put:
     path: "/api/v1/device/{deviceId}/RandomValue_Float64"
-    parameterNames: ["RandomValue_Float64","Enable_Randomization"]
+    parameterNames: ["RandomValue_Float64","EnableRandomization_Float64"]
     responses:
       -
         code: "200"
