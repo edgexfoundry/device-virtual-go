@@ -1,6 +1,6 @@
 [Service]
-Host = "device-virtual"
-Port = 49988
+Host = "edgex-device-virtual"
+Port = 49990
 ConnectRetries = 3
 Labels = []
 OpenMsg = "device virtual started"

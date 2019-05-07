@@ -1,6 +1,6 @@
 [Service]
 Host = "localhost"
-Port = 49988
+Port = 49990
 ConnectRetries = 3
 Labels = []
 OpenMsg = "device virtual started"
