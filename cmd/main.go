@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2018 IOTech Ltd
+// Copyright (C) 2018-2019 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -13,11 +13,10 @@ import (
 )
 
 const (
-	version     string = device_virtual.Version
 	serviceName string = "device-virtual"
 )
 
 func main() {
 	d := driver.NewVirtualDeviceDriver()
-	startup.Bootstrap(serviceName, version, d)
+	startup.Bootstrap(serviceName, device_virtual.Version, d)
 }
