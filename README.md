@@ -15,7 +15,7 @@ Adding service:
 device-virtual:
 image: edgexfoundry/docker-device-virtual-go:1.0.0
 ports:
-  - "49988:49988"
+  - "49990:49990"
 container_name: device-virtual
 hostname: device-virtual
 networks:
