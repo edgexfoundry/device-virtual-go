@@ -21,7 +21,7 @@ RUN make build
 
 FROM scratch
 
-ENV APP_PORT=49988
+ENV APP_PORT=49990
 EXPOSE $APP_PORT
 
 COPY --from=builder /github.com/edgexfoundry/device-virtual/cmd /
