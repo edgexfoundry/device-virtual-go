@@ -32,16 +32,16 @@ depends_on:
 ```
 # How to use
 For now, Virtual Device Service contains 4 pre-defined devices as random value generators:
-* Random-Boolean-Generator01
-* Random-Integer-Generator01
-* Random-UnsignedInteger-Generator01
-* Random-Float-Generator01
+* Random-Boolean-Device
+* Random-Integer-Device
+* Random-UnsignedInteger-Device
+* Random-Float-Device
 
 Use Core-Command Service APIs to find executable commands information:
-* http://[host]:48082/api/v1/device/name/Random-Boolean-Generator01
-* http://[host]:48082/api/v1/device/name/Random-Integer-Generator01
-* http://[host]:48082/api/v1/device/name/Random-UnsignedInteger-Generator01
-* http://[host]:48082/api/v1/device/name/Random-Float-Generator01
+* http://[host]:48082/api/v1/device/name/Random-Boolean-Device
+* http://[host]:48082/api/v1/device/name/Random-Integer-Device
+* http://[host]:48082/api/v1/device/name/Random-UnsignedInteger-Device
+* http://[host]:48082/api/v1/device/name/Random-Float-Device
 
 NOTE:
 * The Enable_Randomization attribute of resource is automatically disabled when you use put command to set a specified value.
@@ -73,9 +73,9 @@ Command examples:
 >>```
 > * Update Enable_Randomization:
 >> ```console
->>$ ql -db deviceVirtual.db "update VIRTUAL_RESOURCE set ENABLE_RANDOMIZATION=false where DEVICE_NAME=\"Random-Integer-Generator01\" and DEVICE_RESOURCE_NAME=\"RandomValue_Int8\" "
+>>$ ql -db deviceVirtual.db "update VIRTUAL_RESOURCE set ENABLE_RANDOMIZATION=false where DEVICE_NAME=\"Random-Integer-Device\" and DEVICE_RESOURCE_NAME=\"RandomValue_Int8\" "
 >> ```
 > * Update Value:
 >> ```console
->>$ ql -db deviceVirtual.db "update VIRTUAL_RESOURCE set VALUE=\"26\" where DEVICE_NAME=\"Random-Integer-Generator01\" and DEVICE_RESOURCE_NAME=\"RandomValue_Int8\" "
+>>$ ql -db deviceVirtual.db "update VIRTUAL_RESOURCE set VALUE=\"26\" where DEVICE_NAME=\"Random-Integer-Device\" and DEVICE_RESOURCE_NAME=\"RandomValue_Int8\" "
 >> ```
