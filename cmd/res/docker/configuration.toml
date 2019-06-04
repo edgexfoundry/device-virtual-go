@@ -57,8 +57,8 @@ LogLevel = 'INFO'
 
 # Pre-define Devices
 [[DeviceList]]
-  Name = "Random-Boolean-Generator01"
-  Profile = "Random-Boolean-Generator"
+  Name = "Random-Boolean-Device"
+  Profile = "Random-Boolean-Device"
   Description = "Example of Device Virtual"
   Labels = [ "device-virtual-example" ]
   [DeviceList.Protocols]
@@ -70,8 +70,8 @@ LogLevel = 'INFO'
     OnChange = false
     Resource = "RandomValue_Bool"
 [[DeviceList]]
-  Name = "Random-Integer-Generator01"
-  Profile = "Random-Integer-Generator"
+  Name = "Random-Integer-Device"
+  Profile = "Random-Integer-Device"
   Description = "Example of Device Virtual"
   Labels = [ "device-virtual-example" ]
   [DeviceList.Protocols]
@@ -95,8 +95,8 @@ LogLevel = 'INFO'
     OnChange = false
     Resource = "RandomValue_Int64"
 [[DeviceList]]
-  Name = "Random-UnsignedInteger-Generator01"
-  Profile = "Random-UnsignedInteger-Generator"
+  Name = "Random-UnsignedInteger-Device"
+  Profile = "Random-UnsignedInteger-Device"
   Description = "Example of Device Virtual"
   Labels = [ "device-virtual-example" ]
   [DeviceList.Protocols]
@@ -120,8 +120,8 @@ LogLevel = 'INFO'
     OnChange = false
     Resource = "RandomValue_Uint64"
 [[DeviceList]]
-  Name = "Random-Float-Generator01"
-  Profile = "Random-Float-Generator"
+  Name = "Random-Float-Device"
+  Profile = "Random-Float-Device"
   Description = "Example of Device Virtual"
   Labels = [ "device-virtual-example" ]
   [DeviceList.Protocols]

@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	deviceName               = "Random-Value-Generator01"
+	deviceName               = "Random-Value-Device"
 	deviceCommandNameBool    = "RandomValue_Bool"
 	deviceCommandNameInt8    = "RandomValue_Int8"
 	deviceCommandNameInt16   = "RandomValue_Int16"
