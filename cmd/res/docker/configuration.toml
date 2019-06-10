@@ -17,7 +17,7 @@ FailLimit = 3
 FailWaitTime = 10
 
 [Logging]
-EnableRemote = false
+EnableRemote = true
 File = "./device-virtual.log"
 
 [Writable]
