@@ -4,7 +4,6 @@ Port = 49990
 ConnectRetries = 3
 Labels = []
 OpenMsg = "device virtual started"
-ReadMaxLimit = 256
 Timeout = 5000
 EnableAsyncReadings = true
 AsyncBufferSize = 16
