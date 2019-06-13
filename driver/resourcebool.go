@@ -28,7 +28,7 @@ func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*d
 			return result, err
 		}
 	}
-	now := time.Now().UnixNano() / int64(time.Millisecond)
+	now := time.Now().UnixNano()
 	if result, err = dsModels.NewBoolValue(deviceResourceName, now, newValueBool); err != nil {
 		return result, err
 	}

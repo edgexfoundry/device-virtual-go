@@ -22,7 +22,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 	}
 
 	var newValueUint uint64
-	now := time.Now().UnixNano() / int64(time.Millisecond)
+	now := time.Now().UnixNano()
 	rand.Seed(time.Now().UnixNano())
 	min, max, err := parseUintMinimumMaximum(minimum, maximum, dataType)
 

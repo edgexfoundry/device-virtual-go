@@ -22,7 +22,7 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 		return result, err
 	}
 
-	now := time.Now().UnixNano() / int64(time.Millisecond)
+	now := time.Now().UnixNano()
 	rand.Seed(time.Now().UnixNano())
 	var newValueFloat float64
 	var bitSize int
