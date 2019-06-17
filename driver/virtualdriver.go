@@ -23,7 +23,7 @@ import (
 type VirtualDriver struct {
 	lc             logger.LoggingClient
 	asyncCh        chan<- *dsModels.AsyncValues
-	virtualDevices map[string]*virtualDevice
+	virtualDevices sync.Map
 	db             *db
 	locker         sync.Mutex
 }
@@ -39,6 +39,14 @@ func NewVirtualDeviceDriver() dsModels.ProtocolDriver {
 	return driver
 }
 
+func (d *VirtualDriver) retrieveVirtualDevice(deviceName string) (vdv *virtualDevice) {
+	vd, ok := d.virtualDevices.LoadOrStore(deviceName, newVirtualDevice())
+	if vdv, ok = vd.(*virtualDevice); !ok {
+		panic("The value in virtualDevices has to be a reference of virtualDevice")
+	}
+	return vdv
+}
+
 func (d *VirtualDriver) DisconnectDevice(deviceName string, protocols map[string]models.ProtocolProperties) error {
 	d.lc.Info(fmt.Sprintf("VirtualDriver.DisconnectDevice: device-virtual driver is disconnecting to %s", deviceName))
 	return nil
@@ -47,7 +55,6 @@ func (d *VirtualDriver) DisconnectDevice(deviceName string, protocols map[string
 func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsModels.AsyncValues) error {
 	d.lc = lc
 	d.asyncCh = asyncCh
-	d.virtualDevices = make(map[string]*virtualDevice)
 
 	if _, err := os.Stat(qlDatabaseDir); os.IsNotExist(err) {
 		if err := os.Mkdir(qlDatabaseDir, os.ModeDir); err != nil {
@@ -110,11 +117,7 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 		d.locker.Unlock()
 	}()
 
-	vd, ok := d.virtualDevices[deviceName]
-	if !ok {
-		vd = newVirtualDevice()
-		d.virtualDevices[deviceName] = vd
-	}
+	vd := d.retrieveVirtualDevice(deviceName)
 
 	res = make([]*dsModels.CommandValue, len(reqs))
 
@@ -151,11 +154,7 @@ func (d *VirtualDriver) HandleWriteCommands(deviceName string, protocols map[str
 		d.locker.Unlock()
 	}()
 
-	vd, ok := d.virtualDevices[deviceName]
-	if !ok {
-		vd = newVirtualDevice()
-		d.virtualDevices[deviceName] = vd
-	}
+	vd := d.retrieveVirtualDevice(deviceName)
 
 	if err := d.db.openDb(); err != nil {
 		d.lc.Info(fmt.Sprintf("Create db connection failed: %v", err))
