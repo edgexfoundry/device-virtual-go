@@ -7,7 +7,7 @@ description: "Example of Device-Virtual"
 
 deviceResources:
 -
-  name: "EnableRandomization_Uint8"
+  name: "EnableRandomization_RandomValue_Uint8"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -15,7 +15,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "Random" }
 -
-  name: "EnableRandomization_Uint16"
+  name: "EnableRandomization_RandomValue_Uint16"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -23,7 +23,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "Random" }
 -
-  name: "EnableRandomization_Uint32"
+  name: "EnableRandomization_RandomValue_Uint32"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -31,7 +31,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "Random" }
 -
-  name: "EnableRandomization_Uint64"
+  name: "EnableRandomization_RandomValue_Uint64"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -78,28 +78,28 @@ deviceCommands:
   - { operation: "get", object: "RandomValue_Uint8", parameter: "RandomValue_Uint8" }
   set:
   - { operation: "set", object: "RandomValue_Uint8", parameter: "RandomValue_Uint8" }
-  - { operation: "set", object: "EnableRandomization_Uint8", parameter: "EnableRandomization_Uint8" }
+  - { operation: "set", object: "EnableRandomization_RandomValue_Uint8", parameter: "EnableRandomization_RandomValue_Uint8" }
 -
   name: "RandomValue_Uint16"
   get:
   - { operation: "get", object: "RandomValue_Uint16", parameter: "RandomValue_Uint16" }
   set:
   - { operation: "set", object: "RandomValue_Uint16", parameter: "RandomValue_Uint16" }
-  - { operation: "set", object: "EnableRandomization_Uint16", parameter: "EnableRandomization_Uint16" }
+  - { operation: "set", object: "EnableRandomization_RandomValue_Uint16", parameter: "EnableRandomization_RandomValue_Uint16" }
 -
   name: "RandomValue_Uint32"
   get:
   - { operation: "get", object: "RandomValue_Uint32", parameter: "RandomValue_Uint32" }
   set:
   - { operation: "set", object: "RandomValue_Uint32", parameter: "RandomValue_Uint32" }
-  - { operation: "set", object: "EnableRandomization_Uint32", parameter: "EnableRandomization_Uint32" }
+  - { operation: "set", object: "EnableRandomization_RandomValue_Uint32", parameter: "EnableRandomization_RandomValue_Uint32" }
 -
   name: "RandomValue_Uint64"
   get:
     - { operation: "get", object: "RandomValue_Uint64", parameter: "RandomValue_Uint64" }
   set:
     - { operation: "set", object: "RandomValue_Uint64", parameter: "RandomValue_Uint64" }
-    - { operation: "set", object: "EnableRandomization_Uint64", parameter: "EnableRandomization_Uint64" }
+    - { operation: "set", object: "EnableRandomization_RandomValue_Uint64", parameter: "EnableRandomization_RandomValue_Uint64" }
 
 coreCommands:
 -
@@ -117,7 +117,7 @@ coreCommands:
       expectedValues: []
   put:
     path: "/api/v1/device/{deviceId}/RandomValue_Uint8"
-    parameterNames: ["RandomValue_Uint8","EnableRandomization_Uint8"]
+    parameterNames: ["RandomValue_Uint8","EnableRandomization_RandomValue_Uint8"]
     responses:
     -
       code: "200"
@@ -140,7 +140,7 @@ coreCommands:
       expectedValues: []
   put:
     path: "/api/v1/device/{deviceId}/RandomValue_Uint16"
-    parameterNames: ["RandomValue_Uint16","EnableRandomization_Uint16"]
+    parameterNames: ["RandomValue_Uint16","EnableRandomization_RandomValue_Uint16"]
     responses:
     -
       code: "200"
@@ -163,7 +163,7 @@ coreCommands:
       expectedValues: []
   put:
     path: "/api/v1/device/{deviceId}/RandomValue_Uint32"
-    parameterNames: ["RandomValue_Uint32","EnableRandomization_Uint32"]
+    parameterNames: ["RandomValue_Uint32","EnableRandomization_RandomValue_Uint32"]
     responses:
       -
         code: "200"
@@ -186,7 +186,7 @@ coreCommands:
         expectedValues: []
   put:
     path: "/api/v1/device/{deviceId}/RandomValue_Uint64"
-    parameterNames: ["RandomValue_Uint64","EnableRandomization_Uint64"]
+    parameterNames: ["RandomValue_Uint64","EnableRandomization_RandomValue_Uint64"]
     responses:
       -
         code: "200"

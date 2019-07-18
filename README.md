@@ -32,10 +32,14 @@ depends_on:
 ```
 # How to use
 For now, Virtual Device Service contains 4 pre-defined devices as random value generators:
-* Random-Boolean-Device
-* Random-Integer-Device
-* Random-UnsignedInteger-Device
-* Random-Float-Device
+* [Random-Boolean-Device](https://github.com/edgexfoundry/device-virtual-go/blob/master/cmd/res/device.virtual.bool.yaml)
+* [Random-Integer-Device](https://github.com/edgexfoundry/device-virtual-go/blob/master/cmd/res/device.virtual.int.yaml)
+* [Random-UnsignedInteger-Device](https://github.com/edgexfoundry/device-virtual-go/blob/master/cmd/res/device.virtual.uint.yaml)
+* [Random-Float-Device](https://github.com/edgexfoundry/device-virtual-go/blob/master/cmd/res/device.virtual.float.yaml)
+Restricted:
+To control the randomization of device resource values, it has to add additional device resources with the prefix
+"EnableRandomization_" for each device resource. (Need to do the same for device commands and core commands)
+Please find the above default device profiles for example.
 
 Use Core-Command Service APIs to find executable commands information:
 * http://[host]:48082/api/v1/device/name/Random-Boolean-Device

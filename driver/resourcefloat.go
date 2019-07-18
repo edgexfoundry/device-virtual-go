@@ -104,26 +104,14 @@ func parseFloatMinimumMaximum(minimum, maximum, dataType string) (float64, float
 }
 
 func (rf *resourceFloat) write(param *dsModels.CommandValue, deviceName string, db *db) error {
-	switch param.DeviceResourceName {
-	case deviceResourceEnableRandomizationFloat32:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceFloat32)
-		} else {
-			return fmt.Errorf("resourceFloat.write: %v", err)
-		}
-	case deviceResourceEnableRandomizationFloat64:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceFloat64)
-		} else {
-			return fmt.Errorf("resourceFloat.write: %v", err)
-		}
-	case deviceResourceFloat32:
+	switch param.Type {
+	case dsModels.Float32:
 		if v, err := param.Float32Value(); err == nil {
 			return db.updateResourceValue(strconv.FormatFloat(float64(v), 'e', -1, 32), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceFloat.write: %v", err)
 		}
-	case deviceResourceFloat64:
+	case dsModels.Float64:
 		if v, err := param.Float64Value(); err == nil {
 			return db.updateResourceValue(strconv.FormatFloat(float64(v), 'e', -1, 64), deviceName, param.DeviceResourceName, true)
 		} else {

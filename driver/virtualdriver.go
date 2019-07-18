@@ -134,7 +134,7 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 
 	for i, req := range reqs {
 		if dr, ok := sdkService.DeviceResource(deviceName, req.DeviceResourceName, ""); ok {
-			if v, err := vd.read(deviceName, req.DeviceResourceName, dr.Properties.Value.Minimum, dr.Properties.Value.Maximum, d.db); err != nil {
+			if v, err := vd.read(deviceName, req.DeviceResourceName, dr.Properties.Value.Type, dr.Properties.Value.Minimum, dr.Properties.Value.Maximum, d.db); err != nil {
 				return nil, err
 			} else {
 				res[i] = v

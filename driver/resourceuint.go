@@ -134,52 +134,28 @@ func parseUintMinimumMaximum(minimum, maximum, dataType string) (uint64, uint64,
 }
 
 func (ru *resourceUint) write(param *dsModels.CommandValue, deviceName string, db *db) error {
-	switch param.DeviceResourceName {
-	case deviceResourceEnableRandomizationUint8:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceUint8)
-		} else {
-			return fmt.Errorf("resourceUint.write: %v", err)
-		}
-	case deviceResourceEnableRandomizationUint16:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceUint16)
-		} else {
-			return fmt.Errorf("resourceUint.write: %v", err)
-		}
-	case deviceResourceEnableRandomizationUint32:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceUint32)
-		} else {
-			return fmt.Errorf("resourceUint.write: %v", err)
-		}
-	case deviceResourceEnableRandomizationUint64:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceUint64)
-		} else {
-			return fmt.Errorf("resourceUint.write: %v", err)
-		}
-	case deviceResourceUint8:
+	switch param.Type {
+	case dsModels.Uint8:
 		if _, err := param.Uint8Value(); err == nil {
-			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceUint8, true)
+			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
-	case deviceResourceUint16:
+	case dsModels.Uint16:
 		if _, err := param.Uint16Value(); err == nil {
-			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceUint16, true)
+			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
-	case deviceResourceUint32:
+	case dsModels.Uint32:
 		if _, err := param.Uint32Value(); err == nil {
-			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceUint32, true)
+			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
-	case deviceResourceUint64:
+	case dsModels.Uint64:
 		if _, err := param.Uint64Value(); err == nil {
-			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceUint64, true)
+			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
