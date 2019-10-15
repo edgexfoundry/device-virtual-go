@@ -7,7 +7,7 @@ description: "Example of Device-Virtual"
 
 deviceResources:
 -
-  name: "EnableRandomization_Float32"
+  name: "EnableRandomization_RandomValue_Float32"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -15,7 +15,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "Random" }
 -
-  name: "EnableRandomization_Float64"
+  name: "EnableRandomization_RandomValue_Float64"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -46,14 +46,14 @@ deviceCommands:
     - { operation: "get", object: "RandomValue_Float32", parameter: "RandomValue_Float32" }
   set:
     - { operation: "set", object: "RandomValue_Float32", parameter: "RandomValue_Float32" }
-    - { operation: "set", object: "EnableRandomization_Float32", parameter: "EnableRandomization_Float32"}
+    - { operation: "set", object: "EnableRandomization_RandomValue_Float32", parameter: "EnableRandomization_RandomValue_Float32"}
 -
   name: "RandomValue_Float64"
   get:
     - { operation: "get", object: "RandomValue_Float64", parameter: "RandomValue_Float64" }
   set:
     - { operation: "set", object: "RandomValue_Float64", parameter: "RandomValue_Float64"}
-    - { operation: "set", object: "EnableRandomization_Float64", parameter: "EnableRandomization_Float64"}
+    - { operation: "set", object: "EnableRandomization_RandomValue_Float64", parameter: "EnableRandomization_RandomValue_Float64"}
 
 coreCommands:
 -
@@ -71,7 +71,7 @@ coreCommands:
         expectedValues: []
   put:
     path: "/api/v1/device/{deviceId}/RandomValue_Float32"
-    parameterNames: ["RandomValue_Float32","EnableRandomization_Float32"]
+    parameterNames: ["RandomValue_Float32","EnableRandomization_RandomValue_Float32"]
     responses:
       -
         code: "200"
@@ -94,7 +94,7 @@ coreCommands:
         expectedValues: []
   put:
     path: "/api/v1/device/{deviceId}/RandomValue_Float64"
-    parameterNames: ["RandomValue_Float64","EnableRandomization_Float64"]
+    parameterNames: ["RandomValue_Float64","EnableRandomization_RandomValue_Float64"]
     responses:
       -
         code: "200"

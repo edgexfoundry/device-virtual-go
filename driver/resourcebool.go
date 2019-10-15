@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"strconv"
+	"strings"
 	"time"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
@@ -40,20 +41,18 @@ func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*d
 }
 
 func (rb *resourceBool) write(param *dsModels.CommandValue, deviceName string, db *db) error {
-	switch param.DeviceResourceName {
-	case deviceResourceEnableRandomizationBool:
+	enableRandomizationPrefix := "EnableRandomization_"
+	if strings.Contains(param.DeviceResourceName, enableRandomizationPrefix) {
 		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceBool)
+			return db.updateResourceRandomization(v, deviceName, param.DeviceResourceName[len(enableRandomizationPrefix):len(param.DeviceResourceName)])
 		} else {
 			return fmt.Errorf("resourceBool.write: %v", err)
 		}
-	case deviceResourceBool:
+	} else {
 		if _, err := param.BoolValue(); err == nil {
-			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceBool, true)
+			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceBool.write: %v", err)
 		}
-	default:
-		return fmt.Errorf("resourceBool.write: unknown device resource: %s", param.DeviceResourceName)
 	}
 }

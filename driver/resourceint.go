@@ -152,52 +152,28 @@ func randomInt(min, max int64) int64 {
 }
 
 func (ri *resourceInt) write(param *dsModels.CommandValue, deviceName string, db *db) error {
-	switch param.DeviceResourceName {
-	case deviceResourceEnableRandomizationInt8:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceInt8)
-		} else {
-			return fmt.Errorf("resourceInt.write: %v", err)
-		}
-	case deviceResourceEnableRandomizationInt16:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceInt16)
-		} else {
-			return fmt.Errorf("resourceInt.write: %v", err)
-		}
-	case deviceResourceEnableRandomizationInt32:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceInt32)
-		} else {
-			return fmt.Errorf("resourceInt.write: %v", err)
-		}
-	case deviceResourceEnableRandomizationInt64:
-		if v, err := param.BoolValue(); err == nil {
-			return db.updateResourceRandomization(v, deviceName, deviceResourceInt64)
-		} else {
-			return fmt.Errorf("resourceInt.write: %v", err)
-		}
-	case deviceResourceInt8:
+	switch param.Type {
+	case dsModels.Int8:
 		if _, err := param.Int8Value(); err == nil {
-			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceInt8, true)
+			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	case deviceResourceInt16:
+	case dsModels.Int16:
 		if _, err := param.Int16Value(); err == nil {
-			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceInt16, true)
+			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	case deviceResourceInt32:
+	case dsModels.Int32:
 		if _, err := param.Int32Value(); err == nil {
-			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceInt32, true)
+			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	case deviceResourceInt64:
+	case dsModels.Int64:
 		if _, err := param.Int64Value(); err == nil {
-			return db.updateResourceValue(param.ValueToString(), deviceName, deviceResourceInt64, true)
+			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
