@@ -75,31 +75,31 @@ deviceCommands:
 -
   name: "Uint8"
   get:
-  - { operation: "get", object: "Uint8", parameter: "Uint8" }
+  - { operation: "get", deviceResource: "Uint8" }
   set:
-  - { operation: "set", object: "Uint8", parameter: "Uint8" }
-  - { operation: "set", object: "EnableRandomization_Uint8", parameter: "EnableRandomization_Uint8" }
+  - { operation: "set", deviceResource: "Uint8" }
+  - { operation: "set", deviceResource: "EnableRandomization_Uint8" }
 -
   name: "Uint16"
   get:
-  - { operation: "get", object: "Uint16", parameter: "Uint16" }
+  - { operation: "get", deviceResource: "Uint16" }
   set:
-  - { operation: "set", object: "Uint16", parameter: "Uint16" }
-  - { operation: "set", object: "EnableRandomization_Uint16", parameter: "EnableRandomization_Uint16" }
+  - { operation: "set", deviceResource: "Uint16" }
+  - { operation: "set", deviceResource: "EnableRandomization_Uint16" }
 -
   name: "Uint32"
   get:
-  - { operation: "get", object: "Uint32", parameter: "Uint32" }
+  - { operation: "get", deviceResource: "Uint32" }
   set:
-  - { operation: "set", object: "Uint32", parameter: "Uint32" }
-  - { operation: "set", object: "EnableRandomization_Uint32", parameter: "EnableRandomization_Uint32" }
+  - { operation: "set", deviceResource: "Uint32" }
+  - { operation: "set", deviceResource: "EnableRandomization_Uint32" }
 -
   name: "Uint64"
   get:
-    - { operation: "get", object: "Uint64", parameter: "Uint64" }
+    - { operation: "get", deviceResource: "Uint64" }
   set:
-    - { operation: "set", object: "Uint64", parameter: "Uint64" }
-    - { operation: "set", object: "EnableRandomization_Uint64", parameter: "EnableRandomization_Uint64" }
+    - { operation: "set", deviceResource: "Uint64" }
+    - { operation: "set", deviceResource: "EnableRandomization_Uint64" }
 
 coreCommands:
 -
