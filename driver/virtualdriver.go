@@ -179,3 +179,18 @@ func (d *VirtualDriver) Stop(force bool) error {
 	d.lc.Info("VirtualDriver.Stop: device-virtual driver is stopping...")
 	return nil
 }
+
+func (d *VirtualDriver) AddDevice(deviceName string, protocols map[string]models.ProtocolProperties, adminState models.AdminState) error {
+	d.lc.Debug(fmt.Sprintf("a new Device is added: %s", deviceName))
+	return nil
+}
+
+func (d *VirtualDriver) UpdateDevice(deviceName string, protocols map[string]models.ProtocolProperties, adminState models.AdminState) error {
+	d.lc.Debug(fmt.Sprintf("Device %s is updated", deviceName))
+	return nil
+}
+
+func (d *VirtualDriver) RemoveDevice(deviceName string, protocols map[string]models.ProtocolProperties) error {
+	d.lc.Debug(fmt.Sprintf("Device %s is removed", deviceName))
+	return nil
+}
