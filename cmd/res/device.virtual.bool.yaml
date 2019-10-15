@@ -7,7 +7,7 @@ description: "Example of Device-Virtual"
 
 deviceResources:
 -
-  name: "EnableRandomization_RandomValue_Bool"
+  name: "EnableRandomization_Bool"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -15,7 +15,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "Random" }
 -
-  name: "RandomValue_Bool"
+  name: "Bool"
   description: "Generate random boolean value"
   properties:
     value:
@@ -25,30 +25,30 @@ deviceResources:
 
 deviceCommands:
 -
-  name: "RandomValue_Bool"
+  name: "Bool"
   get:
-    - { operation: "get", object: "RandomValue_Bool", parameter: "RandomValue_Bool" }
+    - { operation: "get", object: "Bool", parameter: "Bool" }
   set:
-    - { operation: "set", object: "RandomValue_Bool", parameter: "RandomValue_Bool" }
-    - { operation: "set", object: "EnableRandomization_RandomValue_Bool", parameter: "EnableRandomization_RandomValue_Bool" }
+    - { operation: "set", object: "Bool", parameter: "Bool" }
+    - { operation: "set", object: "EnableRandomization_Bool", parameter: "EnableRandomization_Bool" }
     
 coreCommands:
 -
-  name: "RandomValue_Bool"
+  name: "Bool"
   get:
-    path: "/api/v1/device/{deviceId}/RandomValue_Bool"
+    path: "/api/v1/device/{deviceId}/Bool"
     responses:
       -
         code: "200"
         description: ""
-        expectedValues: ["RandomValue_Bool"]
+        expectedValues: ["Bool"]
       -
         code: "503"
         description: "service unavailable"
         expectedValues: []
   put:
-    path: "/api/v1/device/{deviceId}/RandomValue_Bool"
-    parameterNames: ["RandomValue_Bool","EnableRandomization_RandomValue_Bool"]
+    path: "/api/v1/device/{deviceId}/Bool"
+    parameterNames: ["Bool","EnableRandomization_Bool"]
     responses:
       -
         code: "200"

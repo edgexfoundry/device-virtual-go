@@ -67,7 +67,7 @@ LogLevel = 'INFO'
   [[DeviceList.AutoEvents]]
     Frequency = "10s"
     OnChange = false
-    Resource = "RandomValue_Bool"
+    Resource = "Bool"
 [[DeviceList]]
   Name = "Random-Integer-Device"
   Profile = "Random-Integer-Device"
@@ -80,19 +80,19 @@ LogLevel = 'INFO'
   [[DeviceList.AutoEvents]]
     Frequency = "15s"
     OnChange = false
-    Resource = "RandomValue_Int8"
+    Resource = "Int8"
   [[DeviceList.AutoEvents]]
     Frequency = "15s"
     OnChange = false
-    Resource = "RandomValue_Int16"
+    Resource = "Int16"
   [[DeviceList.AutoEvents]]
     Frequency = "15s"
     OnChange = false
-    Resource = "RandomValue_Int32"
+    Resource = "Int32"
   [[DeviceList.AutoEvents]]
     Frequency = "15s"
     OnChange = false
-    Resource = "RandomValue_Int64"
+    Resource = "Int64"
 [[DeviceList]]
   Name = "Random-UnsignedInteger-Device"
   Profile = "Random-UnsignedInteger-Device"
@@ -105,19 +105,19 @@ LogLevel = 'INFO'
   [[DeviceList.AutoEvents]]
     Frequency = "20s"
     OnChange = false
-    Resource = "RandomValue_Uint8"
+    Resource = "Uint8"
   [[DeviceList.AutoEvents]]
     Frequency = "20s"
     OnChange = false
-    Resource = "RandomValue_Uint16"
+    Resource = "Uint16"
   [[DeviceList.AutoEvents]]
     Frequency = "20s"
     OnChange = false
-    Resource = "RandomValue_Uint32"
+    Resource = "Uint32"
   [[DeviceList.AutoEvents]]
     Frequency = "20s"
     OnChange = false
-    Resource = "RandomValue_Uint64"
+    Resource = "Uint64"
 [[DeviceList]]
   Name = "Random-Float-Device"
   Profile = "Random-Float-Device"
@@ -130,8 +130,8 @@ LogLevel = 'INFO'
   [[DeviceList.AutoEvents]]
     Frequency = "30s"
     OnChange = false
-    Resource = "RandomValue_Float32"
+    Resource = "Float32"
   [[DeviceList.AutoEvents]]
     Frequency = "30s"
     OnChange = false
-    Resource = "RandomValue_Float64"
+    Resource = "Float64"
