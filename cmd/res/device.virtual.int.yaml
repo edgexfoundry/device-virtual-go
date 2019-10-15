@@ -7,7 +7,7 @@ description: "Example of Device-Virtual"
 
 deviceResources:
 -
-  name: "EnableRandomization_RandomValue_Int8"
+  name: "EnableRandomization_Int8"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -15,7 +15,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "Random" }
 -
-  name: "EnableRandomization_RandomValue_Int16"
+  name: "EnableRandomization_Int16"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -23,7 +23,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "Random" }
 -
-  name: "EnableRandomization_RandomValue_Int32"
+  name: "EnableRandomization_Int32"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -31,7 +31,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "Random" }
 -
-  name: "EnableRandomization_RandomValue_Int64"
+  name: "EnableRandomization_Int64"
   description: "used to decide whether to re-generate a random value"
   properties:
     value:
@@ -39,7 +39,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "Random" }
 -
-  name: "RandomValue_Int8"
+  name: "Int8"
   description: "Generate random int8 value"
   properties:
     value:
@@ -47,7 +47,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "random int8 value" }
 -
-  name: "RandomValue_Int16"
+  name: "Int16"
   description: "Generate random int16 value"
   properties:
     value:
@@ -55,7 +55,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "random int16 value" }
 -
-  name: "RandomValue_Int32"
+  name: "Int32"
   description: "Generate random int32 value"
   properties:
     value:
@@ -63,7 +63,7 @@ deviceResources:
     units:
       { type: "String", readWrite: "R", defaultValue: "random int32 value" }
 -
-  name: "RandomValue_Int64"
+  name: "Int64"
   description: "Generate random int64 value"
   properties:
     value:
@@ -73,51 +73,51 @@ deviceResources:
 
 deviceCommands:
 -
-  name: "RandomValue_Int8"
+  name: "Int8"
   get:
-  - { operation: "get", object: "RandomValue_Int8", parameter: "RandomValue_Int8" }
+  - { operation: "get", object: "Int8", parameter: "Int8" }
   set:
-  - { operation: "set", object: "RandomValue_Int8", parameter: "RandomValue_Int8" }
-  - { operation: "set", object: "EnableRandomization_RandomValue_Int8", parameter: "EnableRandomization_RandomValue_Int8" }
+  - { operation: "set", object: "Int8", parameter: "Int8" }
+  - { operation: "set", object: "EnableRandomization_Int8", parameter: "EnableRandomization_Int8" }
 -
-  name: "RandomValue_Int16"
+  name: "Int16"
   get:
-  - { operation: "get", object: "RandomValue_Int16", parameter: "RandomValue_Int16" }
+  - { operation: "get", object: "Int16", parameter: "Int16" }
   set:
-  - { operation: "set", object: "RandomValue_Int16", parameter: "RandomValue_Int16" }
-  - { operation: "set", object: "EnableRandomization_RandomValue_Int16", parameter: "EnableRandomization_RandomValue_Int16" }
+  - { operation: "set", object: "Int16", parameter: "Int16" }
+  - { operation: "set", object: "EnableRandomization_Int16", parameter: "EnableRandomization_Int16" }
 -
-  name: "RandomValue_Int32"
+  name: "Int32"
   get:
-  - { operation: "get", object: "RandomValue_Int32", parameter: "RandomValue_Int32" }
+  - { operation: "get", object: "Int32", parameter: "Int32" }
   set:
-  - { operation: "set", object: "RandomValue_Int32", parameter: "RandomValue_Int32" }
-  - { operation: "set", object: "EnableRandomization_RandomValue_Int32", parameter: "EnableRandomization_RandomValue_Int32" }
+  - { operation: "set", object: "Int32", parameter: "Int32" }
+  - { operation: "set", object: "EnableRandomization_Int32", parameter: "EnableRandomization_Int32" }
 -
-  name: "RandomValue_Int64"
+  name: "Int64"
   get:
-    - { operation: "get", object: "RandomValue_Int64", parameter: "RandomValue_Int64" }
+    - { operation: "get", object: "Int64", parameter: "Int64" }
   set:
-    - { operation: "set", object: "RandomValue_Int64", parameter: "RandomValue_Int64" }
-    - { operation: "set", object: "EnableRandomization_RandomValue_Int64", parameter: "EnableRandomization_RandomValue_Int64" }
+    - { operation: "set", object: "Int64", parameter: "Int64" }
+    - { operation: "set", object: "EnableRandomization_Int64", parameter: "EnableRandomization_Int64" }
 
 coreCommands:
 -
-  name: "RandomValue_Int8"
+  name: "Int8"
   get:
-    path: "/api/v1/device/{deviceId}/RandomValue_Int8"
+    path: "/api/v1/device/{deviceId}/Int8"
     responses:
     -
       code: "200"
       description: ""
-      expectedValues: ["RandomValue_Int8"]
+      expectedValues: ["Int8"]
     -
       code: "503"
       description: "service unavailable"
       expectedValues: []
   put:
-    path: "/api/v1/device/{deviceId}/RandomValue_Int8"
-    parameterNames: ["RandomValue_Int8","EnableRandomization_RandomValue_Int8"]
+    path: "/api/v1/device/{deviceId}/Int8"
+    parameterNames: ["Int8","EnableRandomization_Int8"]
     responses:
     -
       code: "200"
@@ -126,21 +126,21 @@ coreCommands:
       code: "503"
       description: "service unavailable"
 -
-  name: "RandomValue_Int16"
+  name: "Int16"
   get:
-    path: "/api/v1/device/{deviceId}/RandomValue_Int16"
+    path: "/api/v1/device/{deviceId}/Int16"
     responses:
     -
       code: "200"
       description: ""
-      expectedValues: ["RandomValue_Int16"]
+      expectedValues: ["Int16"]
     -
       code: "503"
       description: "service unavailable"
       expectedValues: []
   put:
-    path: "/api/v1/device/{deviceId}/RandomValue_Int16"
-    parameterNames: ["RandomValue_Int16","EnableRandomization_RandomValue_Int16"]
+    path: "/api/v1/device/{deviceId}/Int16"
+    parameterNames: ["Int16","EnableRandomization_Int16"]
     responses:
     -
       code: "200"
@@ -149,21 +149,21 @@ coreCommands:
       code: "503"
       description: "service unavailable"
 -
-  name: "RandomValue_Int32"
+  name: "Int32"
   get:
-    path: "/api/v1/device/{deviceId}/RandomValue_Int32"
+    path: "/api/v1/device/{deviceId}/Int32"
     responses:
     -
       code: "200"
       description: ""
-      expectedValues: ["RandomValue_Int32"]
+      expectedValues: ["Int32"]
     -
       code: "503"
       description: "service unavailable"
       expectedValues: []
   put:
-    path: "/api/v1/device/{deviceId}/RandomValue_Int32"
-    parameterNames: ["RandomValue_Int32","EnableRandomization_RandomValue_Int32"]
+    path: "/api/v1/device/{deviceId}/Int32"
+    parameterNames: ["Int32","EnableRandomization_Int32"]
     responses:
       -
         code: "200"
@@ -172,21 +172,21 @@ coreCommands:
         code: "503"
         description: "service unavailable"
 -
-  name: "RandomValue_Int64"
+  name: "Int64"
   get:
-    path: "/api/v1/device/{deviceId}/RandomValue_Int64"
+    path: "/api/v1/device/{deviceId}/Int64"
     responses:
       -
         code: "200"
         description: ""
-        expectedValues: ["RandomValue_Int64"]
+        expectedValues: ["Int64"]
       -
         code: "503"
         description: "service unavailable"
         expectedValues: []
   put:
-    path: "/api/v1/device/{deviceId}/RandomValue_Int64"
-    parameterNames: ["RandomValue_Int64","EnableRandomization_RandomValue_Int64"]
+    path: "/api/v1/device/{deviceId}/Int64"
+    parameterNames: ["Int64","EnableRandomization_Int64"]
     responses:
       -
         code: "200"

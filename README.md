@@ -53,7 +53,7 @@ NOTE:
 >>```yaml
 >>deviceResources:
 >>  -
->>    name: "RandomValue_Int8"
+>>    name: "Int8"
 >>    description: "Generate random int8 value"
 >>    properties:
 >>      value:
@@ -77,9 +77,9 @@ Command examples:
 >>```
 > * Update Enable_Randomization:
 >> ```console
->>$ ql -db deviceVirtual.db "update VIRTUAL_RESOURCE set ENABLE_RANDOMIZATION=false where DEVICE_NAME=\"Random-Integer-Device\" and DEVICE_RESOURCE_NAME=\"RandomValue_Int8\" "
+>>$ ql -db deviceVirtual.db "update VIRTUAL_RESOURCE set ENABLE_RANDOMIZATION=false where DEVICE_NAME=\"Random-Integer-Device\" and DEVICE_RESOURCE_NAME=\"Int8\" "
 >> ```
 > * Update Value:
 >> ```console
->>$ ql -db deviceVirtual.db "update VIRTUAL_RESOURCE set VALUE=\"26\" where DEVICE_NAME=\"Random-Integer-Device\" and DEVICE_RESOURCE_NAME=\"RandomValue_Int8\" "
+>>$ ql -db deviceVirtual.db "update VIRTUAL_RESOURCE set VALUE=\"26\" where DEVICE_NAME=\"Random-Integer-Device\" and DEVICE_RESOURCE_NAME=\"Int8\" "
 >> ```
