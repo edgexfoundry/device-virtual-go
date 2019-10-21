@@ -64,50 +64,20 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 	}
 
 	d.db = getDb()
-	if err := d.db.openDb(); err != nil {
-		d.lc.Info(fmt.Sprintf("Create db connection failed: %v", err))
-		return err
-	}
-	defer func() {
-		if err := d.db.closeDb(); err != nil {
-			d.lc.Info(fmt.Sprintf("Close db failed: %v", err))
-			return
-		}
-	}()
 
-	if err := d.db.exec(SqlDropTable); err != nil {
-		d.lc.Info(fmt.Sprintf("Drop table failed: %v", err))
-		return err
-	}
-
-	if err := d.db.exec(SqlCreateTable); err != nil {
-		d.lc.Info(fmt.Sprintf("Create table failed: %v", err))
-		return err
+	if err := initVirtualResourceTable(d); err != nil {
+		return fmt.Errorf("initial virtual resource table failed: %v", err)
 	}
 
 	service := sdk.RunningService()
 	devices := service.Devices()
 	for _, device := range devices {
-		for _, dc := range device.Profile.DeviceCommands {
-			for _, ro := range dc.Get {
-				for _, dr := range device.Profile.DeviceResources {
-					if ro.DeviceResource == dr.Name {
-						/*
-							d.Name <-> VIRTUAL_RESOURCE.deviceName
-							dr.Name <-> VIRTUAL_RESOURCE.CommandName, VIRTUAL_RESOURCE.ResourceName
-							ro.Object <-> VIRTUAL_RESOURCE.DeviceResourceName
-							dr.Properties.Value.Type <-> VIRTUAL_RESOURCE.DataType
-							dr.Properties.Value.DefaultValue <-> VIRTUAL_RESOURCE.Value
-						*/
-						if err := d.db.exec(SqlInsert, device.Name, dr.Name, dr.Name, true, dr.Properties.Value.Type, dr.Properties.Value.DefaultValue); err != nil {
-							d.lc.Info(fmt.Sprintf("Insert one row into db failed: %v", err))
-							return err
-						}
-					}
-				}
-			}
+		err := prepareVirtualResources(d, device.Name)
+		if err != nil {
+			return fmt.Errorf("prepare virtual resources failed: %v", err)
 		}
 	}
+
 	return nil
 }
 
@@ -182,15 +152,119 @@ func (d *VirtualDriver) Stop(force bool) error {
 
 func (d *VirtualDriver) AddDevice(deviceName string, protocols map[string]models.ProtocolProperties, adminState models.AdminState) error {
 	d.lc.Debug(fmt.Sprintf("a new Device is added: %s", deviceName))
-	return nil
+	err := prepareVirtualResources(d, deviceName)
+	return err
 }
 
 func (d *VirtualDriver) UpdateDevice(deviceName string, protocols map[string]models.ProtocolProperties, adminState models.AdminState) error {
 	d.lc.Debug(fmt.Sprintf("Device %s is updated", deviceName))
-	return nil
+	err := deleteVirtualResources(d, deviceName)
+	if err != nil {
+		return err
+	} else {
+		return prepareVirtualResources(d, deviceName)
+	}
 }
 
 func (d *VirtualDriver) RemoveDevice(deviceName string, protocols map[string]models.ProtocolProperties) error {
 	d.lc.Debug(fmt.Sprintf("Device %s is removed", deviceName))
+	err := deleteVirtualResources(d, deviceName)
+	return err
+}
+
+func initVirtualResourceTable(driver *VirtualDriver) error {
+	if err := driver.db.openDb(); err != nil {
+		driver.lc.Info(fmt.Sprintf("Create db connection failed: %v", err))
+		return err
+	}
+	defer func() {
+		if err := driver.db.closeDb(); err != nil {
+			driver.lc.Info(fmt.Sprintf("Close db failed: %v", err))
+			return
+		}
+	}()
+
+	if err := driver.db.exec(SqlDropTable); err != nil {
+		driver.lc.Info(fmt.Sprintf("Drop table failed: %v", err))
+		return err
+	}
+
+	if err := driver.db.exec(SqlCreateTable); err != nil {
+		driver.lc.Info(fmt.Sprintf("Create table failed: %v", err))
+		return err
+	}
+
 	return nil
+}
+
+func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
+	driver.locker.Lock()
+	defer func() {
+		driver.locker.Unlock()
+	}()
+
+	if err := driver.db.openDb(); err != nil {
+		driver.lc.Error(fmt.Sprintf("Create db connection failed: %v", err))
+		return err
+	}
+	defer func() {
+		if err := driver.db.closeDb(); err != nil {
+			driver.lc.Error(fmt.Sprintf("Close db failed: %v", err))
+		}
+	}()
+
+	service := sdk.RunningService()
+	device, err := service.GetDeviceByName(deviceName)
+	if err != nil {
+		return err
+	}
+
+	for _, dc := range device.Profile.DeviceCommands {
+		for _, ro := range dc.Get {
+			for _, dr := range device.Profile.DeviceResources {
+				if ro.Object == dr.Name {
+					/*
+						d.Name <-> VIRTUAL_RESOURCE.deviceName
+						dr.Name <-> VIRTUAL_RESOURCE.CommandName, VIRTUAL_RESOURCE.ResourceName
+						ro.Object <-> VIRTUAL_RESOURCE.DeviceResourceName
+						dr.Properties.Value.Type <-> VIRTUAL_RESOURCE.DataType
+						dr.Properties.Value.DefaultValue <-> VIRTUAL_RESOURCE.Value
+					*/
+					if err := driver.db.exec(SqlInsert, device.Name, dr.Name, dr.Name, true, dr.Properties.Value.Type,
+						dr.Properties.Value.DefaultValue); err != nil {
+						driver.lc.Info(fmt.Sprintf("Insert one row into db failed: %v", err))
+						return err
+					}
+				}
+			}
+			// TODO another for loop to update the ENABLE_RANDOMIZATION field of virtual resource by device resource
+			//  "EnableRandomization_{ResourceName}"
+		}
+	}
+
+	return nil
+}
+
+func deleteVirtualResources(driver *VirtualDriver, deviceName string) error {
+	driver.locker.Lock()
+	defer func() {
+		driver.locker.Unlock()
+	}()
+
+	if err := driver.db.openDb(); err != nil {
+		driver.lc.Error(fmt.Sprintf("Create db connection failed: %v", err))
+		return err
+	}
+	defer func() {
+		if err := driver.db.closeDb(); err != nil {
+			driver.lc.Error(fmt.Sprintf("Close db failed: %v", err))
+		}
+	}()
+
+	if err := driver.db.exec(SqlDelete, deviceName); err != nil {
+		driver.lc.Info(fmt.Sprintf("Delete virtual resources of device %s failed: %v", deviceName, err))
+		return err
+	} else {
+		return nil
+	}
 }

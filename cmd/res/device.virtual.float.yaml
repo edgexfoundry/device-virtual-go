@@ -46,14 +46,14 @@ deviceCommands:
     - { operation: "get", deviceResource: "Float32" }
   set:
     - { operation: "set", deviceResource: "Float32" }
-    - { operation: "set", deviceResource: "EnableRandomization_Float32" }
+    - { operation: "set", deviceResource: "EnableRandomization_Float32", parameter: "false" }
 -
   name: "Float64"
   get:
     - { operation: "get", deviceResource: "Float64" }
   set:
     - { operation: "set", deviceResource: "Float64" }
-    - { operation: "set", deviceResource: "EnableRandomization_Float64" }
+    - { operation: "set", deviceResource: "EnableRandomization_Float64", parameter: "false" }
 
 coreCommands:
 -

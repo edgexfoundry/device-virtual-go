@@ -30,7 +30,7 @@ deviceCommands:
     - { operation: "get", deviceResource: "Bool" }
   set:
     - { operation: "set", deviceResource: "Bool" }
-    - { operation: "set", deviceResource: "EnableRandomization_Bool" }
+    - { operation: "set", deviceResource: "EnableRandomization_Bool", parameter: "false" }
     
 coreCommands:
 -
