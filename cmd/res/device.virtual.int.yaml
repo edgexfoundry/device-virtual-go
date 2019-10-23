@@ -75,31 +75,31 @@ deviceCommands:
 -
   name: "Int8"
   get:
-  - { operation: "get", object: "Int8", parameter: "Int8" }
+  - { operation: "get", deviceResource: "Int8" }
   set:
-  - { operation: "set", object: "Int8", parameter: "Int8" }
-  - { operation: "set", object: "EnableRandomization_Int8", parameter: "EnableRandomization_Int8" }
+  - { operation: "set", deviceResource: "Int8" }
+  - { operation: "set", deviceResource: "EnableRandomization_Int8" }
 -
   name: "Int16"
   get:
-  - { operation: "get", object: "Int16", parameter: "Int16" }
+  - { operation: "get", deviceResource: "Int16" }
   set:
-  - { operation: "set", object: "Int16", parameter: "Int16" }
-  - { operation: "set", object: "EnableRandomization_Int16", parameter: "EnableRandomization_Int16" }
+  - { operation: "set", deviceResource: "Int16" }
+  - { operation: "set", deviceResource: "EnableRandomization_Int16" }
 -
   name: "Int32"
   get:
-  - { operation: "get", object: "Int32", parameter: "Int32" }
+  - { operation: "get", deviceResource: "Int32" }
   set:
-  - { operation: "set", object: "Int32", parameter: "Int32" }
-  - { operation: "set", object: "EnableRandomization_Int32", parameter: "EnableRandomization_Int32" }
+  - { operation: "set", deviceResource: "Int32" }
+  - { operation: "set", deviceResource: "EnableRandomization_Int32" }
 -
   name: "Int64"
   get:
-    - { operation: "get", object: "Int64", parameter: "Int64" }
+    - { operation: "get", deviceResource: "Int64" }
   set:
-    - { operation: "set", object: "Int64", parameter: "Int64" }
-    - { operation: "set", object: "EnableRandomization_Int64", parameter: "EnableRandomization_Int64" }
+    - { operation: "set", deviceResource: "Int64" }
+    - { operation: "set", deviceResource: "EnableRandomization_Int64" }
 
 coreCommands:
 -

@@ -91,7 +91,7 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 		for _, dc := range device.Profile.DeviceCommands {
 			for _, ro := range dc.Get {
 				for _, dr := range device.Profile.DeviceResources {
-					if ro.Object == dr.Name {
+					if ro.DeviceResource == dr.Name {
 						/*
 							d.Name <-> VIRTUAL_RESOURCE.deviceName
 							dr.Name <-> VIRTUAL_RESOURCE.CommandName, VIRTUAL_RESOURCE.ResourceName
