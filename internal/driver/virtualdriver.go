@@ -11,6 +11,7 @@ package driver
 import (
 	"fmt"
 	"os"
+	"reflect"
 	"sync"
 
 	sdk "github.com/edgexfoundry/device-sdk-go"
@@ -39,12 +40,14 @@ func NewVirtualDeviceDriver() dsModels.ProtocolDriver {
 	return driver
 }
 
-func (d *VirtualDriver) retrieveVirtualDevice(deviceName string) (vdv *virtualDevice) {
+func (d *VirtualDriver) retrieveVirtualDevice(deviceName string) (vdv *virtualDevice, err error) {
 	vd, ok := d.virtualDevices.LoadOrStore(deviceName, newVirtualDevice())
 	if vdv, ok = vd.(*virtualDevice); !ok {
-		panic("The value in virtualDevices has to be a reference of virtualDevice")
+		err = fmt.Errorf("retrieve virtualDevice by name: %s, the returned value has to be a reference of "+
+			"virtualDevice struct, but got: %s", deviceName, reflect.TypeOf(vd))
+		d.lc.Error(err.Error())
 	}
-	return vdv
+	return vdv, err
 }
 
 func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsModels.AsyncValues) error {
@@ -82,7 +85,10 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 		d.locker.Unlock()
 	}()
 
-	vd := d.retrieveVirtualDevice(deviceName)
+	vd, err := d.retrieveVirtualDevice(deviceName)
+	if err != nil {
+		return nil, err
+	}
 
 	res = make([]*dsModels.CommandValue, len(reqs))
 
@@ -119,7 +125,10 @@ func (d *VirtualDriver) HandleWriteCommands(deviceName string, protocols map[str
 		d.locker.Unlock()
 	}()
 
-	vd := d.retrieveVirtualDevice(deviceName)
+	vd, err := d.retrieveVirtualDevice(deviceName)
+	if err != nil {
+		return err
+	}
 
 	if err := d.db.openDb(); err != nil {
 		d.lc.Info(fmt.Sprintf("Create db connection failed: %v", err))
