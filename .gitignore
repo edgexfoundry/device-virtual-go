@@ -16,5 +16,5 @@
 .idea/
 vendor/
 go.sum
-driver/db/
+internal/driver/db/
 cmd/db/
