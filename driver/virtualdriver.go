@@ -47,11 +47,6 @@ func (d *VirtualDriver) retrieveVirtualDevice(deviceName string) (vdv *virtualDe
 	return vdv
 }
 
-func (d *VirtualDriver) DisconnectDevice(deviceName string, protocols map[string]models.ProtocolProperties) error {
-	d.lc.Info(fmt.Sprintf("VirtualDriver.DisconnectDevice: device-virtual driver is disconnecting to %s", deviceName))
-	return nil
-}
-
 func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsModels.AsyncValues) error {
 	d.lc = lc
 	d.asyncCh = asyncCh
