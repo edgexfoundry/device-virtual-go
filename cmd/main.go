@@ -9,7 +9,7 @@ package main
 import (
 	"github.com/edgexfoundry/device-sdk-go/pkg/startup"
 	"github.com/edgexfoundry/device-virtual-go"
-	"github.com/edgexfoundry/device-virtual-go/driver"
+	"github.com/edgexfoundry/device-virtual-go/internal/driver"
 )
 
 const (
