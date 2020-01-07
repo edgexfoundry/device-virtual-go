@@ -226,11 +226,11 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 	for _, dc := range device.Profile.DeviceCommands {
 		for _, ro := range dc.Get {
 			for _, dr := range device.Profile.DeviceResources {
-				if ro.Object == dr.Name {
+				if ro.DeviceResource == dr.Name {
 					/*
 						d.Name <-> VIRTUAL_RESOURCE.deviceName
 						dr.Name <-> VIRTUAL_RESOURCE.CommandName, VIRTUAL_RESOURCE.ResourceName
-						ro.Object <-> VIRTUAL_RESOURCE.DeviceResourceName
+						ro.DeviceResource <-> VIRTUAL_RESOURCE.DeviceResourceName
 						dr.Properties.Value.Type <-> VIRTUAL_RESOURCE.DataType
 						dr.Properties.Value.DefaultValue <-> VIRTUAL_RESOURCE.Value
 					*/
