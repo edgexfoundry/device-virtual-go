@@ -1,0 +1,57 @@
+name: "Random-Binary-Device"
+manufacturer: "IOTech"
+model: "Device-Virtual-01"
+labels:
+- "device-virtual-example"
+description: "Example of Device-Virtual"
+
+deviceResources:
+-
+  name: "EnableRandomization_Binary"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "Binary"
+  description: "Generate random binary value"
+  properties:
+    value:
+      { type: "Binary", readWrite: "R" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random binary value" }
+
+deviceCommands:
+-
+  name: "Binary"
+  get:
+    - { operation: "get", deviceResource: "Binary" }
+  set:
+    - { operation: "set", deviceResource: "EnableRandomization_Binary", parameter: "false" }
+    
+coreCommands:
+-
+  name: "Binary"
+  get:
+    path: "/api/v1/device/{deviceId}/Binary"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Binary"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Binary"
+    parameterNames: ["EnableRandomization_Binary"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"

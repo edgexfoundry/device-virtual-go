@@ -1,6 +1,8 @@
 package driver
 
 import (
+	"bytes"
+	"encoding/hex"
 	"fmt"
 	"os"
 	"strconv"
@@ -21,6 +23,7 @@ const (
 	deviceResourceUint64     = "Uint64"
 	deviceResourceFloat32    = "Float32"
 	deviceResourceFloat64    = "Float64"
+	deviceResourceBinary     = "Binary"
 	deviceName               = "Random-Value-Device"
 	deviceCommandNameBool    = "Bool"
 	deviceCommandNameInt8    = "Int8"
@@ -33,6 +36,7 @@ const (
 	deviceCommandNameUint64  = "Uint64"
 	deviceCommandNameFloat32 = "Float32"
 	deviceCommandNameFloat64 = "Float64"
+	deviceCommandNameBinary  = "Binary"
 	enableRandomizationTrue  = "true"
 )
 
@@ -78,6 +82,8 @@ func init() {
 		{deviceName, deviceCommandNameUint64, deviceResourceUint64, enableRandomizationTrue, typeUint64, "0"},
 		{deviceName, deviceCommandNameFloat32, deviceResourceFloat32, enableRandomizationTrue, typeFloat32, "0"},
 		{deviceName, deviceCommandNameFloat64, deviceResourceFloat64, enableRandomizationTrue, typeFloat64, "0"},
+		{deviceName, deviceCommandNameBinary, deviceResourceBinary, enableRandomizationTrue, typeBinary,
+			hex.EncodeToString(make([]byte, dsModels.MaxBinaryBytes))},
 	}
 	for _, d := range ds {
 		b, _ := strconv.ParseBool(d[3])
@@ -404,6 +410,58 @@ func getIntValue(cv *dsModels.CommandValue) int64 {
 		return v
 	default:
 		return 0
+	}
+}
+
+func TestValue_Binary(t *testing.T) {
+	db := getDb()
+	if err := db.openDb(); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := db.closeDb(); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	vd := newVirtualDevice()
+	v1, err := vd.read(deviceName, deviceResourceBinary, typeBinary, "", "", db)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	//the return string must be convertible to binary
+	b1, err := v1.BinaryValue()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rounds := 20
+	//EnableRandomization = true
+	for x := 1; x <= rounds; x++ {
+		v2, _ := vd.read(deviceName, deviceResourceBinary, typeBinary, "", "", db)
+		b2, _ := v2.BinaryValue()
+		if bytes.Compare(b1, b2) != 0 {
+			break
+		}
+		if x == rounds {
+			t.Fatalf("EnableRandomization is true, but got same read in %d rounds", rounds)
+		}
+	}
+
+	//EnableRandomization = false
+	if err := db.exec(SqlUpdateRandomization, false, deviceName, deviceResourceBinary); err != nil {
+		t.Fatal(err)
+	}
+
+	v1, _ = vd.read(deviceName, deviceResourceBinary, typeBinary, "", "", db)
+	b1, _ = v1.BinaryValue()
+	for x := 0; x <= rounds; x++ {
+		v2, _ := vd.read(deviceName, deviceResourceBinary, typeBinary, "", "", db)
+		b2, _ := v2.BinaryValue()
+		if bytes.Compare(b1, b2) != 0 {
+			t.Fatalf("EnableRandomization is false, but got different read")
+		}
 	}
 }
 

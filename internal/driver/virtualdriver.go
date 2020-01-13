@@ -9,10 +9,13 @@
 package driver
 
 import (
+	"encoding/hex"
 	"fmt"
+	"math/rand"
 	"os"
 	"reflect"
 	"sync"
+	"time"
 
 	sdk "github.com/edgexfoundry/device-sdk-go"
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
@@ -234,6 +237,12 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 						dr.Properties.Value.Type <-> VIRTUAL_RESOURCE.DataType
 						dr.Properties.Value.DefaultValue <-> VIRTUAL_RESOURCE.Value
 					*/
+					if dsModels.ParseValueType(dr.Properties.Value.Type) == dsModels.Binary {
+						b := make([]byte, dsModels.MaxBinaryBytes)
+						rand.Seed(time.Now().UnixNano())
+						rand.Read(b)
+						dr.Properties.Value.DefaultValue = hex.EncodeToString(b)
+					}
 					if err := driver.db.exec(SqlInsert, device.Name, dr.Name, dr.Name, true, dr.Properties.Value.Type,
 						dr.Properties.Value.DefaultValue); err != nil {
 						driver.lc.Info(fmt.Sprintf("Insert one row into db failed: %v", err))

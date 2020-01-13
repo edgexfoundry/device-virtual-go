@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	qlDatabaseDriverName = "ql"
+	qlDatabaseDriverName = "ql2"
 	qlDatabaseDir        = "db"
 	qlDatabaseName       = "/deviceVirtual.db"
 )
