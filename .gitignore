@@ -18,3 +18,4 @@ vendor/
 go.sum
 internal/driver/db/
 cmd/db/
+VERSION
