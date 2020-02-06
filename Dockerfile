@@ -26,7 +26,7 @@ RUN sed -e 's/dl-cdn[.]alpinelinux.org/nl.alpinelinux.org/g' -i~ /etc/apk/reposi
 RUN apk add --update --no-cache ${ALPINE_PKG_BASE} ${ALPINE_PKG_EXTRA}
 
 # set the working directory
-WORKDIR /github.com/edgexfoundry/device-virtual-go
+WORKDIR /device-virtual-go
 
 COPY . .
 
