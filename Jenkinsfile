@@ -16,6 +16,6 @@
 
 edgeXBuildGoApp (
     project: 'device-virtual-go',
-    goVersion: '1.11'
+    goVersion: '1.13'
 )
 

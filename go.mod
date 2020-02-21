@@ -20,3 +20,5 @@ require (
 	modernc.org/strutil v1.0.0 // indirect
 	modernc.org/zappy v1.0.0 // indirect
 )
+
+go 1.13

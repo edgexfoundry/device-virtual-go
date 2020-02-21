@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG BASE=golang:1.11-alpine
+ARG BASE=golang:1.13-alpine
 FROM ${BASE} AS builder
 
 ARG ALPINE_PKG_BASE="build-base git openssh-client"
@@ -26,7 +26,7 @@ RUN sed -e 's/dl-cdn[.]alpinelinux.org/nl.alpinelinux.org/g' -i~ /etc/apk/reposi
 RUN apk add --update --no-cache ${ALPINE_PKG_BASE} ${ALPINE_PKG_EXTRA}
 
 # set the working directory
-WORKDIR /device-virtual-go
+WORKDIR $GOPATH/src/github.com/edgexfoundry/device-virtual-go
 
 COPY . .
 
@@ -41,6 +41,6 @@ FROM alpine
 ENV APP_PORT=49990
 EXPOSE $APP_PORT
 
-COPY --from=builder /device-virtual-go/cmd /
+COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/cmd /
 
 ENTRYPOINT ["/device-virtual","--profile=docker","--confdir=/res","--registry=consul://edgex-core-consul:8500"]
