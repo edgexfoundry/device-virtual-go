@@ -134,3 +134,9 @@ https://github.com/golang/net/blob/master/LICENSE
 
 golang.org/x/sys (Unspecified) https://github.com/golang/sys
 https://github.com/golang/sys/blob/master/LICENSE
+
+github.com/OneOfOne/xxhash
+https://github.com/OneOfOne/xxhash/blob/master/LICENCE
+
+github.com/jessevdk/go-flags
+https://github.com/jessevdk/go-flags/blob/master/LICENSE
