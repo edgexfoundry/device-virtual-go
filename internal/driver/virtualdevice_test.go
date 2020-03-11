@@ -34,6 +34,7 @@ const (
 	deviceCommandNameFloat32 = "Float32"
 	deviceCommandNameFloat64 = "Float64"
 	enableRandomizationTrue  = "true"
+	rounds                   = 10
 )
 
 func init() {
@@ -111,7 +112,6 @@ func TestValue_Bool(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	rounds := 20
 	//EnableRandomization = true
 	for x := 1; x <= rounds; x++ {
 		v2, _ := vd.read(deviceName, deviceResourceBool, typeBool, "", "", db)
@@ -187,8 +187,6 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 	vd := newVirtualDevice()
 
-	rounds := 100
-
 	min, _ := parseStrToInt(minStr, 64)
 	max, _ := parseStrToInt(maxStr, 64)
 
@@ -211,7 +209,6 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 		}
 	}
 
-	//generate read 100 times
 	for x := 1; x <= rounds; x++ {
 		v, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
 
@@ -263,8 +260,6 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 	vd := newVirtualDevice()
 
-	rounds := 100
-
 	min, _ := parseStrToUint(minStr, 64)
 	max, _ := parseStrToUint(maxStr, 64)
 
@@ -284,7 +279,6 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 		}
 	}
 
-	//generate read 100 times
 	for x := 1; x <= rounds; x++ {
 		v, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
 		if err != nil {
@@ -335,8 +329,6 @@ func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 	vd := newVirtualDevice()
 
-	rounds := 100
-
 	min, _ := parseStrToFloat(minStr, 64)
 	max, _ := parseStrToFloat(maxStr, 64)
 
@@ -355,7 +347,6 @@ func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
 		}
 	}
 
-	//generate read 100 times
 	for x := 1; x <= rounds; x++ {
 		v, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
 		if err != nil {
