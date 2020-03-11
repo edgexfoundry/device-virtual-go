@@ -24,13 +24,15 @@ const (
 	typeUint64  = "Uint64"
 	typeFloat32 = "Float32"
 	typeFloat64 = "Float64"
+	typeBinary  = "Binary"
 )
 
 type virtualDevice struct {
-	resourceBool  *resourceBool
-	resourceInt   *resourceInt
-	resourceUint  *resourceUint
-	resourceFloat *resourceFloat
+	resourceBool   *resourceBool
+	resourceInt    *resourceInt
+	resourceUint   *resourceUint
+	resourceFloat  *resourceFloat
+	resourceBinary *resourceBinary
 }
 
 func (d *virtualDevice) read(deviceName, deviceResourceName, typeName, minimum, maximum string, db *db) (*dsModels.CommandValue, error) {
@@ -45,6 +47,8 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, typeName, minimum, 
 		return d.resourceUint.value(db, deviceName, deviceResourceName, minimum, maximum)
 	case dsModels.Float32, dsModels.Float64:
 		return d.resourceFloat.value(db, deviceName, deviceResourceName, minimum, maximum)
+	case dsModels.Binary:
+		return d.resourceBinary.value(db, deviceName, deviceResourceName)
 	default:
 		return result, fmt.Errorf("virtualDevice.read: wrong read type: %s", deviceResourceName)
 	}
@@ -60,6 +64,8 @@ func (d *virtualDevice) write(param *dsModels.CommandValue, deviceName string, d
 		return d.resourceUint.write(param, deviceName, db)
 	case dsModels.Float32, dsModels.Float64:
 		return d.resourceFloat.write(param, deviceName, db)
+	case dsModels.Binary:
+		return d.resourceBinary.write(param, deviceName, db)
 	default:
 		return fmt.Errorf("VirtualDriver.HandleWriteCommands: there is no matched device resource for %s", param.String())
 	}
@@ -67,9 +73,10 @@ func (d *virtualDevice) write(param *dsModels.CommandValue, deviceName string, d
 
 func newVirtualDevice() *virtualDevice {
 	return &virtualDevice{
-		resourceBool:  &resourceBool{},
-		resourceInt:   &resourceInt{},
-		resourceUint:  &resourceUint{},
-		resourceFloat: &resourceFloat{},
+		resourceBool:   &resourceBool{},
+		resourceInt:    &resourceInt{},
+		resourceUint:   &resourceUint{},
+		resourceFloat:  &resourceFloat{},
+		resourceBinary: &resourceBinary{},
 	}
 }
