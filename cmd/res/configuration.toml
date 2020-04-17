@@ -1,150 +1,147 @@
+[Writable]
+LogLevel = 'INFO'
+
 [Service]
-Host = "localhost"
+BootTimeout = 30000
+CheckInterval = '10s'
+ClientMonitor = 15000
+Host = 'localhost'
 Port = 49990
+Protocol = 'http'
+StartupMsg = 'device virtual started'
+Timeout = 5000
 ConnectRetries = 3
 Labels = []
-OpenMsg = "device virtual started"
-Timeout = 5000
 EnableAsyncReadings = true
 AsyncBufferSize = 16
 
 [Registry]
-Type = "consul"
-Host = "localhost"
+Host = 'localhost'
 Port = 8500
-CheckInterval = "10s"
-FailLimit = 3
-FailWaitTime = 10
+Type = 'consul'
 
 [Logging]
 EnableRemote = false
-File = "./device-virtual.log"
-
-[Writable]
-LogLevel = 'INFO'
+File = ''
 
 [Clients]
   [Clients.Data]
-  Name = "edgex-core-data"
-  Protocol = "http"
-  Host = "localhost"
+  Protocol = 'http'
+  Host = 'localhost'
   Port = 48080
-  Timeout = 5000
 
   [Clients.Metadata]
-  Name = "edgex-core-metadata"
-  Protocol = "http"
-  Host = "localhost"
+  Protocol = 'http'
+  Host = 'localhost'
   Port = 48081
-  Timeout = 5000
 
   [Clients.Logging]
-  Name = "edgex-support-logging"
-  Protocol = "http"
-  Host = "localhost"
+  Protocol = 'http'
+  Host = 'localhost'
   Port = 48061
 
 [Device]
   DataTransform = true
-  InitCmd = ""
-  InitCmdArgs = ""
+  InitCmd = ''
+  InitCmdArgs = ''
   MaxCmdOps = 128
   MaxCmdValueLen = 256
-  RemoveCmd = ""
-  RemoveCmdArgs = ""
-  ProfilesDir = "./res"
+  RemoveCmd = ''
+  RemoveCmdArgs = ''
+  ProfilesDir = './res'
+  UpdateLastConnected = false
 
 # Pre-define Devices
 [[DeviceList]]
-  Name = "Random-Boolean-Device"
-  Profile = "Random-Boolean-Device"
-  Description = "Example of Device Virtual"
-  Labels = [ "device-virtual-example" ]
+  Name = 'Random-Boolean-Device'
+  Profile = 'Random-Boolean-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
   [DeviceList.Protocols]
     [DeviceList.Protocols.other]
-      Address = "device-virtual-bool-01"
-      Port = "300"
+      Address = 'device-virtual-bool-01'
+      Port = '300'
   [[DeviceList.AutoEvents]]
-    Frequency = "10s"
+    Frequency = '10s'
     OnChange = false
-    Resource = "Bool"
+    Resource = 'Bool'
 [[DeviceList]]
-  Name = "Random-Integer-Device"
-  Profile = "Random-Integer-Device"
-  Description = "Example of Device Virtual"
-  Labels = [ "device-virtual-example" ]
+  Name = 'Random-Integer-Device'
+  Profile = 'Random-Integer-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
   [DeviceList.Protocols]
     [DeviceList.Protocols.other]
-      Address = "device-virtual-int-01"
-      Protocol = "300"
+      Address = 'device-virtual-int-01'
+      Protocol = '300'
   [[DeviceList.AutoEvents]]
-    Frequency = "15s"
+    Frequency = '15s'
     OnChange = false
-    Resource = "Int8"
+    Resource = 'Int8'
   [[DeviceList.AutoEvents]]
-    Frequency = "15s"
+    Frequency = '15s'
     OnChange = false
-    Resource = "Int16"
+    Resource = 'Int16'
   [[DeviceList.AutoEvents]]
-    Frequency = "15s"
+    Frequency = '15s'
     OnChange = false
-    Resource = "Int32"
+    Resource = 'Int32'
   [[DeviceList.AutoEvents]]
-    Frequency = "15s"
+    Frequency = '15s'
     OnChange = false
-    Resource = "Int64"
+    Resource = 'Int64'
 [[DeviceList]]
-  Name = "Random-UnsignedInteger-Device"
-  Profile = "Random-UnsignedInteger-Device"
-  Description = "Example of Device Virtual"
-  Labels = [ "device-virtual-example" ]
+  Name = 'Random-UnsignedInteger-Device'
+  Profile = 'Random-UnsignedInteger-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
   [DeviceList.Protocols]
     [DeviceList.Protocols.other]
-      Address = "device-virtual-uint-01"
-      Protocol = "300"
+      Address = 'device-virtual-uint-01'
+      Protocol = '300'
   [[DeviceList.AutoEvents]]
-    Frequency = "20s"
+    Frequency = '20s'
     OnChange = false
-    Resource = "Uint8"
+    Resource = 'Uint8'
   [[DeviceList.AutoEvents]]
-    Frequency = "20s"
+    Frequency = '20s'
     OnChange = false
-    Resource = "Uint16"
+    Resource = 'Uint16'
   [[DeviceList.AutoEvents]]
-    Frequency = "20s"
+    Frequency = '20s'
     OnChange = false
-    Resource = "Uint32"
+    Resource = 'Uint32'
   [[DeviceList.AutoEvents]]
-    Frequency = "20s"
+    Frequency = '20s'
     OnChange = false
-    Resource = "Uint64"
+    Resource = 'Uint64'
 [[DeviceList]]
-  Name = "Random-Float-Device"
-  Profile = "Random-Float-Device"
-  Description = "Example of Device Virtual"
-  Labels = [ "device-virtual-example" ]
+  Name = 'Random-Float-Device'
+  Profile = 'Random-Float-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
   [DeviceList.Protocols]
     [DeviceList.Protocols.other]
-      Address = "device-virtual-float-01"
-      Protocol = "300"
+      Address = 'device-virtual-float-01'
+      Protocol = '300'
   [[DeviceList.AutoEvents]]
-    Frequency = "30s"
+    Frequency = '30s'
     OnChange = false
-    Resource = "Float32"
+    Resource = 'Float32'
   [[DeviceList.AutoEvents]]
-    Frequency = "30s"
+    Frequency = '30s'
     OnChange = false
-    Resource = "Float64"
+    Resource = 'Float64'
 [[DeviceList]]
-  Name = "Random-Binary-Device"
-  Profile = "Random-Binary-Device"
-  Description = "Example of Device Virtual"
-  Labels = [ "device-virtual-example" ]
+  Name = 'Random-Binary-Device'
+  Profile = 'Random-Binary-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
   [DeviceList.Protocols]
     [DeviceList.Protocols.other]
-      Address = "device-virtual-bool-01"
-      Port = "300"
+      Address = 'device-virtual-bool-01'
+      Port = '300'
   [[DeviceList.AutoEvents]]
-    Frequency = "30s"
+    Frequency = '30s'
     OnChange = false
-    Resource = "Binary"
+    Resource = 'Binary'

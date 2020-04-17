@@ -43,4 +43,4 @@ EXPOSE $APP_PORT
 
 COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/cmd /
 
-ENTRYPOINT ["/device-virtual","--profile=docker","--confdir=/res","--registry=consul://edgex-core-consul:8500"]
+ENTRYPOINT ["/device-virtual","--cp=consul.http://edgex-core-consul:8500","--registry","--confdir=/res"]
