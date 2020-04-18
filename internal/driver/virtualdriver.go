@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019 IOTech Ltd
+// Copyright (C) 2019-2020 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -17,8 +17,8 @@ import (
 	"sync"
 	"time"
 
-	sdk "github.com/edgexfoundry/device-sdk-go"
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
+	sdk "github.com/edgexfoundry/device-sdk-go/pkg/service"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/logger"
 	"github.com/edgexfoundry/go-mod-core-contracts/models"
 	_ "modernc.org/ql/driver"
