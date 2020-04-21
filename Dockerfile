@@ -17,7 +17,7 @@ ARG ALPINE_PKG_BASE="build-base git openssh-client"
 ARG ALPINE_PKG_EXTRA=""
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
-  copyright='Copyright (c) 2019: IOTech'
+  copyright='Copyright (c) 2019-2020: IOTech'
 
 # Replicate the APK repository override.
 # If it is no longer necessary to avoid the CDN mirros we should consider dropping this as it is brittle.
@@ -42,5 +42,7 @@ ENV APP_PORT=49990
 EXPOSE $APP_PORT
 
 COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/cmd /
+COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/Attribution.txt /
+COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/LICENSE /
 
 ENTRYPOINT ["/device-virtual","--cp=consul.http://edgex-core-consul:8500","--registry","--confdir=/res"]
