@@ -53,7 +53,7 @@ func (d *VirtualDriver) retrieveVirtualDevice(deviceName string) (vdv *virtualDe
 	return vdv, err
 }
 
-func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsModels.AsyncValues) error {
+func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsModels.AsyncValues, deviceCh chan<- []dsModels.DiscoveredDevice) error {
 	d.lc = lc
 	d.asyncCh = asyncCh
 
