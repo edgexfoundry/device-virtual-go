@@ -76,7 +76,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 	if err != nil {
 		return result, err
 	}
-	err = db.updateResourceValue(result.ValueToString(), data.DeviceName, data.DeviceResourceName, false)
+	err = db.updateResourceValue(result.ValueToString(), deviceName, deviceResourceName, false)
 	return result, err
 }
 
