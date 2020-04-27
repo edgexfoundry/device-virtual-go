@@ -63,7 +63,7 @@ func (db *db) query(sqlStatement string, args ...interface{}) (*sql.Rows, error)
 	if db.connection == nil {
 		return nil, fmt.Errorf("Lost DB connection, forgot to openDb()? ")
 	}
-	return db.connection.Query(sqlStatement, args...)
+	return db.transaction.Query(sqlStatement, args...)
 }
 
 func (db *db) exec(sqlStatement string, args ...interface{}) error {
@@ -101,6 +101,8 @@ func (db *db) closeDb() error {
 }
 
 func (db *db) getVirtualResourceData(deviceName, deviceResourceName string) (bool, string, string, error) {
+	db.startTransaction()
+	defer db.commit()
 	rows, err := db.query(SqlSelect, deviceName, deviceResourceName)
 	if err != nil {
 		return false, "", "", err

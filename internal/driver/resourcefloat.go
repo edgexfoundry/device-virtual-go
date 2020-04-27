@@ -58,7 +58,7 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 	if err != nil {
 		return result, err
 	}
-	err = db.updateResourceValue(strconv.FormatFloat(newValueFloat, 'e', -1, bitSize), data.DeviceName, data.DeviceResourceName, false)
+	err = db.updateResourceValue(strconv.FormatFloat(newValueFloat, 'e', -1, bitSize), deviceName, deviceResourceName, false)
 	return result, err
 }
 
