@@ -141,7 +141,7 @@ File = ''
     [DeviceList.Protocols.other]
       Address = 'device-virtual-bool-01'
       Port = '300'
-  [[DeviceList.AutoEvents]]
-    Frequency = '30s'
-    OnChange = false
-    Resource = 'Binary'
+#  [[DeviceList.AutoEvents]]
+#    Frequency = '30s'
+#    OnChange = false
+#    Resource = 'Binary'
