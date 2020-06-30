@@ -38,11 +38,14 @@ For now, Virtual Device Service contains 4 pre-defined devices as random value g
 * [Random-UnsignedInteger-Device](https://github.com/edgexfoundry/device-virtual-go/blob/master/cmd/res/device.virtual.uint.yaml)
 * [Random-Float-Device](https://github.com/edgexfoundry/device-virtual-go/blob/master/cmd/res/device.virtual.float.yaml)
 * [Random-Binary-Device](https://github.com/edgexfoundry/device-virtual-go/blob/master/cmd/res/device.virtual.binary.yaml)
+
 Restricted:
 1. To control the randomization of device resource values, it has to add additional device resources with the prefix
 "EnableRandomization_" for each device resource. (Need to do the same for device commands and core commands)
 Please find the above default device profiles for example.
 2. According to the implementation of REST controller in Device SDK, binary device resource is only applicable to GET command for now.
+In addition, due to [issue-115](https://github.com/edgexfoundry/device-virtual-go/issues/115), device-virtual now doesn't store binary 
+value in ql DB and the generation of binary values is always randomized.
 
 Use Core-Command Service APIs to find executable commands information:
 * http://[host]:48082/api/v1/device/name/Random-Boolean-Device

@@ -1,7 +1,6 @@
 package driver
 
 import (
-	"encoding/hex"
 	"fmt"
 	"math/rand"
 	"time"
@@ -11,34 +10,17 @@ import (
 
 type resourceBinary struct{}
 
-func (rb *resourceBinary) value(db *db, deviceName, deviceResourceName string) (*dsModels.CommandValue, error) {
+func (rb *resourceBinary) value(deviceResourceName string) (*dsModels.CommandValue, error) {
 	result := &dsModels.CommandValue{}
 
-	enableRandomization, currentValueS, _, err := db.getVirtualResourceData(deviceName, deviceResourceName)
-	if err != nil {
-		return result, err
-	}
+	newValueB := make([]byte, dsModels.MaxBinaryBytes/1000)
 
-	newValueB := make([]byte, dsModels.MaxBinaryBytes/2)
-	var newValueS string
+	rand.Seed(time.Now().UnixNano())
+	rand.Read(newValueB)
 
-	if enableRandomization {
-		rand.Seed(time.Now().UnixNano())
-		rand.Read(newValueB)
-		newValueS = hex.EncodeToString(newValueB)
-	} else {
-		newValueB, err = hex.DecodeString(currentValueS)
-		if err != nil {
-			return result, err
-		} else {
-			newValueS = currentValueS
-		}
-	}
 	now := time.Now().UnixNano()
+	var err error
 	if result, err = dsModels.NewBinaryValue(deviceResourceName, now, newValueB); err != nil {
-		return result, err
-	}
-	if err := db.updateResourceValue(newValueS, deviceName, deviceResourceName, false); err != nil {
 		return result, err
 	}
 

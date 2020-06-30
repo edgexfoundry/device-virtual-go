@@ -139,7 +139,7 @@ File = ''
   Labels = [ 'device-virtual-example' ]
   [DeviceList.Protocols]
     [DeviceList.Protocols.other]
-      Address = 'device-virtual-bool-01'
+      Address = 'device-virtual-binary-01'
       Port = '300'
 #  [[DeviceList.AutoEvents]]
 #    Frequency = '30s'
