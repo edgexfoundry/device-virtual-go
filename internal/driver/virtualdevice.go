@@ -48,7 +48,7 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, typeName, minimum, 
 	case dsModels.Float32, dsModels.Float64:
 		return d.resourceFloat.value(db, deviceName, deviceResourceName, minimum, maximum)
 	case dsModels.Binary:
-		return d.resourceBinary.value(db, deviceName, deviceResourceName)
+		return d.resourceBinary.value(deviceResourceName)
 	default:
 		return result, fmt.Errorf("virtualDevice.read: wrong read type: %s", deviceResourceName)
 	}
