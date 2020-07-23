@@ -10,7 +10,6 @@ package driver
 
 import (
 	"fmt"
-	"os"
 	"reflect"
 	"sync"
 
@@ -55,14 +54,12 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 	d.lc = lc
 	d.asyncCh = asyncCh
 
-	if _, err := os.Stat(qlDatabaseDir); os.IsNotExist(err) {
-		if err := os.Mkdir(qlDatabaseDir, os.ModeDir); err != nil {
-			d.lc.Info(fmt.Sprintf("mkdir failed: %v", err))
-			return err
-		}
-	}
-
 	d.db = getDb()
+
+	if err := d.db.openDb(); err != nil {
+		d.lc.Info(fmt.Sprintf("Create db connection failed: %v", err))
+		return err
+	}
 
 	if err := initVirtualResourceTable(d); err != nil {
 		return fmt.Errorf("initial virtual resource table failed: %v", err)
@@ -93,17 +90,6 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 
 	res = make([]*dsModels.CommandValue, len(reqs))
 
-	if err := d.db.openDb(); err != nil {
-		d.lc.Info(fmt.Sprintf("Create db connection failed: %v", err))
-		return nil, err
-	}
-	defer func() {
-		if err := d.db.closeDb(); err != nil {
-			d.lc.Info(fmt.Sprintf("Close db failed: %v", err))
-			return
-		}
-	}()
-
 	for i, req := range reqs {
 		if dr, ok := sdkService.DeviceResource(deviceName, req.DeviceResourceName, ""); ok {
 			if v, err := vd.read(deviceName, req.DeviceResourceName, dr.Properties.Value.Type, dr.Properties.Value.Minimum, dr.Properties.Value.Maximum, d.db); err != nil {
@@ -131,17 +117,6 @@ func (d *VirtualDriver) HandleWriteCommands(deviceName string, protocols map[str
 		return err
 	}
 
-	if err := d.db.openDb(); err != nil {
-		d.lc.Info(fmt.Sprintf("Create db connection failed: %v", err))
-		return err
-	}
-	defer func() {
-		if err := d.db.closeDb(); err != nil {
-			d.lc.Info(fmt.Sprintf("Close db failed: %v", err))
-			return
-		}
-	}()
-
 	for _, param := range params {
 		if err := vd.write(param, deviceName, d.db); err != nil {
 			return err
@@ -152,6 +127,9 @@ func (d *VirtualDriver) HandleWriteCommands(deviceName string, protocols map[str
 
 func (d *VirtualDriver) Stop(force bool) error {
 	d.lc.Info("VirtualDriver.Stop: device-virtual driver is stopping...")
+	if err := d.db.closeDb(); err != nil {
+		d.lc.Error(fmt.Sprintf("ql DB closed ungracefully, error: %e", err))
+	}
 	return nil
 }
 
@@ -178,17 +156,6 @@ func (d *VirtualDriver) RemoveDevice(deviceName string, protocols map[string]mod
 }
 
 func initVirtualResourceTable(driver *VirtualDriver) error {
-	if err := driver.db.openDb(); err != nil {
-		driver.lc.Info(fmt.Sprintf("Create db connection failed: %v", err))
-		return err
-	}
-	defer func() {
-		if err := driver.db.closeDb(); err != nil {
-			driver.lc.Info(fmt.Sprintf("Close db failed: %v", err))
-			return
-		}
-	}()
-
 	if err := driver.db.exec(SqlDropTable); err != nil {
 		driver.lc.Info(fmt.Sprintf("Drop table failed: %v", err))
 		return err
@@ -206,16 +173,6 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 	driver.locker.Lock()
 	defer func() {
 		driver.locker.Unlock()
-	}()
-
-	if err := driver.db.openDb(); err != nil {
-		driver.lc.Error(fmt.Sprintf("Create db connection failed: %v", err))
-		return err
-	}
-	defer func() {
-		if err := driver.db.closeDb(); err != nil {
-			driver.lc.Error(fmt.Sprintf("Close db failed: %v", err))
-		}
 	}()
 
 	service := sdk.RunningService()
@@ -257,16 +214,6 @@ func deleteVirtualResources(driver *VirtualDriver, deviceName string) error {
 	driver.locker.Lock()
 	defer func() {
 		driver.locker.Unlock()
-	}()
-
-	if err := driver.db.openDb(); err != nil {
-		driver.lc.Error(fmt.Sprintf("Create db connection failed: %v", err))
-		return err
-	}
-	defer func() {
-		if err := driver.db.closeDb(); err != nil {
-			driver.lc.Error(fmt.Sprintf("Close db failed: %v", err))
-		}
 	}()
 
 	if err := driver.db.exec(SqlDelete, deviceName); err != nil {

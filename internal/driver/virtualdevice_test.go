@@ -3,7 +3,6 @@ package driver
 import (
 	"fmt"
 	"os"
-	"strconv"
 	"testing"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
@@ -34,29 +33,16 @@ const (
 	deviceCommandNameUint64  = "Uint64"
 	deviceCommandNameFloat32 = "Float32"
 	deviceCommandNameFloat64 = "Float64"
-	enableRandomizationTrue  = "true"
+	enableRandomizationTrue  = true
 	rounds                   = 10
 )
 
-func init() {
-	if _, err := os.Stat(qlDatabaseDir); os.IsNotExist(err) {
-		if err := os.Mkdir(qlDatabaseDir, os.ModeDir); err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-	}
-
+func prepareDB() *db {
 	db := getDb()
 	if err := db.openDb(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	defer func() {
-		if err := db.closeDb(); err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-	}()
 
 	if err := db.exec(SqlDropTable); err != nil {
 		fmt.Println(err)
@@ -68,7 +54,7 @@ func init() {
 		os.Exit(1)
 	}
 
-	ds := [][]string{
+	ds := [][]interface{}{
 		{deviceName, deviceCommandNameBool, deviceResourceBool, enableRandomizationTrue, typeBool, "true"},
 		{deviceName, deviceCommandNameInt8, deviceResourceInt8, enableRandomizationTrue, typeInt8, "0"},
 		{deviceName, deviceCommandNameInt16, deviceResourceInt16, enableRandomizationTrue, typeInt16, "0"},
@@ -82,19 +68,16 @@ func init() {
 		{deviceName, deviceCommandNameFloat64, deviceResourceFloat64, enableRandomizationTrue, typeFloat64, "0"},
 	}
 	for _, d := range ds {
-		b, _ := strconv.ParseBool(d[3])
-		if err := db.exec(SqlInsert, d[0], d[1], d[2], b, d[4], d[5]); err != nil {
+		if err := db.exec(SqlInsert, d...); err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
 	}
+	return db
 }
 
 func TestValue_Bool(t *testing.T) {
-	db := getDb()
-	if err := db.openDb(); err != nil {
-		t.Fatal(err)
-	}
+	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
 			t.Fatal(err)
@@ -171,7 +154,6 @@ func TestValueFloatx(t *testing.T) {
 }
 
 func TestValueBinary(t *testing.T) {
-
 	vd := newVirtualDevice()
 	v1, err := vd.read(deviceName, deviceResourceBinary, typeBinary, "", "", nil)
 	if err != nil {
@@ -186,10 +168,7 @@ func TestValueBinary(t *testing.T) {
 }
 
 func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
-	db := getDb()
-	if err := db.openDb(); err != nil {
-		t.Fatal(err)
-	}
+	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
 			t.Fatal(err)
@@ -259,10 +238,7 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 }
 
 func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
-	db := getDb()
-	if err := db.openDb(); err != nil {
-		t.Fatal(err)
-	}
+	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
 			t.Fatal(err)
@@ -328,10 +304,7 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 }
 
 func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
-	db := getDb()
-	if err := db.openDb(); err != nil {
-		t.Fatal(err)
-	}
+	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
 			t.Fatal(err)
