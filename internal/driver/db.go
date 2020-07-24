@@ -3,14 +3,12 @@ package driver
 import (
 	"database/sql"
 	"fmt"
-	"os"
 	"strconv"
 )
 
 const (
 	qlDatabaseDriverName = "ql2"
-	qlDatabaseDir        = "db"
-	qlDatabaseName       = "/deviceVirtual.db"
+	qlDatabaseName       = "memory://deviceVirtual.db"
 )
 
 var data struct {
@@ -33,15 +31,13 @@ type db struct {
 func getDb() *db {
 	return &db{
 		driverName: qlDatabaseDriverName,
-		path:       qlDatabaseDir,
 		name:       qlDatabaseName,
 	}
 }
 
 func (db *db) openDb() error {
-	d, err := sql.Open(db.driverName, db.path+db.name)
+	d, err := sql.Open(db.driverName, db.name)
 	if err == nil {
-		err = os.Chmod(db.path, 0777)
 		db.connection = d
 	}
 	return err
