@@ -45,4 +45,5 @@ COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/cmd /
 COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/Attribution.txt /
 COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/LICENSE /
 
-ENTRYPOINT ["/device-virtual","--cp=consul.http://edgex-core-consul:8500","--registry","--confdir=/res"]
+ENTRYPOINT ["/device-virtual"]
+CMD ["--cp=consul.http://edgex-core-consul:8500", "--registry", "--confdir=/res"]
