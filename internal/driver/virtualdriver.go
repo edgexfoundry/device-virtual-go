@@ -31,7 +31,7 @@ type VirtualDriver struct {
 
 var once sync.Once
 var driver *VirtualDriver
-var sdkService sdk.Service
+var sdkService sdk.DeviceService
 
 func NewVirtualDeviceDriver() dsModels.ProtocolDriver {
 	once.Do(func() {
