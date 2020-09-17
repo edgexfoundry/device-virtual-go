@@ -137,3 +137,6 @@ https://github.com/fxamacker/cbor/blob/master/LICENSE
 
 x448/float16 (MIT) https://github.com/x448/float16
 https://github.com/x448/float16/blob/master/LICENSE
+
+golang/snappy (BSD-3) https://github.com/golang/snappy
+https://github.com/golang/snappy/blob/master/LICENSE
