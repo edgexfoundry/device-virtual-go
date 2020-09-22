@@ -27,7 +27,7 @@ deviceResources:
   description: "Generate random float32 value"
   properties:
     value:
-      { type: "Float32", readWrite: "R", defaultValue: "0", floatEncoding: "Base64" }
+      { type: "Float32", readWrite: "RW", defaultValue: "0", floatEncoding: "Base64" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random float32 value" }
 -
@@ -35,7 +35,7 @@ deviceResources:
   description: "Generate random float64 value"
   properties:
     value:
-      { type: "Float64", readWrite: "R", defaultValue: "0", floatEncoding: "eNotation" }
+      { type: "Float64", readWrite: "RW", defaultValue: "0", floatEncoding: "eNotation" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random float64 value" }
 

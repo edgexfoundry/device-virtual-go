@@ -43,7 +43,7 @@ deviceResources:
   description: "Generate random int8 value"
   properties:
     value:
-      { type: "Int8", readWrite: "R", defaultValue: "0" }
+      { type: "Int8", readWrite: "RW", defaultValue: "0" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random int8 value" }
 -
@@ -51,7 +51,7 @@ deviceResources:
   description: "Generate random int16 value"
   properties:
     value:
-      { type: "Int16", readWrite: "R", defaultValue: "0" }
+      { type: "Int16", readWrite: "RW", defaultValue: "0" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random int16 value" }
 -
@@ -59,7 +59,7 @@ deviceResources:
   description: "Generate random int32 value"
   properties:
     value:
-      { type: "Int32", readWrite: "R", defaultValue: "0" }
+      { type: "Int32", readWrite: "RW", defaultValue: "0" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random int32 value" }
 -
@@ -67,7 +67,7 @@ deviceResources:
   description: "Generate random int64 value"
   properties:
     value:
-      { type: "Int64", readWrite: "R", defaultValue: "0" }
+      { type: "Int64", readWrite: "RW", defaultValue: "0" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random int64 value" }
 
