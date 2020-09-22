@@ -19,7 +19,7 @@ deviceResources:
   description: "Generate random boolean value"
   properties:
     value:
-      { type: "Bool", readWrite: "R", defaultValue: "true" }
+      { type: "Bool", readWrite: "RW", defaultValue: "true" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random bool value" }
 
