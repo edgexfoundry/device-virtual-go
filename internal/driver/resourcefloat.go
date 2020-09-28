@@ -1,3 +1,9 @@
+// -*- Mode: Go; indent-tabs-mode: t -*-
+//
+// Copyright (C) 2019-2020 IOTech Ltd
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package driver
 
 import (
@@ -8,6 +14,7 @@ import (
 	"time"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
+	"github.com/edgexfoundry/go-mod-core-contracts/models"
 )
 
 type resourceFloat struct{}
@@ -29,7 +36,7 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 	min, max, err := parseFloatMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
-	case typeFloat32:
+	case models.ValueTypeFloat32:
 		bitSize = 32
 		if enableRandomization {
 			if err == nil {
@@ -41,7 +48,7 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 			return result, err
 		}
 		result, err = dsModels.NewFloat32Value(deviceResourceName, now, float32(newValueFloat))
-	case typeFloat64:
+	case models.ValueTypeFloat64:
 		bitSize = 64
 		if enableRandomization {
 			if err == nil {
@@ -60,47 +67,6 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 	}
 	err = db.updateResourceValue(strconv.FormatFloat(newValueFloat, 'e', -1, bitSize), deviceName, deviceResourceName, false)
 	return result, err
-}
-
-func randomFloat(min, max float64) float64 {
-	rand.Seed(time.Now().UnixNano())
-	if max > 0 && min < 0 {
-		var negativePart float64
-		var positivePart float64
-		negativePart = rand.Float64() * min
-		positivePart = rand.Float64() * max
-		return negativePart + positivePart
-	} else {
-		return rand.Float64()*(max-min) + min
-	}
-}
-
-func parseStrToFloat(str string, bitSize int) (float64, error) {
-	if f, err := strconv.ParseFloat(str, bitSize); err != nil {
-		return f, err
-	} else {
-		return f, nil
-	}
-}
-
-func parseFloatMinimumMaximum(minimum, maximum, dataType string) (float64, float64, error) {
-	var err, err1, err2 error
-	var min, max float64
-	switch dataType {
-	case typeFloat32:
-		min, err1 = parseStrToFloat(minimum, 32)
-		max, err2 = parseStrToFloat(maximum, 32)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	case typeFloat64:
-		min, err1 = parseStrToFloat(minimum, 64)
-		max, err2 = parseStrToFloat(maximum, 64)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	}
-	return min, max, err
 }
 
 func (rf *resourceFloat) write(param *dsModels.CommandValue, deviceName string, db *db) error {

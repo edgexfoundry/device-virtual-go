@@ -22,6 +22,22 @@ deviceResources:
       { type: "Bool", readWrite: "RW", defaultValue: "true" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random bool value" }
+-
+  name: "EnableRandomization_BoolArray"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "BoolArray"
+  description: "Generate random boolean array value"
+  properties:
+    value:
+      { type: "BoolArray", readWrite: "RW", defaultValue: "[true]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random bool array value" }
 
 deviceCommands:
 -
@@ -31,6 +47,13 @@ deviceCommands:
   set:
     - { operation: "set", deviceResource: "Bool" }
     - { operation: "set", deviceResource: "EnableRandomization_Bool", parameter: "false" }
+-
+  name: "BoolArray"
+  get:
+    - { operation: "get", deviceResource: "BoolArray" }
+  set:
+    - { operation: "set", deviceResource: "BoolArray" }
+    - { operation: "set", deviceResource: "EnableRandomization_BoolArray", parameter: "false" }
     
 coreCommands:
 -
@@ -49,6 +72,29 @@ coreCommands:
   put:
     path: "/api/v1/device/{deviceId}/Bool"
     parameterNames: ["Bool","EnableRandomization_Bool"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "BoolArray"
+  get:
+    path: "/api/v1/device/{deviceId}/BoolArray"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["BoolArray"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/BoolArray"
+    parameterNames: ["BoolArray","EnableRandomization_BoolArray"]
     responses:
       -
         code: "200"

@@ -70,6 +70,70 @@ deviceResources:
       { type: "Int64", readWrite: "RW", defaultValue: "0" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random int64 value" }
+-
+  name: "EnableRandomization_Int8Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "EnableRandomization_Int16Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "EnableRandomization_Int32Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "EnableRandomization_Int64Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "Int8Array"
+  description: "Generate random int8 array value"
+  properties:
+    value:
+      { type: "Int8Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random int8 array value" }
+-
+  name: "Int16Array"
+  description: "Generate random int16 array value"
+  properties:
+    value:
+      { type: "Int16Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random int16 array value" }
+-
+  name: "Int32Array"
+  description: "Generate random int32 array value"
+  properties:
+    value:
+      { type: "Int32Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random int32 array value" }
+-
+  name: "Int64Array"
+  description: "Generate random int64 array value"
+  properties:
+    value:
+      { type: "Int64Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random int64 array value" }
 
 deviceCommands:
 -
@@ -100,6 +164,34 @@ deviceCommands:
   set:
     - { operation: "set", deviceResource: "Int64" }
     - { operation: "set", deviceResource: "EnableRandomization_Int64", parameter: "false" }
+-
+  name: "Int8Array"
+  get:
+    - { operation: "get", deviceResource: "Int8Array" }
+  set:
+    - { operation: "set", deviceResource: "Int8Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Int8Array", parameter: "false" }
+-
+  name: "Int16Array"
+  get:
+    - { operation: "get", deviceResource: "Int16Array" }
+  set:
+    - { operation: "set", deviceResource: "Int16Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Int16Array", parameter: "false" }
+-
+  name: "Int32Array"
+  get:
+    - { operation: "get", deviceResource: "Int32Array" }
+  set:
+    - { operation: "set", deviceResource: "Int32Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Int32Array", parameter: "false" }
+-
+  name: "Int64Array"
+  get:
+    - { operation: "get", deviceResource: "Int64Array" }
+  set:
+    - { operation: "set", deviceResource: "Int64Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Int64Array", parameter: "false" }
 
 coreCommands:
 -
@@ -187,6 +279,98 @@ coreCommands:
   put:
     path: "/api/v1/device/{deviceId}/Int64"
     parameterNames: ["Int64","EnableRandomization_Int64"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Int8Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Int8Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Int8Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Int8Array"
+    parameterNames: ["Int8Array","EnableRandomization_Int8Array"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Int16Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Int16Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Int16Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Int16Array"
+    parameterNames: ["Int16Array","EnableRandomization_Int16Array"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Int32Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Int32Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Int32Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Int32Array"
+    parameterNames: ["Int32Array","EnableRandomization_Int32Array"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Int64Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Int64Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Int64Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Int64Array"
+    parameterNames: ["Int64Array","EnableRandomization_Int64Array"]
     responses:
       -
         code: "200"

@@ -38,6 +38,38 @@ deviceResources:
       { type: "Float64", readWrite: "RW", defaultValue: "0", floatEncoding: "eNotation" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random float64 value" }
+-
+  name: "EnableRandomization_Float32Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "EnableRandomization_Float64Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "Float32Array"
+  description: "Generate random float32 array value"
+  properties:
+    value:
+      { type: "Float32Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random float32 array value" }
+-
+  name: "Float64Array"
+  description: "Generate random float64 array value"
+  properties:
+    value:
+      { type: "Float64Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random float64 array value" }
 
 deviceCommands:
 -
@@ -54,6 +86,20 @@ deviceCommands:
   set:
     - { operation: "set", deviceResource: "Float64" }
     - { operation: "set", deviceResource: "EnableRandomization_Float64", parameter: "false" }
+-
+  name: "Float32Array"
+  get:
+    - { operation: "get", deviceResource: "Float32Array" }
+  set:
+    - { operation: "set", deviceResource: "Float32Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Float32Array", parameter: "false" }
+-
+  name: "Float64Array"
+  get:
+    - { operation: "get", deviceResource: "Float64Array" }
+  set:
+    - { operation: "set", deviceResource: "Float64Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Float64Array", parameter: "false" }
 
 coreCommands:
 -
@@ -95,6 +141,52 @@ coreCommands:
   put:
     path: "/api/v1/device/{deviceId}/Float64"
     parameterNames: ["Float64","EnableRandomization_Float64"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Float32Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Float32Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Float32Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Float32Array"
+    parameterNames: ["Float32Array","EnableRandomization_Float32Array"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Float64Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Float64Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Float64Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Float64Array"
+    parameterNames: ["Float64Array","EnableRandomization_Float64Array"]
     responses:
       -
         code: "200"
