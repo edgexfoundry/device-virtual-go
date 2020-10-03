@@ -1,3 +1,9 @@
+// -*- Mode: Go; indent-tabs-mode: t -*-
+//
+// Copyright (C) 2019-2020 IOTech Ltd
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package driver
 
 import (
@@ -8,6 +14,7 @@ import (
 	"time"
 
 	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
+	"github.com/edgexfoundry/go-mod-core-contracts/models"
 )
 
 type resourceUint struct{}
@@ -27,7 +34,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 	min, max, err := parseUintMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
-	case typeUint8:
+	case models.ValueTypeUint8:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -38,7 +45,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 			return result, err
 		}
 		result, err = dsModels.NewUint8Value(deviceResourceName, now, uint8(newValueUint))
-	case typeUint16:
+	case models.ValueTypeUint16:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -49,7 +56,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 			return result, err
 		}
 		result, err = dsModels.NewUint16Value(deviceResourceName, now, uint16(newValueUint))
-	case typeUint32:
+	case models.ValueTypeUint32:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -60,7 +67,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 			return result, err
 		}
 		result, err = dsModels.NewUint32Value(deviceResourceName, now, uint32(newValueUint))
-	case typeUint64:
+	case models.ValueTypeUint64:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -78,59 +85,6 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 	}
 	err = db.updateResourceValue(result.ValueToString(), deviceName, deviceResourceName, false)
 	return result, err
-}
-
-func randomUint(min, max uint64) uint64 {
-	rand.Seed(time.Now().UnixNano())
-	if max-min < uint64(math.MaxInt64) {
-		return uint64(rand.Int63n(int64(max-min+1))) + min
-	}
-	x := rand.Uint64()
-	for x > max-min {
-		x = rand.Uint64()
-	}
-	return x + min
-}
-
-func parseStrToUint(str string, bitSize int) (uint64, error) {
-	if i, err := strconv.ParseUint(str, 10, bitSize); err != nil {
-		return i, err
-	} else {
-		return i, nil
-	}
-}
-
-func parseUintMinimumMaximum(minimum, maximum, dataType string) (uint64, uint64, error) {
-	var err, err1, err2 error
-	var min, max uint64
-
-	switch dataType {
-	case typeUint8:
-		min, err1 = parseStrToUint(minimum, 8)
-		max, err2 = parseStrToUint(maximum, 8)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	case typeUint16:
-		min, err1 = parseStrToUint(minimum, 16)
-		max, err2 = parseStrToUint(maximum, 16)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	case typeUint32:
-		min, err1 = parseStrToUint(minimum, 32)
-		max, err2 = parseStrToUint(maximum, 32)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	case typeUint64:
-		min, err1 = parseStrToUint(minimum, 64)
-		max, err2 = parseStrToUint(maximum, 64)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	}
-	return min, max, err
 }
 
 func (ru *resourceUint) write(param *dsModels.CommandValue, deviceName string, db *db) error {

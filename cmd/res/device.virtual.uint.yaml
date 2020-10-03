@@ -70,6 +70,70 @@ deviceResources:
       { type: "Uint64", readWrite: "RW", defaultValue: "0" }
     units:
       { type: "String", readWrite: "R", defaultValue: "random uint64 value" }
+-
+  name: "EnableRandomization_Uint8Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "EnableRandomization_Uint16Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "EnableRandomization_Uint32Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "EnableRandomization_Uint64Array"
+  description: "used to decide whether to re-generate a random value"
+  properties:
+    value:
+      { type: "Bool", readWrite: "W", defaultValue: "true" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "Random" }
+-
+  name: "Uint8Array"
+  description: "Generate random uint8 array value"
+  properties:
+    value:
+      { type: "Uint8Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random uint8 array value" }
+-
+  name: "Uint16Array"
+  description: "Generate random uint16 array value"
+  properties:
+    value:
+      { type: "Uint16Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random uint16 array value" }
+-
+  name: "Uint32Array"
+  description: "Generate random uint32 array value"
+  properties:
+    value:
+      { type: "Uint32Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random uint32 array value" }
+-
+  name: "Uint64Array"
+  description: "Generate random uint64 array value"
+  properties:
+    value:
+      { type: "Uint64Array", readWrite: "RW", defaultValue: "[0]" }
+    units:
+      { type: "String", readWrite: "R", defaultValue: "random uint64 array value" }
 
 deviceCommands:
 -
@@ -100,6 +164,34 @@ deviceCommands:
   set:
     - { operation: "set", deviceResource: "Uint64" }
     - { operation: "set", deviceResource: "EnableRandomization_Uint64", parameter: "false" }
+-
+  name: "Uint8Array"
+  get:
+    - { operation: "get", deviceResource: "Uint8Array" }
+  set:
+    - { operation: "set", deviceResource: "Uint8Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Uint8Array", parameter: "false" }
+-
+  name: "Uint16Array"
+  get:
+    - { operation: "get", deviceResource: "Uint16Array" }
+  set:
+    - { operation: "set", deviceResource: "Uint16Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Uint16Array", parameter: "false" }
+-
+  name: "Uint32Array"
+  get:
+    - { operation: "get", deviceResource: "Uint32Array" }
+  set:
+    - { operation: "set", deviceResource: "Uint32Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Uint32Array", parameter: "false" }
+-
+  name: "Uint64Array"
+  get:
+    - { operation: "get", deviceResource: "Uint64Array" }
+  set:
+    - { operation: "set", deviceResource: "Uint64Array" }
+    - { operation: "set", deviceResource: "EnableRandomization_Uint64Array", parameter: "false" }
 
 coreCommands:
 -
@@ -187,6 +279,98 @@ coreCommands:
   put:
     path: "/api/v1/device/{deviceId}/Uint64"
     parameterNames: ["Uint64","EnableRandomization_Uint64"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Uint8Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Uint8Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Uint8Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Uint8Array"
+    parameterNames: ["Uint8Array","EnableRandomization_Uint8Array"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Uint16Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Uint16Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Uint16Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Uint16Array"
+    parameterNames: ["Uint16Array","EnableRandomization_Uint16Array"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Uint32Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Uint32Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Uint32Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Uint32Array"
+    parameterNames: ["Uint32Array","EnableRandomization_Uint32Array"]
+    responses:
+      -
+        code: "200"
+        description: ""
+      -
+        code: "503"
+        description: "service unavailable"
+-
+  name: "Uint64Array"
+  get:
+    path: "/api/v1/device/{deviceId}/Uint64Array"
+    responses:
+      -
+        code: "200"
+        description: ""
+        expectedValues: ["Uint64Array"]
+      -
+        code: "503"
+        description: "service unavailable"
+        expectedValues: []
+  put:
+    path: "/api/v1/device/{deviceId}/Uint64Array"
+    parameterNames: ["Uint64Array","EnableRandomization_Uint64Array"]
     responses:
       -
         code: "200"
