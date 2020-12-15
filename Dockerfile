@@ -1,7 +1,10 @@
+#
 # Copyright (c) 2020 IOTech Ltd
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
+#
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
@@ -9,8 +12,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-ARG BASE=golang:1.15-alpine
+ARG BASE=golang:1.15-alpine3.12
 FROM ${BASE} AS builder
 
 ARG ALPINE_PKG_BASE="build-base git openssh-client"
@@ -36,7 +40,7 @@ COPY . .
 ARG MAKE='make build'
 RUN $MAKE
 
-FROM alpine
+FROM alpine:3.12
 
 ENV APP_PORT=49990
 EXPOSE $APP_PORT
