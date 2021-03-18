@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2020 IOTech Ltd
+// Copyright (C) 2019-2021 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -13,13 +13,14 @@ import (
 	"strings"
 	"time"
 
-	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
+	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
 )
 
 type resourceBool struct{}
 
-func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*dsModels.CommandValue, error) {
-	result := &dsModels.CommandValue{}
+func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*models.CommandValue, error) {
+	result := &models.CommandValue{}
 
 	enableRandomization, currentValue, _, err := db.getVirtualResourceData(deviceName, deviceResourceName)
 	if err != nil {
@@ -35,8 +36,8 @@ func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*d
 			return result, err
 		}
 	}
-	now := time.Now().UnixNano()
-	if result, err = dsModels.NewBoolValue(deviceResourceName, now, newValueBool); err != nil {
+	result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeBool, newValueBool)
+	if err != nil {
 		return result, err
 	}
 	if err := db.updateResourceValue(result.ValueToString(), deviceName, deviceResourceName, false); err != nil {
@@ -46,7 +47,7 @@ func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*d
 	return result, nil
 }
 
-func (rb *resourceBool) write(param *dsModels.CommandValue, deviceName string, db *db) error {
+func (rb *resourceBool) write(param *models.CommandValue, deviceName string, db *db) error {
 	enableRandomizationPrefix := "EnableRandomization_"
 	if strings.Contains(param.DeviceResourceName, enableRandomizationPrefix) {
 		if v, err := param.BoolValue(); err == nil {

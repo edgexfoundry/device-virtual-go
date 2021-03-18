@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2020 IOTech Ltd
+// Copyright (C) 2019-2021 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -13,15 +13,15 @@ import (
 	"strconv"
 	"time"
 
-	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/models"
+	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
 )
 
 type resourceUint struct{}
 
 func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
-	maximum string) (*dsModels.CommandValue, error) {
-	result := &dsModels.CommandValue{}
+	maximum string) (*models.CommandValue, error) {
+	result := &models.CommandValue{}
 
 	enableRandomization, currentValue, dataType, err := db.getVirtualResourceData(deviceName, deviceResourceName)
 	if err != nil {
@@ -29,12 +29,11 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 	}
 
 	var newValueUint uint64
-	now := time.Now().UnixNano()
 	rand.Seed(time.Now().UnixNano())
 	min, max, err := parseUintMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
-	case models.ValueTypeUint8:
+	case v2.ValueTypeUint8:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -44,8 +43,8 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 8); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewUint8Value(deviceResourceName, now, uint8(newValueUint))
-	case models.ValueTypeUint16:
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeUint8, uint8(newValueUint))
+	case v2.ValueTypeUint16:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -55,8 +54,8 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 16); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewUint16Value(deviceResourceName, now, uint16(newValueUint))
-	case models.ValueTypeUint32:
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeUint16, uint16(newValueUint))
+	case v2.ValueTypeUint32:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -66,8 +65,8 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 32); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewUint32Value(deviceResourceName, now, uint32(newValueUint))
-	case models.ValueTypeUint64:
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeUint32, uint32(newValueUint))
+	case v2.ValueTypeUint64:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -77,7 +76,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 64); err != nil {
 			return result, err
 		}
-		result, err = dsModels.NewUint64Value(deviceResourceName, now, newValueUint)
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeUint64, newValueUint)
 	}
 
 	if err != nil {
@@ -87,27 +86,27 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 	return result, err
 }
 
-func (ru *resourceUint) write(param *dsModels.CommandValue, deviceName string, db *db) error {
+func (ru *resourceUint) write(param *models.CommandValue, deviceName string, db *db) error {
 	switch param.Type {
-	case dsModels.Uint8:
+	case v2.ValueTypeUint8:
 		if _, err := param.Uint8Value(); err == nil {
 			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
-	case dsModels.Uint16:
+	case v2.ValueTypeUint16:
 		if _, err := param.Uint16Value(); err == nil {
 			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
-	case dsModels.Uint32:
+	case v2.ValueTypeUint32:
 		if _, err := param.Uint32Value(); err == nil {
 			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
-	case dsModels.Uint64:
+	case v2.ValueTypeUint64:
 		if _, err := param.Uint64Value(); err == nil {
 			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {

@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2020 IOTech Ltd
+// Copyright (C) 2020-2021 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -14,30 +14,29 @@ import (
 	"strings"
 	"time"
 
-	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/models"
+	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
 )
 
 type resourceIntArray struct{}
 
 func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimum,
-	maximum string) (*dsModels.CommandValue, error) {
+	maximum string) (*models.CommandValue, error) {
 
-	result := &dsModels.CommandValue{}
+	result := &models.CommandValue{}
 
 	enableRandomization, currentValue, dataType, err := db.getVirtualResourceData(deviceName, deviceResourceName)
 	if err != nil {
 		return result, err
 	}
 
-	now := time.Now().UnixNano()
 	rand.Seed(time.Now().UnixNano())
 	signHelper := []int64{-1, 1}
 	var newArrayIntValue []int64
 	min, max, err := parseIntMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
-	case models.ValueTypeInt8Array:
+	case v2.ValueTypeInt8Array:
 		if enableRandomization {
 			if err != nil {
 				min = int64(math.MinInt8)
@@ -60,8 +59,8 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 		for _, i := range newArrayIntValue {
 			int8Array = append(int8Array, int8(i))
 		}
-		result, err = dsModels.NewInt8ArrayValue(deviceResourceName, now, int8Array)
-	case models.ValueTypeInt16Array:
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeInt8Array, int8Array)
+	case v2.ValueTypeInt16Array:
 		if enableRandomization {
 			if err != nil {
 				min = int64(math.MinInt16)
@@ -84,8 +83,8 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 		for _, i := range newArrayIntValue {
 			int16Array = append(int16Array, int16(i))
 		}
-		result, err = dsModels.NewInt16ArrayValue(deviceResourceName, now, int16Array)
-	case models.ValueTypeInt32Array:
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeInt16Array, int16Array)
+	case v2.ValueTypeInt32Array:
 		if enableRandomization {
 			if err == nil {
 				for i := 0; i < defaultArrayValueSize; i++ {
@@ -110,8 +109,8 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 		for _, i := range newArrayIntValue {
 			int32Array = append(int32Array, int32(i))
 		}
-		result, err = dsModels.NewInt32ArrayValue(deviceResourceName, now, int32Array)
-	case models.ValueTypeInt64Array:
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeInt32Array, int32Array)
+	case v2.ValueTypeInt64Array:
 		if enableRandomization {
 			if err == nil {
 				for i := 0; i < defaultArrayValueSize; i++ {
@@ -132,7 +131,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 				newArrayIntValue = append(newArrayIntValue, i)
 			}
 		}
-		result, err = dsModels.NewInt64ArrayValue(deviceResourceName, now, newArrayIntValue)
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeInt64Array, newArrayIntValue)
 	}
 
 	if err != nil {
@@ -144,21 +143,21 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 	return result, err
 }
 
-func (ri *resourceIntArray) write(param *dsModels.CommandValue, deviceName string, db *db) error {
+func (ri *resourceIntArray) write(param *models.CommandValue, deviceName string, db *db) error {
 	switch param.Type {
-	case dsModels.Int8Array:
+	case v2.ValueTypeInt8Array:
 		if _, err := param.Int8ArrayValue(); err != nil {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	case dsModels.Int16Array:
+	case v2.ValueTypeInt16Array:
 		if _, err := param.Int16ArrayValue(); err != nil {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	case dsModels.Int32Array:
+	case v2.ValueTypeInt32Array:
 		if _, err := param.Int32ArrayValue(); err != nil {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	case dsModels.Int64Array:
+	case v2.ValueTypeInt64Array:
 		if _, err := param.Int64ArrayValue(); err != nil {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}

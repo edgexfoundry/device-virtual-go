@@ -8,97 +8,49 @@ description: "Example of Device-Virtual"
 deviceResources:
 -
   name: "EnableRandomization_Bool"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "Bool"
+  isHidden: false
   description: "Generate random boolean value"
   properties:
-    value:
-      { type: "Bool", readWrite: "RW", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random bool value" }
+    valueType: "Bool"
+    readWrite: "RW"
+    defaultValue: "true"
 -
   name: "EnableRandomization_BoolArray"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "BoolArray"
+  isHidden: false
   description: "Generate random boolean array value"
   properties:
-    value:
-      { type: "BoolArray", readWrite: "RW", defaultValue: "[true]" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random bool array value" }
+    valueType: "BoolArray"
+    readWrite: "RW"
+    defaultValue: "[true]"
 
 deviceCommands:
 -
-  name: "Bool"
-  get:
-    - { operation: "get", deviceResource: "Bool" }
-  set:
-    - { operation: "set", deviceResource: "Bool" }
-    - { operation: "set", deviceResource: "EnableRandomization_Bool", parameter: "false" }
+  name: "WriteBoolValue"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Bool" }
+    - { deviceResource: "EnableRandomization_Bool", defaultValue: "false" }
 -
-  name: "BoolArray"
-  get:
-    - { operation: "get", deviceResource: "BoolArray" }
-  set:
-    - { operation: "set", deviceResource: "BoolArray" }
-    - { operation: "set", deviceResource: "EnableRandomization_BoolArray", parameter: "false" }
-    
-coreCommands:
--
-  name: "Bool"
-  get:
-    path: "/api/v1/device/{deviceId}/Bool"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Bool"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Bool"
-    parameterNames: ["Bool","EnableRandomization_Bool"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
--
-  name: "BoolArray"
-  get:
-    path: "/api/v1/device/{deviceId}/BoolArray"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["BoolArray"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/BoolArray"
-    parameterNames: ["BoolArray","EnableRandomization_BoolArray"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
+  name: "WriteBoolArrayValue"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "BoolArray" }
+    - { deviceResource: "EnableRandomization_BoolArray", defaultValue: "false" }

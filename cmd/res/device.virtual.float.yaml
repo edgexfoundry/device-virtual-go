@@ -8,189 +8,95 @@ description: "Example of Device-Virtual"
 deviceResources:
 -
   name: "EnableRandomization_Float32"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "EnableRandomization_Float64"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "Float32"
+  isHidden: false
   description: "Generate random float32 value"
   properties:
-    value:
-      { type: "Float32", readWrite: "RW", defaultValue: "0", floatEncoding: "Base64" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random float32 value" }
+    valueType: "Float32"
+    readWrite: "RW"
+    defaultValue: "0"
 -
   name: "Float64"
+  isHidden: false
   description: "Generate random float64 value"
   properties:
-    value:
-      { type: "Float64", readWrite: "RW", defaultValue: "0", floatEncoding: "eNotation" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random float64 value" }
+    valueType: "Float64"
+    readWrite: "RW"
+    defaultValue: "0"
 -
   name: "EnableRandomization_Float32Array"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "EnableRandomization_Float64Array"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "Float32Array"
+  isHidden: false
   description: "Generate random float32 array value"
   properties:
-    value:
-      { type: "Float32Array", readWrite: "RW", defaultValue: "[0]" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random float32 array value" }
+    valueType: "Float32Array"
+    readWrite: "RW"
+    defaultValue: "[0]"
 -
   name: "Float64Array"
+  isHidden: false
   description: "Generate random float64 array value"
   properties:
-    value:
-      { type: "Float64Array", readWrite: "RW", defaultValue: "[0]" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random float64 array value" }
+    valueType: "Float64Array"
+    readWrite: "RW"
+    defaultValue: "[0]"
 
 deviceCommands:
 -
-  name: "Float32"
-  get:
-    - { operation: "get", deviceResource: "Float32" }
-  set:
-    - { operation: "set", deviceResource: "Float32" }
-    - { operation: "set", deviceResource: "EnableRandomization_Float32", parameter: "false" }
+  name: "WriteFloat32Value"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Float32" }
+    - { deviceResource: "EnableRandomization_Float32", defaultValue: "false" }
 -
-  name: "Float64"
-  get:
-    - { operation: "get", deviceResource: "Float64" }
-  set:
-    - { operation: "set", deviceResource: "Float64" }
-    - { operation: "set", deviceResource: "EnableRandomization_Float64", parameter: "false" }
+  name: "WriteFloat64Value"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Float64" }
+    - { deviceResource: "EnableRandomization_Float64", defaultValue: "false" }
 -
-  name: "Float32Array"
-  get:
-    - { operation: "get", deviceResource: "Float32Array" }
-  set:
-    - { operation: "set", deviceResource: "Float32Array" }
-    - { operation: "set", deviceResource: "EnableRandomization_Float32Array", parameter: "false" }
+  name: "WriteFloat32ArrayValue"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Float32Array" }
+    - { deviceResource: "EnableRandomization_Float32Array", defaultValue: "false" }
 -
-  name: "Float64Array"
-  get:
-    - { operation: "get", deviceResource: "Float64Array" }
-  set:
-    - { operation: "set", deviceResource: "Float64Array" }
-    - { operation: "set", deviceResource: "EnableRandomization_Float64Array", parameter: "false" }
-
-coreCommands:
--
-  name: "Float32"
-  get:
-    path: "/api/v1/device/{deviceId}/Float32"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Float32"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Float32"
-    parameterNames: ["Float32","EnableRandomization_Float32"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
--
-  name: "Float64"
-  get:
-    path: "/api/v1/device/{deviceId}/Float64"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Float64"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Float64"
-    parameterNames: ["Float64","EnableRandomization_Float64"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
--
-  name: "Float32Array"
-  get:
-    path: "/api/v1/device/{deviceId}/Float32Array"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Float32Array"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Float32Array"
-    parameterNames: ["Float32Array","EnableRandomization_Float32Array"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
--
-  name: "Float64Array"
-  get:
-    path: "/api/v1/device/{deviceId}/Float64Array"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Float64Array"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Float64Array"
-    parameterNames: ["Float64Array","EnableRandomization_Float64Array"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
+  name: "WriteFloat64ArrayValue"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Float64Array" }
+    - { deviceResource: "EnableRandomization_Float64Array", defaultValue: "false" }
