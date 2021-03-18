@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2020 IOTech Ltd
+// Copyright (C) 2019-2021 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -13,10 +13,11 @@ import (
 	"reflect"
 	"sync"
 
-	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
-	sdk "github.com/edgexfoundry/device-sdk-go/pkg/service"
-	"github.com/edgexfoundry/go-mod-core-contracts/clients/logger"
-	"github.com/edgexfoundry/go-mod-core-contracts/models"
+	dsModels "github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
+	sdk "github.com/edgexfoundry/device-sdk-go/v2/pkg/service"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/clients/logger"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2/models"
 
 	_ "modernc.org/ql/driver"
 )
@@ -91,8 +92,8 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 	res = make([]*dsModels.CommandValue, len(reqs))
 
 	for i, req := range reqs {
-		if dr, ok := sdkService.DeviceResource(deviceName, req.DeviceResourceName, ""); ok {
-			if v, err := vd.read(deviceName, req.DeviceResourceName, dr.Properties.Value.Type, dr.Properties.Value.Minimum, dr.Properties.Value.Maximum, d.db); err != nil {
+		if dr, ok := sdkService.DeviceResource(deviceName, req.DeviceResourceName); ok {
+			if v, err := vd.read(deviceName, req.DeviceResourceName, dr.Properties.ValueType, dr.Properties.Minimum, dr.Properties.Maximum, d.db); err != nil {
 				return nil, err
 			} else {
 				res[i] = v
@@ -180,31 +181,31 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 	if err != nil {
 		return err
 	}
+	profile, err := service.GetProfileByName(deviceName)
+	if err != nil {
+		return err
+	}
 
-	for _, dc := range device.Profile.DeviceCommands {
-		for _, ro := range dc.Get {
-			for _, dr := range device.Profile.DeviceResources {
-				if ro.DeviceResource == dr.Name {
-					/*
-						d.Name <-> VIRTUAL_RESOURCE.deviceName
-						dr.Name <-> VIRTUAL_RESOURCE.CommandName, VIRTUAL_RESOURCE.ResourceName
-						ro.DeviceResource <-> VIRTUAL_RESOURCE.DeviceResourceName
-						dr.Properties.Value.Type <-> VIRTUAL_RESOURCE.DataType
-						dr.Properties.Value.DefaultValue <-> VIRTUAL_RESOURCE.Value
-					*/
-					if dsModels.ParseValueType(dr.Properties.Value.Type) == dsModels.Binary {
-						continue
-					}
-					if err := driver.db.exec(SqlInsert, device.Name, dr.Name, dr.Name, true, dr.Properties.Value.Type,
-						dr.Properties.Value.DefaultValue); err != nil {
-						driver.lc.Info(fmt.Sprintf("Insert one row into db failed: %v", err))
-						return err
-					}
-				}
+	for _, dr := range profile.DeviceResources {
+		if dr.Properties.ReadWrite == v2.ReadWrite_R || dr.Properties.ReadWrite == v2.ReadWrite_RW {
+			/*
+				d.Name <-> VIRTUAL_RESOURCE.deviceName
+				dr.Name <-> VIRTUAL_RESOURCE.CommandName, VIRTUAL_RESOURCE.ResourceName
+				ro.DeviceResource <-> VIRTUAL_RESOURCE.DeviceResourceName
+				dr.Properties.Value.Type <-> VIRTUAL_RESOURCE.DataType
+				dr.Properties.Value.DefaultValue <-> VIRTUAL_RESOURCE.Value
+			*/
+			if dr.Properties.ValueType == v2.ValueTypeBinary {
+				continue
 			}
-			// TODO another for loop to update the ENABLE_RANDOMIZATION field of virtual resource by device resource
-			//  "EnableRandomization_{ResourceName}"
+			if err := driver.db.exec(SqlInsert, device.Name, dr.Name, dr.Name, true, dr.Properties.ValueType,
+				dr.Properties.DefaultValue); err != nil {
+				driver.lc.Info(fmt.Sprintf("Insert one row into db failed: %v", err))
+				return err
+			}
 		}
+		// TODO another for loop to update the ENABLE_RANDOMIZATION field of virtual resource by device resource
+		//  "EnableRandomization_{ResourceName}"
 	}
 
 	return nil
