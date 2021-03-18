@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2020 IOTech Ltd
+// Copyright (C) 2020-2021 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -14,28 +14,27 @@ import (
 	"strings"
 	"time"
 
-	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/models"
+	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
 )
 
 type resourceFloatArray struct{}
 
 func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, minimum,
-	maximum string) (*dsModels.CommandValue, error) {
+	maximum string) (*models.CommandValue, error) {
 
-	result := &dsModels.CommandValue{}
+	result := &models.CommandValue{}
 
 	enableRandomization, currentValue, dataType, err := db.getVirtualResourceData(deviceName, deviceResourceName)
 	if err != nil {
 		return result, err
 	}
 
-	now := time.Now().UnixNano()
 	rand.Seed(time.Now().UnixNano())
 	min, max, err := parseFloatMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
-	case models.ValueTypeFloat32Array:
+	case v2.ValueTypeFloat32Array:
 		var newValueFloat32Array []float32
 		if enableRandomization {
 			if err != nil {
@@ -55,8 +54,8 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 				newValueFloat32Array = append(newValueFloat32Array, float32(f))
 			}
 		}
-		result, err = dsModels.NewFloat32ArrayValue(deviceResourceName, now, newValueFloat32Array)
-	case models.ValueTypeFloat64Array:
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeFloat32Array, newValueFloat32Array)
+	case v2.ValueTypeFloat64Array:
 		var newValueFloat64Array []float64
 		if enableRandomization {
 			if err != nil {
@@ -76,7 +75,7 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 				newValueFloat64Array = append(newValueFloat64Array, f)
 			}
 		}
-		result, err = dsModels.NewFloat64ArrayValue(deviceResourceName, now, newValueFloat64Array)
+		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeFloat64Array, newValueFloat64Array)
 	}
 
 	if err != nil {
@@ -88,13 +87,13 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 	return result, err
 }
 
-func (rf *resourceFloatArray) write(param *dsModels.CommandValue, deviceName string, db *db) error {
+func (rf *resourceFloatArray) write(param *models.CommandValue, deviceName string, db *db) error {
 	switch param.Type {
-	case dsModels.Float32Array:
+	case v2.ValueTypeFloat32Array:
 		if _, err := param.Float32ArrayValue(); err != nil {
 			return fmt.Errorf("resourceFloat.write: %v", err)
 		}
-	case dsModels.Float64Array:
+	case v2.ValueTypeFloat64Array:
 		if _, err := param.Float64ArrayValue(); err != nil {
 			return fmt.Errorf("resourceFloat.write: %v", err)
 		}

@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2020 IOTech Ltd
+// Copyright (C) 2019-2021 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -11,29 +11,27 @@ import (
 	"math/rand"
 	"time"
 
-	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
+	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
 )
 
 type resourceBinary struct{}
 
-func (rb *resourceBinary) value(deviceResourceName string) (*dsModels.CommandValue, error) {
-	result := &dsModels.CommandValue{}
-
-	newValueB := make([]byte, dsModels.MaxBinaryBytes/1000)
+func (rb *resourceBinary) value(deviceResourceName string) (*models.CommandValue, error) {
+	newValueB := make([]byte, models.MaxBinaryBytes/1000)
 
 	rand.Seed(time.Now().UnixNano())
 	rand.Read(newValueB)
 
-	now := time.Now().UnixNano()
-	var err error
-	if result, err = dsModels.NewBinaryValue(deviceResourceName, now, newValueB); err != nil {
+	result, err := models.NewCommandValue(deviceResourceName, v2.ValueTypeBinary, newValueB)
+	if err != nil {
 		return result, err
 	}
 
 	return result, nil
 }
 
-func (rb *resourceBinary) write(param *dsModels.CommandValue, deviceName string, db *db) (err error) {
+func (rb *resourceBinary) write(param *models.CommandValue, deviceName string, db *db) (err error) {
 	return fmt.Errorf("resourceBinary.write: core-command and device-sdk do not yet support " +
 		"the put operation of binary resource. ")
 }

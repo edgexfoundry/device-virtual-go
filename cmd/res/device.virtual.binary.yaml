@@ -8,30 +8,9 @@ description: "Example of Device-Virtual"
 deviceResources:
   -
     name: "Binary"
+    isHidden: false
     description: "Generate random binary value"
     properties:
-      value:
-        { type: "Binary", readWrite: "R", mediaType: "random" }
-      units:
-        { type: "String", readWrite: "R", defaultValue: "random binary value" }
-
-deviceCommands:
-  -
-    name: "Binary"
-    get:
-      - { operation: "get", deviceResource: "Binary" }
-
-coreCommands:
-  -
-    name: "Binary"
-    get:
-      path: "/api/v1/device/{deviceId}/Binary"
-      responses:
-        -
-          code: "200"
-          description: ""
-          expectedValues: ["Binary"]
-        -
-          code: "503"
-          description: "service unavailable"
-          expectedValues: []
+      valueType: "Binary"
+      readWrite: "R"
+      mediaType: "random"

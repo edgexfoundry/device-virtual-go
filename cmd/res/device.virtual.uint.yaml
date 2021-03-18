@@ -8,373 +8,187 @@ description: "Example of Device-Virtual"
 deviceResources:
 -
   name: "EnableRandomization_Uint8"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "EnableRandomization_Uint16"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "EnableRandomization_Uint32"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "EnableRandomization_Uint64"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "Uint8"
+  isHidden: false
   description: "Generate random uint8 value"
   properties:
-    value:
-      { type: "Uint8", readWrite: "RW", defaultValue: "0" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random uint8 value" }
+    valueType: "Uint8"
+    readWrite: "RW"
+    defaultValue: "0"
 -
   name: "Uint16"
+  isHidden: false
   description: "Generate random uint16 value"
   properties:
-    value:
-      { type: "Uint16", readWrite: "RW", defaultValue: "0" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random uint16 value" }
+    valueType: "Uint16"
+    readWrite: "RW"
+    defaultValue: "0"
 -
   name: "Uint32"
+  isHidden: false
   description: "Generate random uint32 value"
   properties:
-    value:
-      { type: "Uint32", readWrite: "RW", defaultValue: "0" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random uint32 value" }
+    valueType: "Uint32"
+    readWrite: "RW"
+    defaultValue: "0"
 -
   name: "Uint64"
+  isHidden: false
   description: "Generate random uint64 value"
   properties:
-    value:
-      { type: "Uint64", readWrite: "RW", defaultValue: "0" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random uint64 value" }
+    valueType: "Uint64"
+    readWrite: "RW"
+    defaultValue: "0"
 -
   name: "EnableRandomization_Uint8Array"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "EnableRandomization_Uint16Array"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "EnableRandomization_Uint32Array"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "EnableRandomization_Uint64Array"
+  isHidden: true
   description: "used to decide whether to re-generate a random value"
   properties:
-    value:
-      { type: "Bool", readWrite: "W", defaultValue: "true" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "Random" }
+    valueType: "Bool"
+    readWrite: "W"
+    defaultValue: "true"
 -
   name: "Uint8Array"
+  isHidden: false
   description: "Generate random uint8 array value"
   properties:
-    value:
-      { type: "Uint8Array", readWrite: "RW", defaultValue: "[0]" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random uint8 array value" }
+    valueType: "Uint8Array"
+    readWrite: "RW"
+    defaultValue: "[0]"
 -
   name: "Uint16Array"
+  isHidden: false
   description: "Generate random uint16 array value"
   properties:
-    value:
-      { type: "Uint16Array", readWrite: "RW", defaultValue: "[0]" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random uint16 array value" }
+    valueType: "Uint16Array"
+    readWrite: "RW"
+    defaultValue: "[0]"
 -
   name: "Uint32Array"
+  isHidden: false
   description: "Generate random uint32 array value"
   properties:
-    value:
-      { type: "Uint32Array", readWrite: "RW", defaultValue: "[0]" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random uint32 array value" }
+    valueType: "Uint32Array"
+    readWrite: "RW"
+    defaultValue: "[0]"
 -
   name: "Uint64Array"
+  isHidden: false
   description: "Generate random uint64 array value"
   properties:
-    value:
-      { type: "Uint64Array", readWrite: "RW", defaultValue: "[0]" }
-    units:
-      { type: "String", readWrite: "R", defaultValue: "random uint64 array value" }
+    valueType: "Uint64Array"
+    readWrite: "RW"
+    defaultValue: "[0]"
 
 deviceCommands:
 -
-  name: "Uint8"
-  get:
-  - { operation: "get", deviceResource: "Uint8" }
-  set:
-  - { operation: "set", deviceResource: "Uint8" }
-  - { operation: "set", deviceResource: "EnableRandomization_Uint8", parameter: "false" }
+  name: "WriteUint8Value"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+  - { deviceResource: "Uint8" }
+  - { deviceResource: "EnableRandomization_Uint8", defaultValue: "false" }
 -
-  name: "Uint16"
-  get:
-  - { operation: "get", deviceResource: "Uint16" }
-  set:
-  - { operation: "set", deviceResource: "Uint16" }
-  - { operation: "set", deviceResource: "EnableRandomization_Uint16", parameter: "false" }
+  name: "WriteUint16Value"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Uint16" }
+    - { deviceResource: "EnableRandomization_Uint16", defaultValue: "false" }
 -
-  name: "Uint32"
-  get:
-  - { operation: "get", deviceResource: "Uint32" }
-  set:
-  - { operation: "set", deviceResource: "Uint32" }
-  - { operation: "set", deviceResource: "EnableRandomization_Uint32", parameter: "false" }
+  name: "WriteUint32Value"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Uint32" }
+    - { deviceResource: "EnableRandomization_Uint32", defaultValue: "false" }
 -
-  name: "Uint64"
-  get:
-    - { operation: "get", deviceResource: "Uint64" }
-  set:
-    - { operation: "set", deviceResource: "Uint64" }
-    - { operation: "set", deviceResource: "EnableRandomization_Uint64", parameter: "false" }
+  name: "WriteUint64Value"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Uint64" }
+    - { deviceResource: "EnableRandomization_Uint64", defaultValue: "false" }
 -
-  name: "Uint8Array"
-  get:
-    - { operation: "get", deviceResource: "Uint8Array" }
-  set:
-    - { operation: "set", deviceResource: "Uint8Array" }
-    - { operation: "set", deviceResource: "EnableRandomization_Uint8Array", parameter: "false" }
+  name: "WriteUint8ArrayValue"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Uint8Array" }
+    - { deviceResource: "EnableRandomization_Uint8Array", defaultValue: "false" }
 -
-  name: "Uint16Array"
-  get:
-    - { operation: "get", deviceResource: "Uint16Array" }
-  set:
-    - { operation: "set", deviceResource: "Uint16Array" }
-    - { operation: "set", deviceResource: "EnableRandomization_Uint16Array", parameter: "false" }
+  name: "WriteUint16ArrayValue"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Uint16Array" }
+    - { deviceResource: "EnableRandomization_Uint16Array", defaultValue: "false" }
 -
-  name: "Uint32Array"
-  get:
-    - { operation: "get", deviceResource: "Uint32Array" }
-  set:
-    - { operation: "set", deviceResource: "Uint32Array" }
-    - { operation: "set", deviceResource: "EnableRandomization_Uint32Array", parameter: "false" }
+  name: "WriteUint32ArrayValue"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Uint32Array" }
+    - { deviceResource: "EnableRandomization_Uint32Array", defaultValue: "false" }
 -
-  name: "Uint64Array"
-  get:
-    - { operation: "get", deviceResource: "Uint64Array" }
-  set:
-    - { operation: "set", deviceResource: "Uint64Array" }
-    - { operation: "set", deviceResource: "EnableRandomization_Uint64Array", parameter: "false" }
-
-coreCommands:
--
-  name: "Uint8"
-  get:
-    path: "/api/v1/device/{deviceId}/Uint8"
-    responses:
-    -
-      code: "200"
-      description: ""
-      expectedValues: ["Uint8"]
-    -
-      code: "503"
-      description: "service unavailable"
-      expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Uint8"
-    parameterNames: ["Uint8","EnableRandomization_Uint8"]
-    responses:
-    -
-      code: "200"
-      description: ""
-    -
-      code: "503"
-      description: "service unavailable"
--
-  name: "Uint16"
-  get:
-    path: "/api/v1/device/{deviceId}/Uint16"
-    responses:
-    -
-      code: "200"
-      description: ""
-      expectedValues: ["Uint16"]
-    -
-      code: "503"
-      description: "service unavailable"
-      expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Uint16"
-    parameterNames: ["Uint16","EnableRandomization_Uint16"]
-    responses:
-    -
-      code: "200"
-      description: ""
-    -
-      code: "503"
-      description: "service unavailable"
--
-  name: "Uint32"
-  get:
-    path: "/api/v1/device/{deviceId}/Uint32"
-    responses:
-    -
-      code: "200"
-      description: ""
-      expectedValues: ["Uint32"]
-    -
-      code: "503"
-      description: "service unavailable"
-      expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Uint32"
-    parameterNames: ["Uint32","EnableRandomization_Uint32"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
--
-  name: "Uint64"
-  get:
-    path: "/api/v1/device/{deviceId}/Uint64"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Uint64"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Uint64"
-    parameterNames: ["Uint64","EnableRandomization_Uint64"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
--
-  name: "Uint8Array"
-  get:
-    path: "/api/v1/device/{deviceId}/Uint8Array"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Uint8Array"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Uint8Array"
-    parameterNames: ["Uint8Array","EnableRandomization_Uint8Array"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
--
-  name: "Uint16Array"
-  get:
-    path: "/api/v1/device/{deviceId}/Uint16Array"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Uint16Array"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Uint16Array"
-    parameterNames: ["Uint16Array","EnableRandomization_Uint16Array"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
--
-  name: "Uint32Array"
-  get:
-    path: "/api/v1/device/{deviceId}/Uint32Array"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Uint32Array"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Uint32Array"
-    parameterNames: ["Uint32Array","EnableRandomization_Uint32Array"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
--
-  name: "Uint64Array"
-  get:
-    path: "/api/v1/device/{deviceId}/Uint64Array"
-    responses:
-      -
-        code: "200"
-        description: ""
-        expectedValues: ["Uint64Array"]
-      -
-        code: "503"
-        description: "service unavailable"
-        expectedValues: []
-  put:
-    path: "/api/v1/device/{deviceId}/Uint64Array"
-    parameterNames: ["Uint64Array","EnableRandomization_Uint64Array"]
-    responses:
-      -
-        code: "200"
-        description: ""
-      -
-        code: "503"
-        description: "service unavailable"
+  name: "WriteUint64ArrayValue"
+  readWrite: "W"
+  isHidden: false
+  resourceOperations:
+    - { deviceResource: "Uint64Array" }
+    - { deviceResource: "EnableRandomization_Uint64Array", defaultValue: "false" }

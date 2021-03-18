@@ -21,12 +21,12 @@ Port = 8500
 Type = 'consul'
 
 [Clients]
-  [Clients.Data]
+  [Clients.edgex-core-data]
   Protocol = 'http'
   Host = 'localhost'
   Port = 48080
 
-  [Clients.Metadata]
+  [Clients.edgex-core-metadata]
   Protocol = 'http'
   Host = 'localhost'
   Port = 48081
@@ -55,7 +55,7 @@ Type = 'consul'
   [[DeviceList.AutoEvents]]
     Frequency = '10s'
     OnChange = false
-    Resource = 'Bool'
+    SourceName = 'Bool'
 [[DeviceList]]
   Name = 'Random-Integer-Device'
   Profile = 'Random-Integer-Device'
@@ -68,19 +68,19 @@ Type = 'consul'
   [[DeviceList.AutoEvents]]
     Frequency = '15s'
     OnChange = false
-    Resource = 'Int8'
+    SourceName = 'Int8'
   [[DeviceList.AutoEvents]]
     Frequency = '15s'
     OnChange = false
-    Resource = 'Int16'
+    SourceName = 'Int16'
   [[DeviceList.AutoEvents]]
     Frequency = '15s'
     OnChange = false
-    Resource = 'Int32'
+    SourceName = 'Int32'
   [[DeviceList.AutoEvents]]
     Frequency = '15s'
     OnChange = false
-    Resource = 'Int64'
+    SourceName = 'Int64'
 [[DeviceList]]
   Name = 'Random-UnsignedInteger-Device'
   Profile = 'Random-UnsignedInteger-Device'
@@ -93,19 +93,19 @@ Type = 'consul'
   [[DeviceList.AutoEvents]]
     Frequency = '20s'
     OnChange = false
-    Resource = 'Uint8'
+    SourceName = 'Uint8'
   [[DeviceList.AutoEvents]]
     Frequency = '20s'
     OnChange = false
-    Resource = 'Uint16'
+    SourceName = 'Uint16'
   [[DeviceList.AutoEvents]]
     Frequency = '20s'
     OnChange = false
-    Resource = 'Uint32'
+    SourceName = 'Uint32'
   [[DeviceList.AutoEvents]]
     Frequency = '20s'
     OnChange = false
-    Resource = 'Uint64'
+    SourceName = 'Uint64'
 [[DeviceList]]
   Name = 'Random-Float-Device'
   Profile = 'Random-Float-Device'
@@ -118,11 +118,11 @@ Type = 'consul'
   [[DeviceList.AutoEvents]]
     Frequency = '30s'
     OnChange = false
-    Resource = 'Float32'
+    SourceName = 'Float32'
   [[DeviceList.AutoEvents]]
     Frequency = '30s'
     OnChange = false
-    Resource = 'Float64'
+    SourceName = 'Float64'
 [[DeviceList]]
   Name = 'Random-Binary-Device'
   Profile = 'Random-Binary-Device'
@@ -135,4 +135,4 @@ Type = 'consul'
 #  [[DeviceList.AutoEvents]]
 #    Frequency = '30s'
 #    OnChange = false
-#    Resource = 'Binary'
+#    SourceName = 'Binary'

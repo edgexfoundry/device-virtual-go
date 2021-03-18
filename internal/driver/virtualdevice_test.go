@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2020 IOTech Ltd
+// Copyright (C) 2019-2021 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -12,8 +12,8 @@ import (
 	"reflect"
 	"testing"
 
-	dsModels "github.com/edgexfoundry/device-sdk-go/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/models"
+	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
 )
 
 const (
@@ -21,29 +21,29 @@ const (
 	enableRandomizationTrue = true
 	rounds                  = 10
 
-	nameBool         = models.ValueTypeBool
-	nameBoolArray    = models.ValueTypeBoolArray
-	nameInt8         = models.ValueTypeInt8
-	nameInt8Array    = models.ValueTypeInt8Array
-	nameInt16        = models.ValueTypeInt16
-	nameInt16Array   = models.ValueTypeInt16Array
-	nameInt32        = models.ValueTypeInt32
-	nameInt32Array   = models.ValueTypeInt32Array
-	nameInt64        = models.ValueTypeInt64
-	nameInt64Array   = models.ValueTypeInt64Array
-	nameUint8        = models.ValueTypeUint8
-	nameUint8Array   = models.ValueTypeUint8Array
-	nameUint16       = models.ValueTypeUint16
-	nameUint16Array  = models.ValueTypeUint16Array
-	nameUint32       = models.ValueTypeUint32
-	nameUint32Array  = models.ValueTypeUint32Array
-	nameUint64       = models.ValueTypeUint64
-	nameUint64Array  = models.ValueTypeUint64Array
-	nameFloat32      = models.ValueTypeFloat32
-	nameFloat32Array = models.ValueTypeFloat32Array
-	nameFloat64      = models.ValueTypeFloat64
-	nameFloat64Array = models.ValueTypeFloat64Array
-	nameBinary       = models.ValueTypeBinary
+	nameBool         = v2.ValueTypeBool
+	nameBoolArray    = v2.ValueTypeBoolArray
+	nameInt8         = v2.ValueTypeInt8
+	nameInt8Array    = v2.ValueTypeInt8Array
+	nameInt16        = v2.ValueTypeInt16
+	nameInt16Array   = v2.ValueTypeInt16Array
+	nameInt32        = v2.ValueTypeInt32
+	nameInt32Array   = v2.ValueTypeInt32Array
+	nameInt64        = v2.ValueTypeInt64
+	nameInt64Array   = v2.ValueTypeInt64Array
+	nameUint8        = v2.ValueTypeUint8
+	nameUint8Array   = v2.ValueTypeUint8Array
+	nameUint16       = v2.ValueTypeUint16
+	nameUint16Array  = v2.ValueTypeUint16Array
+	nameUint32       = v2.ValueTypeUint32
+	nameUint32Array  = v2.ValueTypeUint32Array
+	nameUint64       = v2.ValueTypeUint64
+	nameUint64Array  = v2.ValueTypeUint64Array
+	nameFloat32      = v2.ValueTypeFloat32
+	nameFloat32Array = v2.ValueTypeFloat32Array
+	nameFloat64      = v2.ValueTypeFloat64
+	nameFloat64Array = v2.ValueTypeFloat64Array
+	nameBinary       = v2.ValueTypeBinary
 )
 
 func prepareDB() *db {
@@ -673,18 +673,18 @@ func ValueFloatxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 }
 
-func getIntValue(cv *dsModels.CommandValue) int64 {
+func getIntValue(cv *models.CommandValue) int64 {
 	switch cv.Type {
-	case dsModels.Int8:
+	case v2.ValueTypeInt8:
 		v, _ := cv.Int8Value()
 		return int64(v)
-	case dsModels.Int16:
+	case v2.ValueTypeInt16:
 		v, _ := cv.Int16Value()
 		return int64(v)
-	case dsModels.Int32:
+	case v2.ValueTypeInt32:
 		v, _ := cv.Int32Value()
 		return int64(v)
-	case dsModels.Int64:
+	case v2.ValueTypeInt64:
 		v, _ := cv.Int64Value()
 		return v
 	default:
@@ -692,25 +692,25 @@ func getIntValue(cv *dsModels.CommandValue) int64 {
 	}
 }
 
-func getIntArrayValue(cv *dsModels.CommandValue) []int64 {
+func getIntArrayValue(cv *models.CommandValue) []int64 {
 	var value []int64
 	switch cv.Type {
-	case dsModels.Int8Array:
+	case v2.ValueTypeInt8Array:
 		int8Arr, _ := cv.Int8ArrayValue()
 		for _, i := range int8Arr {
 			value = append(value, int64(i))
 		}
-	case dsModels.Int16Array:
+	case v2.ValueTypeInt16Array:
 		int16Arr, _ := cv.Int16ArrayValue()
 		for _, i := range int16Arr {
 			value = append(value, int64(i))
 		}
-	case dsModels.Int32Array:
+	case v2.ValueTypeInt32Array:
 		int32Arr, _ := cv.Int32ArrayValue()
 		for _, i := range int32Arr {
 			value = append(value, int64(i))
 		}
-	case dsModels.Int64Array:
+	case v2.ValueTypeInt64Array:
 		value, _ = cv.Int64ArrayValue()
 	default:
 		value = []int64{0}
@@ -718,18 +718,18 @@ func getIntArrayValue(cv *dsModels.CommandValue) []int64 {
 	return value
 }
 
-func getUintValue(cv *dsModels.CommandValue) uint64 {
+func getUintValue(cv *models.CommandValue) uint64 {
 	switch cv.Type {
-	case dsModels.Uint8:
+	case v2.ValueTypeUint8:
 		v, _ := cv.Uint8Value()
 		return uint64(v)
-	case dsModels.Uint16:
+	case v2.ValueTypeUint16:
 		v, _ := cv.Uint16Value()
 		return uint64(v)
-	case dsModels.Uint32:
+	case v2.ValueTypeUint32:
 		v, _ := cv.Uint32Value()
 		return uint64(v)
-	case dsModels.Uint64:
+	case v2.ValueTypeUint64:
 		v, _ := cv.Uint64Value()
 		return v
 	default:
@@ -737,25 +737,25 @@ func getUintValue(cv *dsModels.CommandValue) uint64 {
 	}
 }
 
-func getUintArrayValue(cv *dsModels.CommandValue) []uint64 {
+func getUintArrayValue(cv *models.CommandValue) []uint64 {
 	var value []uint64
 	switch cv.Type {
-	case dsModels.Uint8Array:
+	case v2.ValueTypeUint8Array:
 		uint8Arr, _ := cv.Uint8ArrayValue()
 		for _, i := range uint8Arr {
 			value = append(value, uint64(i))
 		}
-	case dsModels.Uint16Array:
+	case v2.ValueTypeUint16Array:
 		uint16Arr, _ := cv.Uint16ArrayValue()
 		for _, i := range uint16Arr {
 			value = append(value, uint64(i))
 		}
-	case dsModels.Uint32Array:
+	case v2.ValueTypeUint32Array:
 		uint32Arr, _ := cv.Uint32ArrayValue()
 		for _, i := range uint32Arr {
 			value = append(value, uint64(i))
 		}
-	case dsModels.Uint64Array:
+	case v2.ValueTypeUint64Array:
 		value, _ = cv.Uint64ArrayValue()
 	default:
 		value = []uint64{0}
@@ -763,12 +763,12 @@ func getUintArrayValue(cv *dsModels.CommandValue) []uint64 {
 	return value
 }
 
-func getFloatValue(cv *dsModels.CommandValue) float64 {
+func getFloatValue(cv *models.CommandValue) float64 {
 	switch cv.Type {
-	case dsModels.Float32:
+	case v2.ValueTypeFloat32:
 		v, _ := cv.Float32Value()
 		return float64(v)
-	case dsModels.Float64:
+	case v2.ValueTypeFloat64:
 		v, _ := cv.Float64Value()
 		return v
 	default:
@@ -776,15 +776,15 @@ func getFloatValue(cv *dsModels.CommandValue) float64 {
 	}
 }
 
-func getFloatArrayValue(cv *dsModels.CommandValue) []float64 {
+func getFloatArrayValue(cv *models.CommandValue) []float64 {
 	var value []float64
 	switch cv.Type {
-	case dsModels.Float32Array:
+	case v2.ValueTypeFloat32Array:
 		float32Arr, _ := cv.Float32ArrayValue()
 		for _, f := range float32Arr {
 			value = append(value, float64(f))
 		}
-	case dsModels.Float64Array:
+	case v2.ValueTypeFloat64Array:
 		value, _ = cv.Float64ArrayValue()
 	default:
 		value = []float64{0}
