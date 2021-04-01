@@ -181,7 +181,7 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 	if err != nil {
 		return err
 	}
-	profile, err := service.GetProfileByName(deviceName)
+	profile, err := service.GetProfileByName(device.ProfileName)
 	if err != nil {
 		return err
 	}
