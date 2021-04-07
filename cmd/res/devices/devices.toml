@@ -1,0 +1,94 @@
+# Pre-define Devices
+[[DeviceList]]
+  Name = 'Random-Boolean-Device'
+  ProfileName = 'Random-Boolean-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+      Address = 'device-virtual-bool-01'
+      Port = '300'
+  [[DeviceList.AutoEvents]]
+    Frequency = '10s'
+    OnChange = false
+    SourceName = 'Bool'
+[[DeviceList]]
+  Name = 'Random-Integer-Device'
+  ProfileName = 'Random-Integer-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+      Address = 'device-virtual-int-01'
+      Protocol = '300'
+  [[DeviceList.AutoEvents]]
+    Frequency = '15s'
+    OnChange = false
+    SourceName = 'Int8'
+  [[DeviceList.AutoEvents]]
+    Frequency = '15s'
+    OnChange = false
+    SourceName = 'Int16'
+  [[DeviceList.AutoEvents]]
+    Frequency = '15s'
+    OnChange = false
+    SourceName = 'Int32'
+  [[DeviceList.AutoEvents]]
+    Frequency = '15s'
+    OnChange = false
+    SourceName = 'Int64'
+[[DeviceList]]
+  Name = 'Random-UnsignedInteger-Device'
+  ProfileName = 'Random-UnsignedInteger-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+      Address = 'device-virtual-uint-01'
+      Protocol = '300'
+  [[DeviceList.AutoEvents]]
+    Frequency = '20s'
+    OnChange = false
+    SourceName = 'Uint8'
+  [[DeviceList.AutoEvents]]
+    Frequency = '20s'
+    OnChange = false
+    SourceName = 'Uint16'
+  [[DeviceList.AutoEvents]]
+    Frequency = '20s'
+    OnChange = false
+    SourceName = 'Uint32'
+  [[DeviceList.AutoEvents]]
+    Frequency = '20s'
+    OnChange = false
+    SourceName = 'Uint64'
+[[DeviceList]]
+  Name = 'Random-Float-Device'
+  ProfileName = 'Random-Float-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+      Address = 'device-virtual-float-01'
+      Protocol = '300'
+  [[DeviceList.AutoEvents]]
+    Frequency = '30s'
+    OnChange = false
+    SourceName = 'Float32'
+  [[DeviceList.AutoEvents]]
+    Frequency = '30s'
+    OnChange = false
+    SourceName = 'Float64'
+[[DeviceList]]
+  Name = 'Random-Binary-Device'
+  ProfileName = 'Random-Binary-Device'
+  Description = 'Example of Device Virtual'
+  Labels = [ 'device-virtual-example' ]
+  [DeviceList.Protocols]
+    [DeviceList.Protocols.other]
+      Address = 'device-virtual-binary-01'
+      Port = '300'
+#  [[DeviceList.AutoEvents]]
+#    Frequency = '30s'
+#    OnChange = false
+#    SourceName = 'Binary'

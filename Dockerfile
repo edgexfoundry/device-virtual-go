@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2020 IOTech Ltd
+# Copyright (c) 2020-2021 IOTech Ltd
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 ARG BASE=golang:1.15-alpine3.12
 FROM ${BASE} AS builder
 
-ARG ALPINE_PKG_BASE="build-base git openssh-client"
+ARG ALPINE_PKG_BASE="make git openssh-client gcc libc-dev zeromq-dev libsodium-dev"
 ARG ALPINE_PKG_EXTRA=""
 
-LABEL license='SPDX-License-Identifier: Apache-2.0' \
-  copyright='Copyright (c) 2019-2020: IOTech'
+# set the working directory
+WORKDIR /device-virtual-go
 
 # Replicate the APK repository override.
 # If it is no longer necessary to avoid the CDN mirros we should consider dropping this as it is brittle.
@@ -29,10 +29,9 @@ RUN sed -e 's/dl-cdn[.]alpinelinux.org/nl.alpinelinux.org/g' -i~ /etc/apk/reposi
 # Install our build time packages.
 RUN apk add --update --no-cache ${ALPINE_PKG_BASE} ${ALPINE_PKG_EXTRA}
 
-# set the working directory
-WORKDIR $GOPATH/src/github.com/edgexfoundry/device-virtual-go
-
 COPY . .
+
+RUN go mod download
 
 # To run tests in the build container:
 #   docker build --build-arg 'MAKE=build test' .
@@ -42,12 +41,18 @@ RUN $MAKE
 
 FROM alpine:3.12
 
-ENV APP_PORT=49990
-EXPOSE $APP_PORT
+LABEL license='SPDX-License-Identifier: Apache-2.0' \
+  copyright='Copyright (c) 2019-2021: IOTech'
 
-COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/cmd /
-COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/Attribution.txt /
-COPY --from=builder /go/src/github.com/edgexfoundry/device-virtual-go/LICENSE /
+RUN sed -e 's/dl-cdn[.]alpinelinux.org/nl.alpinelinux.org/g' -i~ /etc/apk/repositories
+RUN apk add --update --no-cache zeromq
+
+WORKDIR /
+COPY --from=builder /device-virtual-go/Attribution.txt /
+COPY --from=builder /device-virtual-go/LICENSE /
+COPY --from=builder /device-virtual-go/cmd /
+
+EXPOSE 49990
 
 ENTRYPOINT ["/device-virtual"]
 CMD ["--cp=consul.http://edgex-core-consul:8500", "--registry", "--confdir=/res"]
