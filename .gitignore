@@ -17,5 +17,6 @@
 vendor/
 go.sum
 internal/driver/db/
+cmd/device-virtual
 cmd/db/
 VERSION

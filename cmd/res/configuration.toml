@@ -52,6 +52,21 @@ PublishTopicPrefix = 'edgex/events' # /<device-profile-name>/<device-name>/<sour
   ClientAuth = "none" # Valid values are: `none`, `usernamepassword` or `clientcert`
   Secretpath = "messagebus"  # Path in secret store used if ClientAuth not `none`
 
+# Only used when EDGEX_SECURITY_SECRET_STORE=true which is now required for secure Consul
+[SecretStore]
+Type = 'vault'
+Host = 'localhost'
+Port = 8200
+Path = '/v1/secret/edgex/device-virtual/'
+Protocol = 'http'
+RootCaCertPath = ''
+ServerName = ''
+TokenFile = '/tmp/edgex/secrets/device-virtual/secrets-token.json'
+AdditionalRetryAttempts = 10
+RetryWaitPeriod = "1s"
+  [SecretStore.Authentication]
+  AuthType = 'X-Vault-Token'
+
 [Device]
   DataTransform = true
   InitCmd = ''

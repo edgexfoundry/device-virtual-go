@@ -45,7 +45,7 @@ LABEL license='SPDX-License-Identifier: Apache-2.0' \
   copyright='Copyright (c) 2019-2021: IOTech'
 
 RUN sed -e 's/dl-cdn[.]alpinelinux.org/nl.alpinelinux.org/g' -i~ /etc/apk/repositories
-RUN apk add --update --no-cache zeromq
+RUN apk add --update --no-cache zeromq dumb-init
 
 WORKDIR /
 COPY --from=builder /device-virtual-go/Attribution.txt /
