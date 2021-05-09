@@ -36,6 +36,6 @@ docker: $(DOCKERS)
 docker_device_virtual_go:
 	docker build \
 		--label "git_sha=$(GIT_SHA)" \
-		-t edgexfoundry/docker-device-virtual-go:$(GIT_SHA) \
-		-t edgexfoundry/docker-device-virtual-go:$(VERSION)-dev \
+		-t edgexfoundry/device-virtual:$(GIT_SHA) \
+		-t edgexfoundry/device-virtual:$(VERSION)-dev \
 		.
