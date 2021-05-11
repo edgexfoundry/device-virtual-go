@@ -18,6 +18,7 @@ build: $(MICROSERVICES)
 	$(GOCGO) build ./...
 
 cmd/device-virtual:
+	go mod tidy
 	$(GOCGO) build $(GOFLAGS) -o $@ ./cmd
 
 test:
