@@ -1,7 +1,7 @@
 module github.com/edgexfoundry/device-virtual-go
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v2 v2.0.0-dev.54
+	github.com/edgexfoundry/device-sdk-go/v2 v2.0.0-dev.56
 	github.com/edgexfoundry/go-mod-core-contracts/v2 v2.0.0-dev.83
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
