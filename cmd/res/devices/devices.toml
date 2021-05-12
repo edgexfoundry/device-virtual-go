@@ -9,7 +9,7 @@
       Address = 'device-virtual-bool-01'
       Port = '300'
   [[DeviceList.AutoEvents]]
-    Frequency = '10s'
+    Interval = '10s'
     OnChange = false
     SourceName = 'Bool'
 [[DeviceList]]
@@ -22,19 +22,19 @@
       Address = 'device-virtual-int-01'
       Protocol = '300'
   [[DeviceList.AutoEvents]]
-    Frequency = '15s'
+    Interval = '15s'
     OnChange = false
     SourceName = 'Int8'
   [[DeviceList.AutoEvents]]
-    Frequency = '15s'
+    Interval = '15s'
     OnChange = false
     SourceName = 'Int16'
   [[DeviceList.AutoEvents]]
-    Frequency = '15s'
+    Interval = '15s'
     OnChange = false
     SourceName = 'Int32'
   [[DeviceList.AutoEvents]]
-    Frequency = '15s'
+    Interval = '15s'
     OnChange = false
     SourceName = 'Int64'
 [[DeviceList]]
@@ -47,19 +47,19 @@
       Address = 'device-virtual-uint-01'
       Protocol = '300'
   [[DeviceList.AutoEvents]]
-    Frequency = '20s'
+    Interval = '20s'
     OnChange = false
     SourceName = 'Uint8'
   [[DeviceList.AutoEvents]]
-    Frequency = '20s'
+    Interval = '20s'
     OnChange = false
     SourceName = 'Uint16'
   [[DeviceList.AutoEvents]]
-    Frequency = '20s'
+    Interval = '20s'
     OnChange = false
     SourceName = 'Uint32'
   [[DeviceList.AutoEvents]]
-    Frequency = '20s'
+    Interval = '20s'
     OnChange = false
     SourceName = 'Uint64'
 [[DeviceList]]
@@ -72,11 +72,11 @@
       Address = 'device-virtual-float-01'
       Protocol = '300'
   [[DeviceList.AutoEvents]]
-    Frequency = '30s'
+    Interval = '30s'
     OnChange = false
     SourceName = 'Float32'
   [[DeviceList.AutoEvents]]
-    Frequency = '30s'
+    Interval = '30s'
     OnChange = false
     SourceName = 'Float64'
 [[DeviceList]]
@@ -89,6 +89,6 @@
       Address = 'device-virtual-binary-01'
       Port = '300'
 #  [[DeviceList.AutoEvents]]
-#    Frequency = '30s'
+#    Interval = '30s'
 #    OnChange = false
 #    SourceName = 'Binary'

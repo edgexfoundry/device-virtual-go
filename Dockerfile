@@ -32,6 +32,7 @@ RUN apk add --update --no-cache ${ALPINE_PKG_BASE} ${ALPINE_PKG_EXTRA}
 COPY . .
 
 RUN go mod download
+RUN go mod tidy
 
 # To run tests in the build container:
 #   docker build --build-arg 'MAKE=build test' .
