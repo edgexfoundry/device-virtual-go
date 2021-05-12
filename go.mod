@@ -20,4 +20,4 @@ require (
 	modernc.org/zappy v1.0.0 // indirect
 )
 
-go 1.15
+go 1.16
