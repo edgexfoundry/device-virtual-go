@@ -21,7 +21,7 @@ ConnectRetries = 10
 Labels = []
 EnableAsyncReadings = true
 AsyncBufferSize = 16
-UseMessageBus = true
+UseMessageBus = false
 
 [Registry]
 Host = 'localhost'
