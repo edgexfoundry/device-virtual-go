@@ -31,6 +31,7 @@ RUN apk add --update --no-cache ${ALPINE_PKG_BASE} ${ALPINE_PKG_EXTRA}
 
 COPY . .
 
+RUN go mod tidy
 RUN go mod download
 
 # To run tests in the build container:

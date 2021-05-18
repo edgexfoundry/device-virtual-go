@@ -15,13 +15,13 @@ GIT_SHA=$(shell git rev-parse HEAD)
 GOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)"
 
 build: $(MICROSERVICES)
-	$(GOCGO) build ./...
 
 cmd/device-virtual:
 	go mod tidy
 	$(GOCGO) build $(GOFLAGS) -o $@ ./cmd
 
 test:
+	go mod tidy
 	$(GOCGO) test ./... -coverprofile=coverage.out
 	$(GOCGO) vet ./...
 	gofmt -l .
