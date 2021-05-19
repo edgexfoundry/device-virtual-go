@@ -53,7 +53,7 @@ COPY --from=builder /device-virtual-go/Attribution.txt /
 COPY --from=builder /device-virtual-go/LICENSE /
 COPY --from=builder /device-virtual-go/cmd /
 
-EXPOSE 49990
+EXPOSE 59900
 
 ENTRYPOINT ["/device-virtual"]
 CMD ["--cp=consul.http://edgex-core-consul:8500", "--registry", "--confdir=/res"]
