@@ -9,19 +9,14 @@ LogLevel = 'INFO'
       password = ""
 
 [Service]
-BootTimeout = 30000
-CheckInterval = '10s'
+HealthCheckInterval = '10s'
 Host = 'localhost'
 ServerBindAddr = ''  # blank value defaults to Service.Host value
 Port = 59900
-Protocol = 'http'
 StartupMsg = 'device virtual started'
-Timeout = 5000
-ConnectRetries = 10
-Labels = []
-EnableAsyncReadings = true
-AsyncBufferSize = 16
-UseMessageBus = false
+# MaxRequestSize limit the request body size in byte of put command
+MaxRequestSize = 0 # value 0 unlimit the request size.
+RequestTimeout = '20s'
 
 [Registry]
 Host = 'localhost'
@@ -75,13 +70,20 @@ RetryWaitPeriod = "1s"
   AuthType = 'X-Vault-Token'
 
 [Device]
-  DataTransform = true
-  InitCmd = ''
-  InitCmdArgs = ''
-  MaxCmdOps = 128
-  MaxCmdValueLen = 256
-  RemoveCmd = ''
-  RemoveCmdArgs = ''
-  ProfilesDir = './res/profiles'
-  DevicesDir = './res/devices'
-  UpdateLastConnected = false
+DataTransform = true
+InitCmd = ''
+InitCmdArgs = ''
+MaxCmdOps = 128
+MaxCmdValueLen = 256
+RemoveCmd = ''
+RemoveCmdArgs = ''
+ProfilesDir = './res/profiles'
+DevicesDir = './res/devices'
+UpdateLastConnected = false
+EnableAsyncReadings = true
+AsyncBufferSize = 1
+Labels = []
+UseMessageBus = false
+  [Device.Discovery]
+  Enabled = false
+  Interval = '30s'
