@@ -16,7 +16,7 @@ Port = 59900
 StartupMsg = 'device virtual started'
 # MaxRequestSize limit the request body size in byte of put command
 MaxRequestSize = 0 # value 0 unlimit the request size.
-RequestTimeout = '20s'
+RequestTimeout = '5s'
 
 [Registry]
 Host = 'localhost'
@@ -81,7 +81,7 @@ ProfilesDir = './res/profiles'
 DevicesDir = './res/devices'
 UpdateLastConnected = false
 EnableAsyncReadings = true
-AsyncBufferSize = 1
+AsyncBufferSize = 16
 Labels = []
 UseMessageBus = false
   [Device.Discovery]
