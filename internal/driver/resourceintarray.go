@@ -46,7 +46,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 				newArrayIntValue = append(newArrayIntValue, randomInt(min, max))
 			}
 		} else {
-			strArr := strings.Split(strings.Trim(currentValue, "[]"), ",")
+			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
 			for _, s := range strArr {
 				i, err := strconv.ParseInt(strings.Trim(s, " "), 10, 8)
 				if err != nil {
@@ -70,7 +70,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 				newArrayIntValue = append(newArrayIntValue, randomInt(min, max))
 			}
 		} else {
-			strArr := strings.Split(strings.Trim(currentValue, "[]"), ",")
+			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
 			for _, s := range strArr {
 				i, err := strconv.ParseInt(strings.Trim(s, " "), 10, 16)
 				if err != nil {
@@ -96,7 +96,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 				}
 			}
 		} else {
-			strArr := strings.Split(strings.Trim(currentValue, "[]"), ",")
+			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
 			for _, s := range strArr {
 				i, err := strconv.ParseInt(strings.Trim(s, " "), 10, 32)
 				if err != nil {
@@ -122,7 +122,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 				}
 			}
 		} else {
-			strArr := strings.Split(strings.Trim(currentValue, "[]"), ",")
+			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
 			for _, s := range strArr {
 				i, err := strconv.ParseInt(strings.Trim(s, " "), 10, 64)
 				if err != nil {

@@ -34,7 +34,7 @@ func (rb *resourceBoolArray) value(db *db, deviceName, deviceResourceName string
 			newArrayBoolValue = append(newArrayBoolValue, rand.Int()%2 == 0)
 		}
 	} else {
-		strArr := strings.Split(strings.Trim(currentValue, "[]"), ",")
+		strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
 		for _, s := range strArr {
 			b, err := strconv.ParseBool(strings.Trim(s, " "))
 			if err != nil {
