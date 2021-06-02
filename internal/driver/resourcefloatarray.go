@@ -45,7 +45,7 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 				newValueFloat32Array = append(newValueFloat32Array, float32(randomFloat(min, max)))
 			}
 		} else {
-			strArr := strings.Split(strings.Trim(currentValue, "[]"), ",")
+			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
 			for _, s := range strArr {
 				f, err := strconv.ParseFloat(strings.Trim(s, " "), 32)
 				if err != nil {
@@ -66,7 +66,7 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 				newValueFloat64Array = append(newValueFloat64Array, randomFloat(min, max))
 			}
 		} else {
-			strArr := strings.Split(strings.Trim(currentValue, "[]"), ",")
+			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
 			for _, s := range strArr {
 				f, err := strconv.ParseFloat(strings.Trim(s, " "), 64)
 				if err != nil {
