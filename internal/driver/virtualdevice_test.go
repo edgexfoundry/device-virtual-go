@@ -13,7 +13,7 @@ import (
 	"testing"
 
 	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 const (
@@ -21,29 +21,29 @@ const (
 	enableRandomizationTrue = true
 	rounds                  = 10
 
-	nameBool         = v2.ValueTypeBool
-	nameBoolArray    = v2.ValueTypeBoolArray
-	nameInt8         = v2.ValueTypeInt8
-	nameInt8Array    = v2.ValueTypeInt8Array
-	nameInt16        = v2.ValueTypeInt16
-	nameInt16Array   = v2.ValueTypeInt16Array
-	nameInt32        = v2.ValueTypeInt32
-	nameInt32Array   = v2.ValueTypeInt32Array
-	nameInt64        = v2.ValueTypeInt64
-	nameInt64Array   = v2.ValueTypeInt64Array
-	nameUint8        = v2.ValueTypeUint8
-	nameUint8Array   = v2.ValueTypeUint8Array
-	nameUint16       = v2.ValueTypeUint16
-	nameUint16Array  = v2.ValueTypeUint16Array
-	nameUint32       = v2.ValueTypeUint32
-	nameUint32Array  = v2.ValueTypeUint32Array
-	nameUint64       = v2.ValueTypeUint64
-	nameUint64Array  = v2.ValueTypeUint64Array
-	nameFloat32      = v2.ValueTypeFloat32
-	nameFloat32Array = v2.ValueTypeFloat32Array
-	nameFloat64      = v2.ValueTypeFloat64
-	nameFloat64Array = v2.ValueTypeFloat64Array
-	nameBinary       = v2.ValueTypeBinary
+	nameBool         = common.ValueTypeBool
+	nameBoolArray    = common.ValueTypeBoolArray
+	nameInt8         = common.ValueTypeInt8
+	nameInt8Array    = common.ValueTypeInt8Array
+	nameInt16        = common.ValueTypeInt16
+	nameInt16Array   = common.ValueTypeInt16Array
+	nameInt32        = common.ValueTypeInt32
+	nameInt32Array   = common.ValueTypeInt32Array
+	nameInt64        = common.ValueTypeInt64
+	nameInt64Array   = common.ValueTypeInt64Array
+	nameUint8        = common.ValueTypeUint8
+	nameUint8Array   = common.ValueTypeUint8Array
+	nameUint16       = common.ValueTypeUint16
+	nameUint16Array  = common.ValueTypeUint16Array
+	nameUint32       = common.ValueTypeUint32
+	nameUint32Array  = common.ValueTypeUint32Array
+	nameUint64       = common.ValueTypeUint64
+	nameUint64Array  = common.ValueTypeUint64Array
+	nameFloat32      = common.ValueTypeFloat32
+	nameFloat32Array = common.ValueTypeFloat32Array
+	nameFloat64      = common.ValueTypeFloat64
+	nameFloat64Array = common.ValueTypeFloat64Array
+	nameBinary       = common.ValueTypeBinary
 )
 
 func prepareDB() *db {
@@ -675,16 +675,16 @@ func ValueFloatxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 func getIntValue(cv *models.CommandValue) int64 {
 	switch cv.Type {
-	case v2.ValueTypeInt8:
+	case common.ValueTypeInt8:
 		v, _ := cv.Int8Value()
 		return int64(v)
-	case v2.ValueTypeInt16:
+	case common.ValueTypeInt16:
 		v, _ := cv.Int16Value()
 		return int64(v)
-	case v2.ValueTypeInt32:
+	case common.ValueTypeInt32:
 		v, _ := cv.Int32Value()
 		return int64(v)
-	case v2.ValueTypeInt64:
+	case common.ValueTypeInt64:
 		v, _ := cv.Int64Value()
 		return v
 	default:
@@ -695,22 +695,22 @@ func getIntValue(cv *models.CommandValue) int64 {
 func getIntArrayValue(cv *models.CommandValue) []int64 {
 	var value []int64
 	switch cv.Type {
-	case v2.ValueTypeInt8Array:
+	case common.ValueTypeInt8Array:
 		int8Arr, _ := cv.Int8ArrayValue()
 		for _, i := range int8Arr {
 			value = append(value, int64(i))
 		}
-	case v2.ValueTypeInt16Array:
+	case common.ValueTypeInt16Array:
 		int16Arr, _ := cv.Int16ArrayValue()
 		for _, i := range int16Arr {
 			value = append(value, int64(i))
 		}
-	case v2.ValueTypeInt32Array:
+	case common.ValueTypeInt32Array:
 		int32Arr, _ := cv.Int32ArrayValue()
 		for _, i := range int32Arr {
 			value = append(value, int64(i))
 		}
-	case v2.ValueTypeInt64Array:
+	case common.ValueTypeInt64Array:
 		value, _ = cv.Int64ArrayValue()
 	default:
 		value = []int64{0}
@@ -720,16 +720,16 @@ func getIntArrayValue(cv *models.CommandValue) []int64 {
 
 func getUintValue(cv *models.CommandValue) uint64 {
 	switch cv.Type {
-	case v2.ValueTypeUint8:
+	case common.ValueTypeUint8:
 		v, _ := cv.Uint8Value()
 		return uint64(v)
-	case v2.ValueTypeUint16:
+	case common.ValueTypeUint16:
 		v, _ := cv.Uint16Value()
 		return uint64(v)
-	case v2.ValueTypeUint32:
+	case common.ValueTypeUint32:
 		v, _ := cv.Uint32Value()
 		return uint64(v)
-	case v2.ValueTypeUint64:
+	case common.ValueTypeUint64:
 		v, _ := cv.Uint64Value()
 		return v
 	default:
@@ -740,22 +740,22 @@ func getUintValue(cv *models.CommandValue) uint64 {
 func getUintArrayValue(cv *models.CommandValue) []uint64 {
 	var value []uint64
 	switch cv.Type {
-	case v2.ValueTypeUint8Array:
+	case common.ValueTypeUint8Array:
 		uint8Arr, _ := cv.Uint8ArrayValue()
 		for _, i := range uint8Arr {
 			value = append(value, uint64(i))
 		}
-	case v2.ValueTypeUint16Array:
+	case common.ValueTypeUint16Array:
 		uint16Arr, _ := cv.Uint16ArrayValue()
 		for _, i := range uint16Arr {
 			value = append(value, uint64(i))
 		}
-	case v2.ValueTypeUint32Array:
+	case common.ValueTypeUint32Array:
 		uint32Arr, _ := cv.Uint32ArrayValue()
 		for _, i := range uint32Arr {
 			value = append(value, uint64(i))
 		}
-	case v2.ValueTypeUint64Array:
+	case common.ValueTypeUint64Array:
 		value, _ = cv.Uint64ArrayValue()
 	default:
 		value = []uint64{0}
@@ -765,10 +765,10 @@ func getUintArrayValue(cv *models.CommandValue) []uint64 {
 
 func getFloatValue(cv *models.CommandValue) float64 {
 	switch cv.Type {
-	case v2.ValueTypeFloat32:
+	case common.ValueTypeFloat32:
 		v, _ := cv.Float32Value()
 		return float64(v)
-	case v2.ValueTypeFloat64:
+	case common.ValueTypeFloat64:
 		v, _ := cv.Float64Value()
 		return v
 	default:
@@ -779,12 +779,12 @@ func getFloatValue(cv *models.CommandValue) float64 {
 func getFloatArrayValue(cv *models.CommandValue) []float64 {
 	var value []float64
 	switch cv.Type {
-	case v2.ValueTypeFloat32Array:
+	case common.ValueTypeFloat32Array:
 		float32Arr, _ := cv.Float32ArrayValue()
 		for _, f := range float32Arr {
 			value = append(value, float64(f))
 		}
-	case v2.ValueTypeFloat64Array:
+	case common.ValueTypeFloat64Array:
 		value, _ = cv.Float64ArrayValue()
 	default:
 		value = []float64{0}

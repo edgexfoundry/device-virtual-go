@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 type resourceFloat struct{}
@@ -35,7 +35,7 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 	min, max, err := parseFloatMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
-	case v2.ValueTypeFloat32:
+	case common.ValueTypeFloat32:
 		bitSize = 32
 		if enableRandomization {
 			if err == nil {
@@ -46,8 +46,8 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueFloat, err = strconv.ParseFloat(currentValue, 32); err != nil {
 			return result, err
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeFloat32, float32(newValueFloat))
-	case v2.ValueTypeFloat64:
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeFloat32, float32(newValueFloat))
+	case common.ValueTypeFloat64:
 		bitSize = 64
 		if enableRandomization {
 			if err == nil {
@@ -58,7 +58,7 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueFloat, err = strconv.ParseFloat(currentValue, 64); err != nil {
 			return result, err
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeFloat64, newValueFloat)
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeFloat64, newValueFloat)
 	}
 
 	if err != nil {
@@ -70,13 +70,13 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 
 func (rf *resourceFloat) write(param *models.CommandValue, deviceName string, db *db) error {
 	switch param.Type {
-	case v2.ValueTypeFloat32:
+	case common.ValueTypeFloat32:
 		if v, err := param.Float32Value(); err == nil {
 			return db.updateResourceValue(strconv.FormatFloat(float64(v), 'e', -1, 32), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceFloat.write: %v", err)
 		}
-	case v2.ValueTypeFloat64:
+	case common.ValueTypeFloat64:
 		if v, err := param.Float64Value(); err == nil {
 			return db.updateResourceValue(strconv.FormatFloat(float64(v), 'e', -1, 64), deviceName, param.DeviceResourceName, true)
 		} else {

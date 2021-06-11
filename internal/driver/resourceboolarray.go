@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 type resourceBoolArray struct{}
@@ -43,7 +43,7 @@ func (rb *resourceBoolArray) value(db *db, deviceName, deviceResourceName string
 			newArrayBoolValue = append(newArrayBoolValue, b)
 		}
 	}
-	result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeBoolArray, newArrayBoolValue)
+	result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeBoolArray, newArrayBoolValue)
 	if err != nil {
 		return result, err
 	}

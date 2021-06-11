@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 type resourceUint struct{}
@@ -33,7 +33,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 	min, max, err := parseUintMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
-	case v2.ValueTypeUint8:
+	case common.ValueTypeUint8:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -43,8 +43,8 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 8); err != nil {
 			return result, err
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeUint8, uint8(newValueUint))
-	case v2.ValueTypeUint16:
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint8, uint8(newValueUint))
+	case common.ValueTypeUint16:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -54,8 +54,8 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 16); err != nil {
 			return result, err
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeUint16, uint16(newValueUint))
-	case v2.ValueTypeUint32:
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint16, uint16(newValueUint))
+	case common.ValueTypeUint32:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -65,8 +65,8 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 32); err != nil {
 			return result, err
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeUint32, uint32(newValueUint))
-	case v2.ValueTypeUint64:
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint32, uint32(newValueUint))
+	case common.ValueTypeUint64:
 		if enableRandomization {
 			if err == nil {
 				newValueUint = randomUint(min, max)
@@ -76,7 +76,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 64); err != nil {
 			return result, err
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeUint64, newValueUint)
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint64, newValueUint)
 	}
 
 	if err != nil {
@@ -88,25 +88,25 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 
 func (ru *resourceUint) write(param *models.CommandValue, deviceName string, db *db) error {
 	switch param.Type {
-	case v2.ValueTypeUint8:
+	case common.ValueTypeUint8:
 		if _, err := param.Uint8Value(); err == nil {
 			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
-	case v2.ValueTypeUint16:
+	case common.ValueTypeUint16:
 		if _, err := param.Uint16Value(); err == nil {
 			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
-	case v2.ValueTypeUint32:
+	case common.ValueTypeUint32:
 		if _, err := param.Uint32Value(); err == nil {
 			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {
 			return fmt.Errorf("resourceUint.write: %v", err)
 		}
-	case v2.ValueTypeUint64:
+	case common.ValueTypeUint64:
 		if _, err := param.Uint64Value(); err == nil {
 			return db.updateResourceValue(param.ValueToString(), deviceName, param.DeviceResourceName, true)
 		} else {

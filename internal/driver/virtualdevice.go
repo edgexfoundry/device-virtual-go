@@ -10,7 +10,7 @@ import (
 	"fmt"
 
 	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 const (
@@ -32,23 +32,23 @@ type virtualDevice struct {
 func (d *virtualDevice) read(deviceName, deviceResourceName, typeName, minimum, maximum string, db *db) (*models.CommandValue, error) {
 	result := &models.CommandValue{}
 	switch typeName {
-	case v2.ValueTypeBool:
+	case common.ValueTypeBool:
 		return d.resourceBool.value(db, deviceName, deviceResourceName)
-	case v2.ValueTypeBoolArray:
+	case common.ValueTypeBoolArray:
 		return d.resourceBoolArray.value(db, deviceName, deviceResourceName)
-	case v2.ValueTypeInt8, v2.ValueTypeInt16, v2.ValueTypeInt32, v2.ValueTypeInt64:
+	case common.ValueTypeInt8, common.ValueTypeInt16, common.ValueTypeInt32, common.ValueTypeInt64:
 		return d.resourceInt.value(db, deviceName, deviceResourceName, minimum, maximum)
-	case v2.ValueTypeInt8Array, v2.ValueTypeInt16Array, v2.ValueTypeInt32Array, v2.ValueTypeInt64Array:
+	case common.ValueTypeInt8Array, common.ValueTypeInt16Array, common.ValueTypeInt32Array, common.ValueTypeInt64Array:
 		return d.resourceIntArray.value(db, deviceName, deviceResourceName, minimum, maximum)
-	case v2.ValueTypeUint8, v2.ValueTypeUint16, v2.ValueTypeUint32, v2.ValueTypeUint64:
+	case common.ValueTypeUint8, common.ValueTypeUint16, common.ValueTypeUint32, common.ValueTypeUint64:
 		return d.resourceUint.value(db, deviceName, deviceResourceName, minimum, maximum)
-	case v2.ValueTypeUint8Array, v2.ValueTypeUint16Array, v2.ValueTypeUint32Array, v2.ValueTypeUint64Array:
+	case common.ValueTypeUint8Array, common.ValueTypeUint16Array, common.ValueTypeUint32Array, common.ValueTypeUint64Array:
 		return d.resourceUintArray.value(db, deviceName, deviceResourceName, minimum, maximum)
-	case v2.ValueTypeFloat32, v2.ValueTypeFloat64:
+	case common.ValueTypeFloat32, common.ValueTypeFloat64:
 		return d.resourceFloat.value(db, deviceName, deviceResourceName, minimum, maximum)
-	case v2.ValueTypeFloat32Array, v2.ValueTypeFloat64Array:
+	case common.ValueTypeFloat32Array, common.ValueTypeFloat64Array:
 		return d.resourceFloatArray.value(db, deviceName, deviceResourceName, minimum, maximum)
-	case v2.ValueTypeBinary:
+	case common.ValueTypeBinary:
 		return d.resourceBinary.value(deviceResourceName)
 	default:
 		return result, fmt.Errorf("virtualDevice.read: wrong read type: %s", deviceResourceName)
@@ -57,23 +57,23 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, typeName, minimum, 
 
 func (d *virtualDevice) write(param *models.CommandValue, deviceName string, db *db) error {
 	switch param.Type {
-	case v2.ValueTypeBool:
+	case common.ValueTypeBool:
 		return d.resourceBool.write(param, deviceName, db)
-	case v2.ValueTypeBoolArray:
+	case common.ValueTypeBoolArray:
 		return d.resourceBoolArray.write(param, deviceName, db)
-	case v2.ValueTypeInt8, v2.ValueTypeInt16, v2.ValueTypeInt32, v2.ValueTypeInt64:
+	case common.ValueTypeInt8, common.ValueTypeInt16, common.ValueTypeInt32, common.ValueTypeInt64:
 		return d.resourceInt.write(param, deviceName, db)
-	case v2.ValueTypeInt8Array, v2.ValueTypeInt16Array, v2.ValueTypeInt32Array, v2.ValueTypeInt64Array:
+	case common.ValueTypeInt8Array, common.ValueTypeInt16Array, common.ValueTypeInt32Array, common.ValueTypeInt64Array:
 		return d.resourceIntArray.write(param, deviceName, db)
-	case v2.ValueTypeUint8, v2.ValueTypeUint16, v2.ValueTypeUint32, v2.ValueTypeUint64:
+	case common.ValueTypeUint8, common.ValueTypeUint16, common.ValueTypeUint32, common.ValueTypeUint64:
 		return d.resourceUint.write(param, deviceName, db)
-	case v2.ValueTypeUint8Array, v2.ValueTypeUint16Array, v2.ValueTypeUint32Array, v2.ValueTypeUint64Array:
+	case common.ValueTypeUint8Array, common.ValueTypeUint16Array, common.ValueTypeUint32Array, common.ValueTypeUint64Array:
 		return d.resourceUintArray.write(param, deviceName, db)
-	case v2.ValueTypeFloat32, v2.ValueTypeFloat64:
+	case common.ValueTypeFloat32, common.ValueTypeFloat64:
 		return d.resourceFloat.write(param, deviceName, db)
-	case v2.ValueTypeFloat32Array, v2.ValueTypeFloat64Array:
+	case common.ValueTypeFloat32Array, common.ValueTypeFloat64Array:
 		return d.resourceFloatArray.write(param, deviceName, db)
-	case v2.ValueTypeBinary:
+	case common.ValueTypeBinary:
 		return d.resourceBinary.write(param, deviceName, db)
 	default:
 		return fmt.Errorf("VirtualDriver.HandleWriteCommands: there is no matched device resource for %s", param.String())

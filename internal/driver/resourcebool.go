@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 type resourceBool struct{}
@@ -36,7 +36,7 @@ func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*m
 			return result, err
 		}
 	}
-	result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeBool, newValueBool)
+	result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeBool, newValueBool)
 	if err != nil {
 		return result, err
 	}
