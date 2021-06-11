@@ -13,7 +13,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 func parseStrToInt(str string, bitSize int) (int64, error) {
@@ -29,25 +29,25 @@ func parseIntMinimumMaximum(minimum, maximum, dataType string) (int64, int64, er
 	var min, max int64
 
 	switch dataType {
-	case v2.ValueTypeInt8, v2.ValueTypeInt8Array:
+	case common.ValueTypeInt8, common.ValueTypeInt8Array:
 		min, err1 = parseStrToInt(minimum, 8)
 		max, err2 = parseStrToInt(maximum, 8)
 		if max <= min || err1 != nil || err2 != nil {
 			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
 		}
-	case v2.ValueTypeInt16, v2.ValueTypeInt16Array:
+	case common.ValueTypeInt16, common.ValueTypeInt16Array:
 		min, err1 = parseStrToInt(minimum, 16)
 		max, err2 = parseStrToInt(maximum, 16)
 		if max <= min || err1 != nil || err2 != nil {
 			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
 		}
-	case v2.ValueTypeInt32, v2.ValueTypeInt32Array:
+	case common.ValueTypeInt32, common.ValueTypeInt32Array:
 		min, err1 = parseStrToInt(minimum, 32)
 		max, err2 = parseStrToInt(maximum, 32)
 		if max <= min || err1 != nil || err2 != nil {
 			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
 		}
-	case v2.ValueTypeInt64, v2.ValueTypeInt64Array:
+	case common.ValueTypeInt64, common.ValueTypeInt64Array:
 		min, err1 = parseStrToInt(minimum, 64)
 		max, err2 = parseStrToInt(maximum, 64)
 		if max <= min || err1 != nil || err2 != nil {
@@ -110,25 +110,25 @@ func parseUintMinimumMaximum(minimum, maximum, dataType string) (uint64, uint64,
 	var min, max uint64
 
 	switch dataType {
-	case v2.ValueTypeUint8, v2.ValueTypeUint8Array:
+	case common.ValueTypeUint8, common.ValueTypeUint8Array:
 		min, err1 = parseStrToUint(minimum, 8)
 		max, err2 = parseStrToUint(maximum, 8)
 		if max <= min || err1 != nil || err2 != nil {
 			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
 		}
-	case v2.ValueTypeUint16, v2.ValueTypeUint16Array:
+	case common.ValueTypeUint16, common.ValueTypeUint16Array:
 		min, err1 = parseStrToUint(minimum, 16)
 		max, err2 = parseStrToUint(maximum, 16)
 		if max <= min || err1 != nil || err2 != nil {
 			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
 		}
-	case v2.ValueTypeUint32, v2.ValueTypeUint32Array:
+	case common.ValueTypeUint32, common.ValueTypeUint32Array:
 		min, err1 = parseStrToUint(minimum, 32)
 		max, err2 = parseStrToUint(maximum, 32)
 		if max <= min || err1 != nil || err2 != nil {
 			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
 		}
-	case v2.ValueTypeUint64, v2.ValueTypeUint64Array:
+	case common.ValueTypeUint64, common.ValueTypeUint64Array:
 		min, err1 = parseStrToUint(minimum, 64)
 		max, err2 = parseStrToUint(maximum, 64)
 		if max <= min || err1 != nil || err2 != nil {
@@ -163,13 +163,13 @@ func parseFloatMinimumMaximum(minimum, maximum, dataType string) (float64, float
 	var err, err1, err2 error
 	var min, max float64
 	switch dataType {
-	case v2.ValueTypeFloat32, v2.ValueTypeFloat32Array:
+	case common.ValueTypeFloat32, common.ValueTypeFloat32Array:
 		min, err1 = parseStrToFloat(minimum, 32)
 		max, err2 = parseStrToFloat(maximum, 32)
 		if max <= min || err1 != nil || err2 != nil {
 			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
 		}
-	case v2.ValueTypeFloat64, v2.ValueTypeFloat64Array:
+	case common.ValueTypeFloat64, common.ValueTypeFloat64Array:
 		min, err1 = parseStrToFloat(minimum, 64)
 		max, err2 = parseStrToFloat(maximum, 64)
 		if max <= min || err1 != nil || err2 != nil {

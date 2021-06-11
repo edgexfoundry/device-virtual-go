@@ -16,8 +16,8 @@ import (
 	dsModels "github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
 	sdk "github.com/edgexfoundry/device-sdk-go/v2/pkg/service"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/clients/logger"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2/models"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/models"
 
 	_ "modernc.org/ql/driver"
 )
@@ -187,7 +187,7 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 	}
 
 	for _, dr := range profile.DeviceResources {
-		if dr.Properties.ReadWrite == v2.ReadWrite_R || dr.Properties.ReadWrite == v2.ReadWrite_RW {
+		if dr.Properties.ReadWrite == common.ReadWrite_R || dr.Properties.ReadWrite == common.ReadWrite_RW {
 			/*
 				d.Name <-> VIRTUAL_RESOURCE.deviceName
 				dr.Name <-> VIRTUAL_RESOURCE.CommandName, VIRTUAL_RESOURCE.ResourceName
@@ -195,7 +195,7 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 				dr.Properties.Value.Type <-> VIRTUAL_RESOURCE.DataType
 				dr.Properties.Value.DefaultValue <-> VIRTUAL_RESOURCE.Value
 			*/
-			if dr.Properties.ValueType == v2.ValueTypeBinary {
+			if dr.Properties.ValueType == common.ValueTypeBinary {
 				continue
 			}
 			if err := driver.db.exec(SqlInsert, device.Name, dr.Name, dr.Name, true, dr.Properties.ValueType,

@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 type resourceBinary struct{}
@@ -23,7 +23,7 @@ func (rb *resourceBinary) value(deviceResourceName string) (*models.CommandValue
 	rand.Seed(time.Now().UnixNano())
 	rand.Read(newValueB)
 
-	result, err := models.NewCommandValue(deviceResourceName, v2.ValueTypeBinary, newValueB)
+	result, err := models.NewCommandValue(deviceResourceName, common.ValueTypeBinary, newValueB)
 	if err != nil {
 		return result, err
 	}

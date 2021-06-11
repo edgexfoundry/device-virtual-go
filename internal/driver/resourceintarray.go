@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 type resourceIntArray struct{}
@@ -36,7 +36,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 	min, max, err := parseIntMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
-	case v2.ValueTypeInt8Array:
+	case common.ValueTypeInt8Array:
 		if enableRandomization {
 			if err != nil {
 				min = int64(math.MinInt8)
@@ -59,8 +59,8 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 		for _, i := range newArrayIntValue {
 			int8Array = append(int8Array, int8(i))
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeInt8Array, int8Array)
-	case v2.ValueTypeInt16Array:
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt8Array, int8Array)
+	case common.ValueTypeInt16Array:
 		if enableRandomization {
 			if err != nil {
 				min = int64(math.MinInt16)
@@ -83,8 +83,8 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 		for _, i := range newArrayIntValue {
 			int16Array = append(int16Array, int16(i))
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeInt16Array, int16Array)
-	case v2.ValueTypeInt32Array:
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt16Array, int16Array)
+	case common.ValueTypeInt32Array:
 		if enableRandomization {
 			if err == nil {
 				for i := 0; i < defaultArrayValueSize; i++ {
@@ -109,8 +109,8 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 		for _, i := range newArrayIntValue {
 			int32Array = append(int32Array, int32(i))
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeInt32Array, int32Array)
-	case v2.ValueTypeInt64Array:
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt32Array, int32Array)
+	case common.ValueTypeInt64Array:
 		if enableRandomization {
 			if err == nil {
 				for i := 0; i < defaultArrayValueSize; i++ {
@@ -131,7 +131,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 				newArrayIntValue = append(newArrayIntValue, i)
 			}
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeInt64Array, newArrayIntValue)
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt64Array, newArrayIntValue)
 	}
 
 	if err != nil {
@@ -145,19 +145,19 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 
 func (ri *resourceIntArray) write(param *models.CommandValue, deviceName string, db *db) error {
 	switch param.Type {
-	case v2.ValueTypeInt8Array:
+	case common.ValueTypeInt8Array:
 		if _, err := param.Int8ArrayValue(); err != nil {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	case v2.ValueTypeInt16Array:
+	case common.ValueTypeInt16Array:
 		if _, err := param.Int16ArrayValue(); err != nil {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	case v2.ValueTypeInt32Array:
+	case common.ValueTypeInt32Array:
 		if _, err := param.Int32ArrayValue(); err != nil {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}
-	case v2.ValueTypeInt64Array:
+	case common.ValueTypeInt64Array:
 		if _, err := param.Int64ArrayValue(); err != nil {
 			return fmt.Errorf("resourceInt.write: %v", err)
 		}

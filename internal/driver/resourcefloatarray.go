@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v2/pkg/models"
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/v2"
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 )
 
 type resourceFloatArray struct{}
@@ -34,7 +34,7 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 	min, max, err := parseFloatMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
-	case v2.ValueTypeFloat32Array:
+	case common.ValueTypeFloat32Array:
 		var newValueFloat32Array []float32
 		if enableRandomization {
 			if err != nil {
@@ -54,8 +54,8 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 				newValueFloat32Array = append(newValueFloat32Array, float32(f))
 			}
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeFloat32Array, newValueFloat32Array)
-	case v2.ValueTypeFloat64Array:
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeFloat32Array, newValueFloat32Array)
+	case common.ValueTypeFloat64Array:
 		var newValueFloat64Array []float64
 		if enableRandomization {
 			if err != nil {
@@ -75,7 +75,7 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 				newValueFloat64Array = append(newValueFloat64Array, f)
 			}
 		}
-		result, err = models.NewCommandValue(deviceResourceName, v2.ValueTypeFloat64Array, newValueFloat64Array)
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeFloat64Array, newValueFloat64Array)
 	}
 
 	if err != nil {
@@ -89,11 +89,11 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 
 func (rf *resourceFloatArray) write(param *models.CommandValue, deviceName string, db *db) error {
 	switch param.Type {
-	case v2.ValueTypeFloat32Array:
+	case common.ValueTypeFloat32Array:
 		if _, err := param.Float32ArrayValue(); err != nil {
 			return fmt.Errorf("resourceFloat.write: %v", err)
 		}
-	case v2.ValueTypeFloat64Array:
+	case common.ValueTypeFloat64Array:
 		if _, err := param.Float64ArrayValue(); err != nil {
 			return fmt.Errorf("resourceFloat.write: %v", err)
 		}
