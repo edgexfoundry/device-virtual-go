@@ -19,5 +19,5 @@ const (
 
 func main() {
 	d := driver.NewVirtualDeviceDriver()
-	startup.Bootstrap(serviceName, device_virtual.Version, d)
+	startup.Bootstrap(serviceKey, device_virtual.Version, d)
 }
