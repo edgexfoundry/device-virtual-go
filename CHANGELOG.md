@@ -4,6 +4,9 @@
 [Github repository](https://github.com/edgexfoundry/device-virtual-go)
 
 ## [v2.0.0] Ireland - 2021-06-30  (Not Compatible with 1.x releases)
+### Change Logs for EdgeX Dependencies
+- [device-sdk-go](https://github.com/edgexfoundry/device-sdk-go/blob/v2.0.0/CHANGELOG.md)
+- [go-mod-core-contracts](https://github.com/edgexfoundry/go-mod-core-contracts/blob/v2.0.0/CHANGELOG.md)
 
 ### Features ✨
 - Enable using MessageBus as the default ([#dee740d](https://github.com/edgexfoundry/device-virtual-go/commits/dee740d))
@@ -18,15 +21,10 @@
 ### Bug Fixes 🐛
 - update separator for GET array value handler function ([#f5ae1f5](https://github.com/edgexfoundry/device-virtual-go/commits/f5ae1f5))
 - update default service configuration ([#735eab6](https://github.com/edgexfoundry/device-virtual-go/commits/735eab6))
-- Set UseMessageBus back to false ([#6faa9be](https://github.com/edgexfoundry/device-virtual-go/commits/6faa9be))
 - pass correct argument in prepareVirtualResources ([#3f1af1c](https://github.com/edgexfoundry/device-virtual-go/commits/3f1af1c))
-- **build:** update Dockerfile to go 1.16 ([#8cf28ce](https://github.com/edgexfoundry/device-virtual-go/commits/8cf28ce))
-- **build:** update go.mod to go 1.16 ([#587e06e](https://github.com/edgexfoundry/device-virtual-go/commits/587e06e))
 ### Code Refactoring ♻
-- bump dependency version and update import path ([#ddc9002](https://github.com/edgexfoundry/device-virtual-go/commits/ddc9002))
 - remove unimplemented InitCmd/RemoveCmd configuration ([#db5966d](https://github.com/edgexfoundry/device-virtual-go/commits/db5966d))
 - Change PublishTopicPrefix value to be 'edgex/events/device' ([#3806501](https://github.com/edgexfoundry/device-virtual-go/commits/3806501))
-- Remove retry items of SecretStore config and update secret path go-mod-bootstrap has implemented the addition of prefix /v1/secret/edgex/ for the Path property of SecretStore config section, so we just use the service specific secret path     in Toml files ([#c83b18e](https://github.com/edgexfoundry/device-virtual-go/commits/c83b18e))
 - Update to assign and uses new Port Assignments ([#a4c3f51](https://github.com/edgexfoundry/device-virtual-go/commits/a4c3f51))
     ```
     BREAKING CHANGE:
@@ -38,11 +36,13 @@
     BREAKING CHANGE:
     Service key names used in configuration have changed.
     ```
-- Secure Messagebus Rework ([#8b6e00b](https://github.com/edgexfoundry/device-virtual-go/commits/8b6e00b))
 - Updated to latest SDK and update MessageQue type to be `redis` ([#ff158f9](https://github.com/edgexfoundry/device-virtual-go/commits/ff158f9))
 - consume v2 Device SDK ([#941086c](https://github.com/edgexfoundry/device-virtual-go/commits/941086c))
 ### Documentation 📖
 - Add badges to readme ([#e3e4674](https://github.com/edgexfoundry/device-virtual-go/commits/e3e4674))
+### Build 👷
+- update Dockerfile to go 1.16 ([#8cf28ce](https://github.com/edgexfoundry/device-virtual-go/commits/8cf28ce))
+- update go.mod to go 1.16 ([#587e06e](https://github.com/edgexfoundry/device-virtual-go/commits/587e06e))
 ### Continuous Integration 🔄
 - update local docker image names ([#390274e](https://github.com/edgexfoundry/device-virtual-go/commits/390274e))
 
