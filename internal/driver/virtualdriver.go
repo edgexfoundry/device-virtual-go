@@ -80,9 +80,7 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 
 func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[string]models.ProtocolProperties, reqs []dsModels.CommandRequest) (res []*dsModels.CommandValue, err error) {
 	d.locker.Lock()
-	defer func() {
-		d.locker.Unlock()
-	}()
+	defer driver.locker.Unlock()
 
 	vd, err := d.retrieveVirtualDevice(deviceName)
 	if err != nil {
@@ -109,9 +107,7 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 func (d *VirtualDriver) HandleWriteCommands(deviceName string, protocols map[string]models.ProtocolProperties, reqs []dsModels.CommandRequest,
 	params []*dsModels.CommandValue) error {
 	d.locker.Lock()
-	defer func() {
-		d.locker.Unlock()
-	}()
+	defer driver.locker.Unlock()
 
 	vd, err := d.retrieveVirtualDevice(deviceName)
 	if err != nil {
@@ -167,9 +163,7 @@ func initVirtualResourceTable(driver *VirtualDriver) error {
 
 func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 	driver.locker.Lock()
-	defer func() {
-		driver.locker.Unlock()
-	}()
+	defer driver.locker.Unlock()
 
 	service := sdk.RunningService()
 	device, err := service.GetDeviceByName(deviceName)
@@ -208,9 +202,7 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 
 func deleteVirtualResources(driver *VirtualDriver, deviceName string) error {
 	driver.locker.Lock()
-	defer func() {
-		driver.locker.Unlock()
-	}()
+	defer driver.locker.Unlock()
 
 	if err := driver.db.exec(SqlDelete, deviceName); err != nil {
 		driver.lc.Info(fmt.Sprintf("Delete virtual resources of device %s failed: %v", deviceName, err))
