@@ -30,9 +30,7 @@ RUN sed -e 's/dl-cdn[.]alpinelinux.org/nl.alpinelinux.org/g' -i~ /etc/apk/reposi
 RUN apk add --update --no-cache ${ALPINE_PKG_BASE} ${ALPINE_PKG_EXTRA}
 
 COPY . .
-
-RUN go mod tidy
-RUN go mod download
+RUN [ ! -d "vendor" ] && go mod download all || echo "skipping..."
 
 # To run tests in the build container:
 #   docker build --build-arg 'MAKE=build test' .
