@@ -1,7 +1,12 @@
 .PHONY: build test clean docker
 
-GO=CGO_ENABLED=0 GO111MODULE=on go
-GOCGO=CGO_ENABLED=1 GO111MODULE=on go
+GO=CGO_ENABLED=1 GO111MODULE=on go
+
+# Don't need CGO_ENABLED=1 on Windows w/o ZMQ.
+# If it is enabled something is invoking gcc and causing errors
+ifeq ($(OS),Windows_NT)
+  GO=CGO_ENABLED=0 GO111MODULE=on go
+endif
 
 MICROSERVICES=cmd/device-virtual
 
@@ -20,11 +25,11 @@ tidy:
 build: $(MICROSERVICES)
 
 cmd/device-virtual:
-	$(GOCGO) build $(GOFLAGS) -o $@ ./cmd
+	$(GO) build $(GOFLAGS) -o $@ ./cmd
 
 test:
-	$(GOCGO) test ./... -coverprofile=coverage.out
-	$(GOCGO) vet ./...
+	$(GO) test ./... -coverprofile=coverage.out
+	$(GO) vet ./...
 	gofmt -l $$(find . -type f -name '*.go'| grep -v "/vendor/")
 	[ "`gofmt -l $$(find . -type f -name '*.go'| grep -v "/vendor/")`" = "" ]
 	./bin/test-attribution-txt.sh
@@ -42,4 +47,4 @@ docker_device_virtual_go:
 		.
 
 vendor:
-	$(GO) mod vendor
+	CGO_ENABLED=0 GO111MODULE=on go mod vendor
