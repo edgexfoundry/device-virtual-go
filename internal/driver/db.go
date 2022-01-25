@@ -1,6 +1,10 @@
 package driver
 
-import "github.com/edgexfoundry/go-mod-core-contracts/v2/errors"
+import (
+	"sync"
+
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/errors"
+)
 
 type data struct {
 	CommandName         string
@@ -12,6 +16,9 @@ type data struct {
 // Global: the data we are tasked with storing
 // Outer key: device name, inner key: resource name, value: resource info
 var resources map[string]map[string]data
+
+// Golang maps alone are not safe for concurrent access
+var resources_lock sync.RWMutex
 
 type db struct {
 	driverName string
@@ -26,6 +33,8 @@ func getDb() *db {
 }
 
 func (db *db) init() error {
+	resources_lock.Lock()
+	defer resources_lock.Unlock()
 	resources = make(map[string]map[string]data)
 	return nil
 }
@@ -37,6 +46,8 @@ func (db *db) openDb() error {
 
 func (db *db) addResource(deviceName string, commandName string, resourceName string, enableRandomization bool,
 	valueType string, value string) error {
+	resources_lock.Lock()
+	defer resources_lock.Unlock()
 	if _, haveDev := resources[deviceName]; !haveDev {
 		resources[deviceName] = make(map[string]data)
 	}
@@ -51,6 +62,8 @@ func (db *db) addResource(deviceName string, commandName string, resourceName st
 }
 
 func (db *db) deleteResources(deviceName string) error {
+	resources_lock.Lock()
+	defer resources_lock.Unlock()
 	delete(resources, deviceName)
 	return nil
 }
@@ -61,7 +74,8 @@ func (db *db) closeDb() error {
 }
 
 func (db *db) getVirtualResourceData(deviceName string, deviceResourceName string) (bool, string, string, error) {
-
+	resources_lock.RLock()
+	defer resources_lock.RUnlock()
 	if thisdev, present := resources[deviceName]; present {
 		if thisres, resPresent := thisdev[deviceResourceName]; resPresent {
 			return thisres.EnableRandomization, thisres.Value, thisres.DataType, nil
@@ -72,6 +86,8 @@ func (db *db) getVirtualResourceData(deviceName string, deviceResourceName strin
 }
 
 func (db *db) updateResourceValue(param string, deviceName string, deviceResourceName string, autoDisableRandomization bool) error {
+	resources_lock.Lock()
+	defer resources_lock.Unlock()
 	if thisdev, present := resources[deviceName]; present {
 		if thisres, resPresent := thisdev[deviceResourceName]; resPresent {
 			thisres.Value = param
@@ -87,6 +103,8 @@ func (db *db) updateResourceValue(param string, deviceName string, deviceResourc
 }
 
 func (db *db) updateResourceRandomization(param bool, deviceName string, deviceResourceName string) error {
+	resources_lock.Lock()
+	defer resources_lock.Unlock()
 	if thisdev, present := resources[deviceName]; present {
 		if thisres, resPresent := thisdev[deviceResourceName]; resPresent {
 			thisres.EnableRandomization = param
