@@ -57,10 +57,6 @@ type resourceDef struct {
 
 func prepareDB() *db {
 	db := getDb()
-	if err := db.openDb(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
 
 	if err := db.init(); err != nil {
 		fmt.Println(err)

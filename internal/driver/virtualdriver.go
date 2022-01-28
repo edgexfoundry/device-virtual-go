@@ -55,11 +55,6 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 
 	d.db = getDb()
 
-	if err := d.db.openDb(); err != nil {
-		d.lc.Errorf("failed to create db connection: %v", err)
-		return err
-	}
-
 	if err := initVirtualResourceTable(d); err != nil {
 		return fmt.Errorf("failed to initial virtual resource table: %v", err)
 	}

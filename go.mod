@@ -3,9 +3,6 @@ module github.com/edgexfoundry/device-virtual-go
 require (
 	github.com/edgexfoundry/device-sdk-go/v2 v2.2.0-dev.8
 	github.com/edgexfoundry/go-mod-core-contracts/v2 v2.1.0
-)
-
-require (
 	bitbucket.org/bertimus9/systemstat v0.0.0-20180207000608-0eeff89b0690 // indirect
 	github.com/OneOfOne/xxhash v1.2.8 // indirect
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect

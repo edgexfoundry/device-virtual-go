@@ -13,16 +13,13 @@ type data struct {
 	Value               string
 }
 
-// Global: the data we are tasked with storing
-// Outer key: device name, inner key: resource name, value: resource info
-var resources map[string]map[string]data
-
-// Golang maps alone are not safe for concurrent access
-var resources_lock sync.RWMutex
-
 type db struct {
 	driverName string
 	name       string
+	// The data we are tasked with storing
+	// Outer key: device name, inner key: resource name, value: resource info
+	resources      map[string]map[string]data
+	resources_lock sync.RWMutex
 }
 
 func getDb() *db {
@@ -33,50 +30,46 @@ func getDb() *db {
 }
 
 func (db *db) init() error {
-	resources_lock.Lock()
-	defer resources_lock.Unlock()
-	resources = make(map[string]map[string]data)
-	return nil
-}
-
-func (db *db) openDb() error {
-	// Nothing to do
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	db.resources = make(map[string]map[string]data)
 	return nil
 }
 
 func (db *db) addResource(deviceName string, commandName string, resourceName string, enableRandomization bool,
 	valueType string, value string) error {
-	resources_lock.Lock()
-	defer resources_lock.Unlock()
-	if _, haveDev := resources[deviceName]; !haveDev {
-		resources[deviceName] = make(map[string]data)
-	}
 	var thisres data
 	thisres.CommandName = commandName
 	thisres.EnableRandomization = enableRandomization
 	thisres.DataType = valueType
 	thisres.Value = value
-	resources[deviceName][resourceName] = thisres
+
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	if _, haveDev := db.resources[deviceName]; !haveDev {
+		db.resources[deviceName] = make(map[string]data)
+	}
+	db.resources[deviceName][resourceName] = thisres
 
 	return nil
 }
 
 func (db *db) deleteResources(deviceName string) error {
-	resources_lock.Lock()
-	defer resources_lock.Unlock()
-	delete(resources, deviceName)
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	delete(db.resources, deviceName)
 	return nil
 }
 
 func (db *db) closeDb() error {
-	resources = nil
+	db.resources = nil
 	return nil
 }
 
 func (db *db) getVirtualResourceData(deviceName string, deviceResourceName string) (bool, string, string, error) {
-	resources_lock.RLock()
-	defer resources_lock.RUnlock()
-	if thisdev, present := resources[deviceName]; present {
+	db.resources_lock.RLock()
+	defer db.resources_lock.RUnlock()
+	if thisdev, present := db.resources[deviceName]; present {
 		if thisres, resPresent := thisdev[deviceResourceName]; resPresent {
 			return thisres.EnableRandomization, thisres.Value, thisres.DataType, nil
 		}
@@ -86,15 +79,15 @@ func (db *db) getVirtualResourceData(deviceName string, deviceResourceName strin
 }
 
 func (db *db) updateResourceValue(param string, deviceName string, deviceResourceName string, autoDisableRandomization bool) error {
-	resources_lock.Lock()
-	defer resources_lock.Unlock()
-	if thisdev, present := resources[deviceName]; present {
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	if thisdev, present := db.resources[deviceName]; present {
 		if thisres, resPresent := thisdev[deviceResourceName]; resPresent {
 			thisres.Value = param
 			if autoDisableRandomization {
 				thisres.EnableRandomization = false
 			}
-			resources[deviceName][deviceResourceName] = thisres
+			db.resources[deviceName][deviceResourceName] = thisres
 			return nil
 		}
 		return errors.NewCommonEdgeX(errors.KindEntityDoesNotExist, "resource not found", nil)
@@ -103,12 +96,12 @@ func (db *db) updateResourceValue(param string, deviceName string, deviceResourc
 }
 
 func (db *db) updateResourceRandomization(param bool, deviceName string, deviceResourceName string) error {
-	resources_lock.Lock()
-	defer resources_lock.Unlock()
-	if thisdev, present := resources[deviceName]; present {
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	if thisdev, present := db.resources[deviceName]; present {
 		if thisres, resPresent := thisdev[deviceResourceName]; resPresent {
 			thisres.EnableRandomization = param
-			resources[deviceName][deviceResourceName] = thisres
+			db.resources[deviceName][deviceResourceName] = thisres
 			return nil
 		}
 		return errors.NewCommonEdgeX(errors.KindEntityDoesNotExist, "resource not found", nil)
