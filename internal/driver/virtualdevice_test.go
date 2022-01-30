@@ -46,24 +46,24 @@ const (
 	nameBinary       = common.ValueTypeBinary
 )
 
+type resourceDef struct {
+	devName    string
+	cmdName    string
+	resName    string
+	randEnable bool
+	dataType   string
+	initValue  string
+}
+
 func prepareDB() *db {
 	db := getDb()
-	if err := db.openDb(); err != nil {
+
+	if err := db.init(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	if err := db.exec(SqlDropTable); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	if err := db.exec(SqlCreateTable); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-
-	ds := [][]interface{}{
+	ds := []resourceDef{
 		{deviceName, nameBool, nameBool, enableRandomizationTrue, nameBool, "true"},
 		{deviceName, nameBoolArray, nameBoolArray, enableRandomizationTrue, nameBoolArray, "[true]"},
 		{deviceName, nameInt8, nameInt8, enableRandomizationTrue, nameInt8, "0"},
@@ -88,7 +88,7 @@ func prepareDB() *db {
 		{deviceName, nameFloat64Array, nameFloat64Array, enableRandomizationTrue, nameFloat64Array, "[0]"},
 	}
 	for _, d := range ds {
-		if err := db.exec(SqlInsert, d...); err != nil {
+		if err := db.addResource(d.devName, d.cmdName, d.resName, d.randEnable, d.dataType, d.initValue); err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
@@ -129,7 +129,7 @@ func TestValueBool(t *testing.T) {
 	}
 
 	//EnableRandomization = false
-	if err := db.exec(SqlUpdateRandomization, false, deviceName, nameBool); err != nil {
+	if err := db.updateResourceRandomization(false, deviceName, nameBool); err != nil {
 		t.Fatal(err)
 	}
 
@@ -177,7 +177,7 @@ func TestValueBoolArray(t *testing.T) {
 	}
 
 	// EnableRandomization = false
-	if err := db.exec(SqlUpdateRandomization, false, deviceName, nameBoolArray); err != nil {
+	if err := db.updateResourceRandomization(false, deviceName, nameBoolArray); err != nil {
 		t.Fatal(err)
 	}
 
@@ -273,7 +273,7 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}()
 
 	//EnableRandomization = true
-	if err := db.exec(SqlUpdateRandomization, true, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(true, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -319,7 +319,7 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	//EnableRandomization = false
-	if err := db.exec(SqlUpdateRandomization, false, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(false, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -343,7 +343,7 @@ func ValueIntxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}()
 
 	// EnableRandomization = true
-	if err := db.exec(SqlUpdateRandomization, true, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(true, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -391,7 +391,7 @@ func ValueIntxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	// EnableRandomization = false
-	if err := db.exec(SqlUpdateRandomization, false, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(false, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -415,7 +415,7 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}()
 
 	// EnableRandomization = true
-	if err := db.exec(SqlUpdateRandomization, true, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(true, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -457,7 +457,7 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	// EnableRandomization = false
-	if err := db.exec(SqlUpdateRandomization, false, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(false, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -481,7 +481,7 @@ func ValueUintxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}()
 
 	// EnableRandomization = true
-	if err := db.exec(SqlUpdateRandomization, true, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(true, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -525,7 +525,7 @@ func ValueUintxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	// EnableRandomization = false
-	if err := db.exec(SqlUpdateRandomization, false, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(false, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -549,7 +549,7 @@ func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}()
 
 	// EnableRandomization = true
-	if err := db.exec(SqlUpdateRandomization, true, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(true, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -590,7 +590,7 @@ func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	// EnableRandomization = false
-	if err := db.exec(SqlUpdateRandomization, false, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(false, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -614,7 +614,7 @@ func ValueFloatxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}()
 
 	// EnableRandomization = true
-	if err := db.exec(SqlUpdateRandomization, true, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(true, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 
@@ -658,7 +658,7 @@ func ValueFloatxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	// EnableRandomization = false
-	if err := db.exec(SqlUpdateRandomization, false, deviceName, dr); err != nil {
+	if err := db.updateResourceRandomization(false, deviceName, dr); err != nil {
 		t.Fatal(err)
 	}
 

@@ -1,142 +1,110 @@
 package driver
 
 import (
-	"database/sql"
-	"fmt"
-	"strconv"
+	"sync"
+
+	"github.com/edgexfoundry/go-mod-core-contracts/v2/errors"
 )
 
-const (
-	qlDatabaseDriverName = "ql2"
-	qlDatabaseName       = "memory://deviceVirtual.db"
-)
-
-var data struct {
-	DeviceName          string
+type data struct {
 	CommandName         string
-	DeviceResourceName  string
-	EnableRandomization string
+	EnableRandomization bool
 	DataType            string
 	Value               string
 }
 
 type db struct {
-	driverName  string
-	path        string
-	name        string
-	connection  *sql.DB
-	transaction *sql.Tx
+	driverName string
+	name       string
+	// The data we are tasked with storing
+	// Outer key: device name, inner key: resource name, value: resource info
+	resources      map[string]map[string]data
+	resources_lock sync.RWMutex
 }
 
 func getDb() *db {
 	return &db{
-		driverName: qlDatabaseDriverName,
-		name:       qlDatabaseName,
+		driverName: "Map",
+		name:       "Transient",
 	}
 }
 
-func (db *db) openDb() error {
-	d, err := sql.Open(db.driverName, db.name)
-	if err == nil {
-		db.connection = d
-	}
-	return err
+func (db *db) init() error {
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	db.resources = make(map[string]map[string]data)
+	return nil
 }
 
-func (db *db) startTransaction() error {
-	if db.connection == nil {
-		return fmt.Errorf("Lost DB connection, forgot to openDb()? ")
+func (db *db) addResource(deviceName string, commandName string, resourceName string, enableRandomization bool,
+	valueType string, value string) error {
+	var thisres data
+	thisres.CommandName = commandName
+	thisres.EnableRandomization = enableRandomization
+	thisres.DataType = valueType
+	thisres.Value = value
+
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	if _, haveDev := db.resources[deviceName]; !haveDev {
+		db.resources[deviceName] = make(map[string]data)
 	}
-	if tx, err := db.connection.Begin(); err != nil {
-		return err
-	} else {
-		db.transaction = tx
-		return nil
-	}
+	db.resources[deviceName][resourceName] = thisres
+
+	return nil
 }
 
-func (db *db) query(sqlStatement string, args ...interface{}) (*sql.Rows, error) {
-	if db.connection == nil {
-		return nil, fmt.Errorf("Lost DB connection, forgot to openDb()? ")
-	}
-	return db.transaction.Query(sqlStatement, args...)
-}
-
-func (db *db) exec(sqlStatement string, args ...interface{}) error {
-	if db.connection == nil {
-		return fmt.Errorf("Lost DB connection, forgot to openDb()? ")
-	}
-	if t, err := db.connection.Begin(); err != nil {
-		return fmt.Errorf("Start transaction failed: %v ", err)
-	} else {
-		db.transaction = t
-	}
-	if _, err := db.transaction.Exec(sqlStatement, args...); err != nil {
-		return err
-	}
-	return db.transaction.Commit()
-}
-
-func (db *db) commit() error {
-	if db.transaction == nil {
-		return fmt.Errorf("DB transaction not found, forgot to startTransaction()? ")
-	}
-	return db.transaction.Commit()
+func (db *db) deleteResources(deviceName string) error {
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	delete(db.resources, deviceName)
+	return nil
 }
 
 func (db *db) closeDb() error {
-	if db.connection == nil {
-		return fmt.Errorf("Lost DB connection, forgot to openDb()? ")
-	}
-
-	defer func() {
-		db.transaction = nil
-		db.connection = nil
-	}()
-	return db.connection.Close()
-}
-
-func (db *db) getVirtualResourceData(deviceName, deviceResourceName string) (bool, string, string, error) {
-	db.startTransaction()
-	defer db.commit()
-	rows, err := db.query(SqlSelect, deviceName, deviceResourceName)
-	if err != nil {
-		return false, "", "", err
-	}
-	if rows.Next() {
-		if err = rows.Scan(&data.DeviceName, &data.CommandName, &data.DeviceResourceName, &data.EnableRandomization, &data.DataType, &data.Value); err != nil {
-			rows.Close()
-			return false, "", "", err
-		}
-		if err = rows.Close(); err != nil {
-			return false, "", "", err
-		}
-	}
-
-	enableRandomization, err := strconv.ParseBool(data.EnableRandomization)
-	if err != nil {
-		return false, "", "", err
-	}
-	return enableRandomization, data.Value, data.DataType, nil
-}
-
-func (db *db) updateResourceValue(param, deviceName, deviceResourceName string, autoDisableRandomization bool) error {
-	var sqlStr string
-	if autoDisableRandomization {
-		sqlStr = SqlUpdateValueAndDisableRandomization
-	} else {
-		sqlStr = SqlUpdateValue
-	}
-
-	if err := db.exec(sqlStr, param, deviceName, deviceResourceName); err != nil {
-		return err
-	}
+	db.resources = nil
 	return nil
 }
 
-func (db *db) updateResourceRandomization(param bool, deviceName, deviceResourceName string) error {
-	if err := db.exec(SqlUpdateRandomization, param, deviceName, deviceResourceName); err != nil {
-		return err
+func (db *db) getVirtualResourceData(deviceName string, deviceResourceName string) (bool, string, string, error) {
+	db.resources_lock.RLock()
+	defer db.resources_lock.RUnlock()
+	if thisdev, present := db.resources[deviceName]; present {
+		if thisres, resPresent := thisdev[deviceResourceName]; resPresent {
+			return thisres.EnableRandomization, thisres.Value, thisres.DataType, nil
+		}
+		return false, "", "", errors.NewCommonEdgeX(errors.KindEntityDoesNotExist, "resource not found", nil)
 	}
-	return nil
+	return false, "", "", errors.NewCommonEdgeX(errors.KindEntityDoesNotExist, "device not found", nil)
+}
+
+func (db *db) updateResourceValue(param string, deviceName string, deviceResourceName string, autoDisableRandomization bool) error {
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	if thisdev, present := db.resources[deviceName]; present {
+		if thisres, resPresent := thisdev[deviceResourceName]; resPresent {
+			thisres.Value = param
+			if autoDisableRandomization {
+				thisres.EnableRandomization = false
+			}
+			db.resources[deviceName][deviceResourceName] = thisres
+			return nil
+		}
+		return errors.NewCommonEdgeX(errors.KindEntityDoesNotExist, "resource not found", nil)
+	}
+	return errors.NewCommonEdgeX(errors.KindEntityDoesNotExist, "device not found", nil)
+}
+
+func (db *db) updateResourceRandomization(param bool, deviceName string, deviceResourceName string) error {
+	db.resources_lock.Lock()
+	defer db.resources_lock.Unlock()
+	if thisdev, present := db.resources[deviceName]; present {
+		if thisres, resPresent := thisdev[deviceResourceName]; resPresent {
+			thisres.EnableRandomization = param
+			db.resources[deviceName][deviceResourceName] = thisres
+			return nil
+		}
+		return errors.NewCommonEdgeX(errors.KindEntityDoesNotExist, "resource not found", nil)
+	}
+	return errors.NewCommonEdgeX(errors.KindEntityDoesNotExist, "device not found", nil)
 }

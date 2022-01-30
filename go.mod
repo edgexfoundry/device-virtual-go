@@ -3,10 +3,6 @@ module github.com/edgexfoundry/device-virtual-go
 require (
 	github.com/edgexfoundry/device-sdk-go/v2 v2.2.0-dev.8
 	github.com/edgexfoundry/go-mod-core-contracts/v2 v2.1.0
-	modernc.org/ql v1.0.0
-)
-
-require (
 	bitbucket.org/bertimus9/systemstat v0.0.0-20180207000608-0eeff89b0690 // indirect
 	github.com/OneOfOne/xxhash v1.2.8 // indirect
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
@@ -17,7 +13,6 @@ require (
 	github.com/edgexfoundry/go-mod-messaging/v2 v2.2.0-dev.4 // indirect
 	github.com/edgexfoundry/go-mod-registry/v2 v2.1.0 // indirect
 	github.com/edgexfoundry/go-mod-secrets/v2 v2.1.0 // indirect
-	github.com/edsrzf/mmap-go v1.0.0 // indirect
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.3.0 // indirect
 	github.com/go-kit/kit v0.11.0 // indirect
@@ -48,24 +43,12 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.0 // indirect
 	github.com/pebbe/zmq4 v1.2.7 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
-	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
 	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4 // indirect
 	golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069 // indirect
 	golang.org/x/text v0.3.6 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
-	modernc.org/b v1.0.2 // indirect
-	modernc.org/db v1.0.3 // indirect
-	modernc.org/file v1.0.3 // indirect
-	modernc.org/fileutil v1.0.0 // indirect
-	modernc.org/golex v1.0.1 // indirect
-	modernc.org/internal v1.0.2 // indirect
-	modernc.org/lldb v1.0.2 // indirect
-	modernc.org/mathutil v1.4.1 // indirect
-	modernc.org/sortutil v1.1.0 // indirect
-	modernc.org/strutil v1.1.1 // indirect
-	modernc.org/zappy v1.0.3 // indirect
 )
 
 go 1.17

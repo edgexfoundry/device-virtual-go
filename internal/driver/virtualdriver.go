@@ -18,8 +18,6 @@ import (
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/clients/logger"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/common"
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/models"
-
-	_ "modernc.org/ql/driver"
 )
 
 type VirtualDriver struct {
@@ -42,7 +40,8 @@ func NewVirtualDeviceDriver() dsModels.ProtocolDriver {
 }
 
 func (d *VirtualDriver) retrieveVirtualDevice(deviceName string) (vdv *virtualDevice, err error) {
-	vd, ok := d.virtualDevices.LoadOrStore(deviceName, newVirtualDevice())
+	vd, _ := d.virtualDevices.LoadOrStore(deviceName, newVirtualDevice())
+	var ok bool
 	if vdv, ok = vd.(*virtualDevice); !ok {
 		d.lc.Errorf("retrieve virtualDevice by name: %s, the returned value has to be a reference of "+
 			"virtualDevice struct, but got: %s", deviceName, reflect.TypeOf(vd))
@@ -55,11 +54,6 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 	d.asyncCh = asyncCh
 
 	d.db = getDb()
-
-	if err := d.db.openDb(); err != nil {
-		d.lc.Errorf("failed to create db connection: %v", err)
-		return err
-	}
 
 	if err := initVirtualResourceTable(d); err != nil {
 		return fmt.Errorf("failed to initial virtual resource table: %v", err)
@@ -147,13 +141,8 @@ func (d *VirtualDriver) RemoveDevice(deviceName string, protocols map[string]mod
 }
 
 func initVirtualResourceTable(driver *VirtualDriver) error {
-	if err := driver.db.exec(SqlDropTable); err != nil {
-		driver.lc.Errorf("failed to drop table: %v", err)
-		return err
-	}
-
-	if err := driver.db.exec(SqlCreateTable); err != nil {
-		driver.lc.Errorf("failed to create table: %v", err)
+	if err := driver.db.init(); err != nil {
+		driver.lc.Errorf("failed to init storage: %v", err)
 		return err
 	}
 
@@ -186,9 +175,9 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 			if dr.Properties.ValueType == common.ValueTypeBinary {
 				continue
 			}
-			if err := driver.db.exec(SqlInsert, device.Name, dr.Name, dr.Name, true, dr.Properties.ValueType,
+			if err := driver.db.addResource(device.Name, dr.Name, dr.Name, true, dr.Properties.ValueType,
 				dr.Properties.DefaultValue); err != nil {
-				driver.lc.Errorf("failed to insert data into db: %v", err)
+				driver.lc.Errorf("failed to add resource: %v", err)
 				return err
 			}
 		}
@@ -203,7 +192,7 @@ func deleteVirtualResources(driver *VirtualDriver, deviceName string) error {
 	driver.locker.Lock()
 	defer driver.locker.Unlock()
 
-	if err := driver.db.exec(SqlDelete, deviceName); err != nil {
+	if err := driver.db.deleteResources(deviceName); err != nil {
 		driver.lc.Errorf("failed to delete virtual resources of device %s: %v", deviceName, err)
 		return err
 	} else {

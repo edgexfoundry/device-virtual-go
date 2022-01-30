@@ -1,13 +1,7 @@
 The following open source projects are referenced by Device Service Virtual Go:
 
-BurntSushi/toml (MIT) https://github.com/BurntSushi/toml
-https://github.com/BurntSushi/toml/blob/master/COPYING
-
 cenkalti/backoff (MIT) https://github.com/cenkalti/backoff
 https://github.com/cenkalti/backoff/blob/master/LICENSE
-
-edsrzf/mmap-go (BSD-3) https://github.com/edsrzf/mmap-go
-https://github.com/edsrzf/mmap-go/blob/master/LICENSE
 
 edgexfoundry/go-mod-core-contracts (Apache 2.0) https://github.com/edgexfoundry/go-mod-core-contracts/v2
 https://github.com/edgexfoundry/go-mod-core-contracts/blob/master/LICENSE
@@ -26,9 +20,6 @@ https://github.com/go-kit/kit/blob/master/LICENSE
 
 go-logfmt/logfmt (MIT) https://github.com/go-logfmt/logfmt
 https://github.com/go-logfmt/logfmt/blob/master/LICENSE
-
-kr/logfmt (MIT) https://github.com/kr/logfmt
-https://github.com/kr/logfmt/blob/master/Readme
 
 hashicorp/go-cleanhttp (Mozilla Public License 2.0) https://github.com/hashicorp/go-cleanhttp
 https://github.com/hashicorp/go-cleanhttp/blob/master/LICENSE
@@ -63,42 +54,6 @@ https://github.com/hashicorp/go-immutable-radix/blob/master/LICENSE
 hashicorp/golang-lru (Mozilla Public License 2.0) https://github.com/hashicorp/golang-lru
 https://github.com/hashicorp/golang-lru/blob/master/LICENSE
 
-modernc.org/b (BSD-3) https://godoc.org/modernc.org/b
-https://gitlab.com/cznic/b/blob/master/LICENSE
-
-modernc.org/db (BSD-3) https://godoc.org/modernc.org/db
-https://gitlab.com/cznic/db/blob/master/LICENSE
-
-modernc.org/file (BSD-3) https://godoc.org/modernc.org/file
-https://gitlab.com/cznic/file/blob/master/LICENSE
-
-modernc.org/fileutil (BSD-3) https://godoc.org/modernc.org/fileutil
-https://gitlab.com/cznic/fileutil/blob/master/LICENSE
-
-modernc.org/golex (BSD-3) https://godoc.org/modernc.org/golex
-https://gitlab.com/cznic/golex/blob/master/LICENSE
-
-modernc.org/internal (BSD-3) https://godoc.org/modernc.org/internal
-https://gitlab.com/cznic/internal/blob/master/LICENSE
-
-modernc.org/lldb (BSD-3) https://godoc.org/modernc.org/lldb
-https://gitlab.com/cznic/lldb/blob/master/LICENSE
-
-modernc.org/mathutil (BSD-3) https://godoc.org/modernc.org/mathutil
-https://gitlab.com/cznic/mathutil/blob/master/LICENSE
-
-modernc.org/ql (BSD-3) https://godoc.org/modernc.org/ql
-https://gitlab.com/cznic/ql/blob/master/LICENSE
-
-modernc.org/sortutil (BSD-3) https://godoc.org/modernc.org/sortutil
-https://gitlab.com/cznic/sortutil/blob/master/LICENSE
-
-modernc.org/strutil (BSD-3) https://godoc.org/modernc.org/strutil
-https://gitlab.com/cznic/strutil/blob/master/LICENSE
-
-modernc.org/zappy (BSD-3) https://godoc.org/modernc.org/zappy
-https://gitlab.com/cznic/zappy/blob/master/LICENSE
-
 gopkg.in/yaml.v3 (MIT) https://github.com/go-yaml/yaml/tree/v3
 https://github.com/go-yaml/yaml/blob/v3/LICENSE
 
@@ -107,9 +62,6 @@ https://github.com/google/uuid/blob/master/LICENSE
 
 pelletier/go-toml (MIT) https://github.com/pelletier/go-toml
 https://github.com/pelletier/go-toml/blob/master/LICENSE
-
-remyoudompheng/bigfft (BSD-3) https://github.com/remyoudompheng/bigfft
-https://github.com/remyoudompheng/bigfft/blob/master/LICENSE
 
 golang.org/x/sys (Unspecified) https://github.com/golang/sys
 https://github.com/golang/sys/blob/master/LICENSE
@@ -134,9 +86,6 @@ https://github.com/fxamacker/cbor/blob/master/LICENSE
 
 x448/float16 (MIT) https://github.com/x448/float16
 https://github.com/x448/float16/blob/master/LICENSE
-
-golang/snappy (BSD-3) https://github.com/golang/snappy
-https://github.com/golang/snappy/blob/master/LICENSE
 
 bertimus9/systemstat (MIT) https://bitbucket.org/bertimus9/systemstat
 https://bitbucket.org/bertimus9/systemstat/src/master/LICENSE
