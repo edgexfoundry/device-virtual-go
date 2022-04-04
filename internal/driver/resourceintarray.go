@@ -92,7 +92,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 				}
 			} else {
 				for i := 0; i < defaultArrayValueSize; i++ {
-					newArrayIntValue = append(newArrayIntValue, int64(rand.Int31())*signHelper[rand.Int()%2])
+					newArrayIntValue = append(newArrayIntValue, int64(rand.Int31())*signHelper[rand.Int()%2]) //nolint:gosec
 				}
 			}
 		} else {
@@ -118,7 +118,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 				}
 			} else {
 				for i := 0; i < defaultArrayValueSize; i++ {
-					newArrayIntValue = append(newArrayIntValue, rand.Int63()*signHelper[rand.Int()%2])
+					newArrayIntValue = append(newArrayIntValue, rand.Int63()*signHelper[rand.Int()%2]) //nolint:gosec
 				}
 			}
 		} else {

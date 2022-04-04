@@ -62,7 +62,7 @@ func (ri *resourceInt) value(db *db, deviceName, deviceResourceName, minimum,
 			if err == nil {
 				newValueInt = randomInt(min, max)
 			} else {
-				newValueInt = int64(rand.Int31()) * signHelper[rand.Int()%2]
+				newValueInt = int64(rand.Int31()) * signHelper[rand.Int()%2] //nolint:gosec
 			}
 		} else if newValueInt, err = strconv.ParseInt(currentValue, 10, 32); err != nil {
 			return result, err
@@ -73,7 +73,7 @@ func (ri *resourceInt) value(db *db, deviceName, deviceResourceName, minimum,
 			if err == nil {
 				newValueInt = randomInt(min, max)
 			} else {
-				newValueInt = rand.Int63() * signHelper[rand.Int()%2]
+				newValueInt = rand.Int63() * signHelper[rand.Int()%2] //nolint:gosec
 			}
 		} else if newValueInt, err = strconv.ParseInt(currentValue, 10, 64); err != nil {
 			return result, err

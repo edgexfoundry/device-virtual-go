@@ -21,7 +21,7 @@ func (rb *resourceBinary) value(deviceResourceName string) (*models.CommandValue
 	newValueB := make([]byte, models.MaxBinaryBytes/1000)
 
 	rand.Seed(time.Now().UnixNano())
-	rand.Read(newValueB)
+	rand.Read(newValueB) //nolint:gosec
 
 	result, err := models.NewCommandValue(deviceResourceName, common.ValueTypeBinary, newValueB)
 	if err != nil {

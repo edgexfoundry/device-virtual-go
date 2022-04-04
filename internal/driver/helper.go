@@ -63,24 +63,24 @@ func randomInt(min, max int64) int64 {
 		var positivePart int64
 		//min~0
 		if min == int64(math.MinInt64) {
-			negativePart = rand.Int63n(int64(math.MaxInt64)) + min - rand.Int63n(int64(1))
+			negativePart = rand.Int63n(int64(math.MaxInt64)) + min - rand.Int63n(int64(1)) //nolint:gosec
 		} else {
-			negativePart = rand.Int63n(-min+int64(1)) + min
+			negativePart = rand.Int63n(-min+int64(1)) + min //nolint:gosec
 		}
 		//0~max
 		if max == int64(math.MaxInt64) {
-			positivePart = rand.Int63n(max) + rand.Int63n(int64(1))
+			positivePart = rand.Int63n(max) + rand.Int63n(int64(1)) //nolint:gosec
 		} else {
-			positivePart = rand.Int63n(max + int64(1))
+			positivePart = rand.Int63n(max + int64(1)) //nolint:gosec
 		}
 		return negativePart + positivePart
 	} else {
 		if max == int64(math.MaxInt64) && min == 0 {
-			return rand.Int63n(max) + rand.Int63n(int64(1))
+			return rand.Int63n(max) + rand.Int63n(int64(1)) //nolint:gosec
 		} else if min == int64(math.MinInt64) && max == 0 {
-			return rand.Int63n(int64(math.MaxInt64)) + min - rand.Int63n(int64(1))
+			return rand.Int63n(int64(math.MaxInt64)) + min - rand.Int63n(int64(1)) //nolint:gosec
 		} else {
-			return rand.Int63n(max-min+1) + min
+			return rand.Int63n(max-min+1) + min //nolint:gosec
 		}
 	}
 }
@@ -88,11 +88,11 @@ func randomInt(min, max int64) int64 {
 func randomUint(min, max uint64) uint64 {
 	rand.Seed(time.Now().UnixNano())
 	if max-min < uint64(math.MaxInt64) {
-		return uint64(rand.Int63n(int64(max-min+1))) + min
+		return uint64(rand.Int63n(int64(max-min+1))) + min //nolint:gosec
 	}
-	x := rand.Uint64()
+	x := rand.Uint64() //nolint:gosec
 	for x > max-min {
-		x = rand.Uint64()
+		x = rand.Uint64() //nolint:gosec
 	}
 	return x + min
 }
@@ -143,11 +143,11 @@ func randomFloat(min, max float64) float64 {
 	if max > 0 && min < 0 {
 		var negativePart float64
 		var positivePart float64
-		negativePart = rand.Float64() * min
-		positivePart = rand.Float64() * max
+		negativePart = rand.Float64() * min //nolint:gosec
+		positivePart = rand.Float64() * max //nolint:gosec
 		return negativePart + positivePart
 	} else {
-		return rand.Float64()*(max-min) + min
+		return rand.Float64()*(max-min) + min //nolint:gosec
 	}
 }
 

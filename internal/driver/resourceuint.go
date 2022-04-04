@@ -60,7 +60,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 			if err == nil {
 				newValueUint = randomUint(min, max)
 			} else {
-				newValueUint = uint64(rand.Uint32())
+				newValueUint = uint64(rand.Uint32()) //nolint:gosec
 			}
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 32); err != nil {
 			return result, err
@@ -71,7 +71,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 			if err == nil {
 				newValueUint = randomUint(min, max)
 			} else {
-				newValueUint = rand.Uint64()
+				newValueUint = rand.Uint64() //nolint:gosec
 			}
 		} else if newValueUint, err = strconv.ParseUint(currentValue, 10, 64); err != nil {
 			return result, err

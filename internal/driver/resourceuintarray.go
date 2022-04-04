@@ -24,7 +24,7 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName, minim
 	maximum string) (*models.CommandValue, error) {
 	result := &models.CommandValue{}
 
-	enableRandomization, currentValue, dataType, err := db.getVirtualResourceData(deviceName, deviceResourceName)
+	enableRandomization, currentValue, dataType, err := db.getVirtualResourceData(deviceName, deviceResourceName) //nolint:gosec
 	if err != nil {
 		return result, err
 	}
@@ -88,7 +88,7 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName, minim
 			if err == nil {
 				newValueUint = randomUint(min, max)
 			} else {
-				newValueUint = uint64(rand.Uint32())
+				newValueUint = uint64(rand.Uint32()) //nolint:gosec
 			}
 			for i := 0; i < defaultArrayValueSize; i++ {
 				newArrayValueUint = append(newArrayValueUint, newValueUint)
@@ -114,7 +114,7 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName, minim
 			if err == nil {
 				newValueUint = randomUint(min, max)
 			} else {
-				newValueUint = rand.Uint64()
+				newValueUint = rand.Uint64() //nolint:gosec
 			}
 			for i := 0; i < defaultArrayValueSize; i++ {
 				newArrayValueUint = append(newArrayValueUint, newValueUint)
