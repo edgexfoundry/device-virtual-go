@@ -31,7 +31,7 @@ func (rb *resourceBoolArray) value(db *db, deviceName, deviceResourceName string
 	if enableRandomization {
 		rand.Seed(time.Now().UnixNano())
 		for i := 0; i < defaultArrayValueSize; i++ {
-			newArrayBoolValue = append(newArrayBoolValue, rand.Int()%2 == 0)
+			newArrayBoolValue = append(newArrayBoolValue, rand.Int()%2 == 0) //nolint:gosec
 		}
 	} else {
 		strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
