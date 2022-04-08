@@ -26,8 +26,13 @@ DOCKERS=docker_device_virtual_go
 VERSION=$(shell cat ./VERSION 2>/dev/null || echo 0.0.0)
 GIT_SHA=$(shell git rev-parse HEAD)
 
-GOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)" -trimpath -mod=readonly
-CGOFLAGS=-ldflags "-linkmode=external -X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)" -trimpath -mod=readonly -buildmode=pie
+ifeq ($(OS),Windows_NT)
+	GOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)"
+	CGOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)"
+else
+	GOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)" -trimpath -mod=readonly
+	CGOFLAGS=-ldflags "-linkmode=external -X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)" -trimpath -mod=readonly -buildmode=pie
+endif
 
 tidy:
 	go mod tidy
