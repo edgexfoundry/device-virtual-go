@@ -8,6 +8,12 @@ ifeq ($(OS),Windows_NT)
   GO=CGO_ENABLED=0 GO111MODULE=on go
 endif
 
+# see https://shibumi.dev/posts/hardening-executables
+CGO_CPPFLAGS="-D_FORTIFY_SOURCE=2"
+CGO_CFLAGS="-O2 -pipe -fno-plt"
+CGO_CXXFLAGS="-O2 -pipe -fno-plt"
+CGO_LDFLAGS="-Wl,-O1,–sort-common,–as-needed,-z,relro,-z,now"
+
 MICROSERVICES=cmd/device-virtual
 
 .PHONY: $(MICROSERVICES)
@@ -19,7 +25,14 @@ DOCKERS=docker_device_virtual_go
 
 VERSION=$(shell cat ./VERSION 2>/dev/null || echo 0.0.0)
 GIT_SHA=$(shell git rev-parse HEAD)
-GOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)"
+
+ifeq ($(OS),Windows_NT)
+	GOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)"
+	CGOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)"
+else
+	GOFLAGS=-ldflags "-X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)" -trimpath -mod=readonly
+	CGOFLAGS=-ldflags "-linkmode=external -X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)" -trimpath -mod=readonly -buildmode=pie
+endif
 
 tidy:
 	go mod tidy
@@ -27,7 +40,7 @@ tidy:
 build: $(MICROSERVICES)
 
 cmd/device-virtual:
-	$(GO) build $(GOFLAGS) -o $@ ./cmd
+	$(GO) build $(CGOFLAGS) -o $@ ./cmd
 
 
 unittest:
