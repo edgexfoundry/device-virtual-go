@@ -1,7 +1,7 @@
 module github.com/edgexfoundry/device-virtual-go
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v2 v2.2.0-dev.22
+	github.com/edgexfoundry/device-sdk-go/v2 v2.2.0-dev.23
 	github.com/edgexfoundry/go-mod-core-contracts/v2 v2.2.0-dev.21
 )
 
