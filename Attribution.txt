@@ -174,3 +174,5 @@ https://github.com/square/go-jose/blob/v2.6.0/LICENSE
 gopkg.in/yaml.v2 (MIT) https://github.com/go-yaml/yaml/
 https://github.com/go-yaml/yaml/blob/v2/LICENSE
 
+github.com/rcrowley/go-metrics (Unspecified) https://github.com/rcrowley/go-metrics
+https://github.com/rcrowley/go-metrics/blob/master/LICENSE
