@@ -104,4 +104,5 @@ parts:
       # set the version of this snap
       snapcraftctl set-version $VERSION
     parse-info: [edgex-device-virtual.metainfo.xml]
+
     

@@ -15,3 +15,4 @@ tidy:
 
 clean:
 	rm -f $(HOOKS)
+
