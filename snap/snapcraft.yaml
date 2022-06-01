@@ -1,0 +1,107 @@
+name: edgex-device-virtual
+base: core20
+license: Apache-2.0
+adopt-info: metadata
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
+grade: stable
+confinement: strict
+
+slots:
+  edgex-secretstore-token:
+    interface: content
+    source:
+      write: [$SNAP_DATA/device-virtual]
+
+plugs:
+  device-config:
+    interface: content 
+    target: $SNAP_DATA/config/device-virtual
+
+apps:
+  device-virtual:
+    command: bin/device-virtual $CONFIG_PRO_ARG $CONF_ARG $REGISTRY_ARG
+    command-chain:
+      - bin/startup-env-var.sh
+    environment:
+      CONFIG_PRO_ARG: "--cp=consul.http://localhost:8500"
+      CONF_ARG: "--confdir=$SNAP_DATA/config/device-virtual/res"
+      REGISTRY_ARG: "--registry"
+      DEVICE_PROFILESDIR: "$SNAP_DATA/config/device-virtual/res/profiles"
+      DEVICE_DEVICESDIR: "$SNAP_DATA/config/device-virtual/res/devices"
+      SECRETSTORE_TOKENFILE: $SNAP_DATA/device-virtual/secrets-token.json
+    daemon: simple
+    install-mode: disable
+    plugs: [network, network-bind]
+
+parts:      
+  hooks:
+    source: snap/local/hooks
+    plugin: make
+    build-snaps: [go/1.17/stable]
+    override-build: |
+      cd $SNAPCRAFT_PART_SRC
+      make build
+      install -DT ./cmd/configure/configure $SNAPCRAFT_PART_INSTALL/snap/hooks/configure
+      install -DT ./cmd/install/install $SNAPCRAFT_PART_INSTALL/snap/hooks/install
+
+  device-virtual:
+    after: [metadata]
+    source: .
+    plugin: make
+    build-packages: [git, libzmq3-dev, pkg-config]
+    build-snaps: [go/1.17/stable]
+    stage-packages: [libzmq5]
+    override-build: |
+      cd $SNAPCRAFT_PART_SRC
+
+      # the version is needed for the build
+      cat VERSION
+
+      make tidy
+      make build
+
+      install -DT "./cmd/device-virtual" "$SNAPCRAFT_PART_INSTALL/bin/device-virtual"
+
+      RES=$SNAPCRAFT_PART_INSTALL/config/device-virtual/res/
+      mkdir -p $RES
+      cp    cmd/res/configuration.toml $RES
+      cp -r cmd/res/devices $RES
+      cp -r cmd/res/profiles $RES
+      
+      DOC=$SNAPCRAFT_PART_INSTALL/usr/share/doc/device-virtual
+      mkdir -p $DOC
+      cp Attribution.txt $DOC/Attribution.txt
+      cp LICENSE $DOC/LICENSE
+
+  runtime-helpers:
+    plugin: dump
+    source: snap/local/runtime-helpers
+
+  metadata:
+    plugin: nil
+    source: https://github.com/canonical/edgex-snap-metadata.git
+    source-branch: appstream
+    source-depth: 1
+    override-build: |
+      # install the icon at the default internal path
+      install -DT edgex-snap-icon.png \
+        $SNAPCRAFT_PART_INSTALL/meta/gui/icon.png
+      
+      # change to this project's repo to get the version
+      cd $SNAPCRAFT_PROJECT_DIR
+      if git describe ; then
+        VERSION=$(git describe --tags --abbrev=0 | sed 's/v//')
+      else
+        VERSION="0.0.0"
+      fi
+      
+      # write version to file for the build
+      echo $VERSION > ./VERSION
+      # set the version of this snap
+      snapcraftctl set-version $VERSION
+    parse-info: [edgex-device-virtual.metainfo.xml]
+    
