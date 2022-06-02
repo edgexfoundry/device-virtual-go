@@ -62,7 +62,7 @@ func installDevices() error {
 }
 
 func installDevProfiles() error {
-	profs := [...]string{"binary","bool","float","int","uint"}
+	profs := [...]string{"binary", "bool", "float", "int", "uint"}
 	profilesDir := "/config/device-virtual/res/profiles/"
 
 	err := os.MkdirAll(env.SnapData+profilesDir, 0755)
@@ -70,7 +70,7 @@ func installDevProfiles() error {
 		return err
 	}
 
-	for _,v := range profs {
+	for _, v := range profs {
 		err = hooks.CopyFile(
 			hooks.Snap+profilesDir+"device.virtual."+v+".yaml",
 			hooks.SnapData+profilesDir+"device.virtual."+v+".yaml")
@@ -103,4 +103,3 @@ func main() {
 		os.Exit(1)
 	}
 }
-
