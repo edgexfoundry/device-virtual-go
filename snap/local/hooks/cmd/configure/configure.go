@@ -26,17 +26,18 @@ import (
 )
 
 func main() {
-	log.SetComponentName("configure")
-	err := options.ProcessAppConfig("device-virtual")
+	log.Info("Enabling config options")
+	err := snapctl.Set("app-options", "true").Run()
 	if err != nil {
-		log.Errorf("could not process options: %v", err)
+		log.Errorf("could not enable config options: %v", err)
 		os.Exit(1)
 	}
 
-	log.Info("Enabling config options")
-	err = snapctl.Set("app-options", "true").Run()
+	log.SetComponentName("configure")
+	err = options.ProcessAppConfig("device-virtual")
 	if err != nil {
-		panic(err)
+		log.Errorf("could not process options: %v", err)
+		os.Exit(1)
 	}
 
 	// If autostart is not explicitly set, default to "no"
