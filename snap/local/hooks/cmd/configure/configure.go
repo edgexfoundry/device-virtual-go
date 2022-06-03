@@ -26,6 +26,8 @@ import (
 )
 
 func main() {
+	log.SetComponentName("configure")
+
 	log.Info("Enabling config options")
 	err := snapctl.Set("app-options", "true").Run()
 	if err != nil {
@@ -33,7 +35,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	log.SetComponentName("configure")
+	log.Info("Processing options")
 	err = options.ProcessAppConfig("device-virtual")
 	if err != nil {
 		log.Errorf("could not process options: %v", err)
