@@ -15,7 +15,7 @@ jobs:
       - name: Build and upload snap
         id: build
         # uses: canonical/edgex-snap-testing/build@v2
-        uses: MonicaisHer/edgex-snap-testing/build@EDGEX-445-add-device-virtual-test
+        uses: canonical/edgex-snap-testing/build@main
     outputs:
       snap: ${{steps.build.outputs.snap}}
 
@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Download and test snap
         # uses: canonical/edgex-snap-testing/test@v2
-        uses: MonicaisHer/edgex-snap-testing/test@EDGEX-445-add-device-virtual-test
+        uses: canonical/edgex-snap-testing/test@main
         with:
           name: device-virtual
 
