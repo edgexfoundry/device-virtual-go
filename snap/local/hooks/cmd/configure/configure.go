@@ -33,6 +33,12 @@ func main() {
 		os.Exit(1)
 	}
 
+	log.Info("Enabling config options")
+	err = snapctl.Set("app-options", "true").Run()
+	if err != nil {
+		panic(err)
+	}
+
 	// If autostart is not explicitly set, default to "no"
 	// as only example service configuration and profiles
 	// are provided by default.
