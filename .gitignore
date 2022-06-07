@@ -19,3 +19,12 @@ internal/driver/db/
 cmd/device-virtual
 cmd/db/
 VERSION
+
+# snap files
+*.snap
+*.assert
+prime/
+stage/
+parts/
+squashfs-root/
+
