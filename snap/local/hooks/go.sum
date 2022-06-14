@@ -1,7 +1,7 @@
+github.com/canonical/edgex-snap-hooks/v2 v2.2.1-0.20220614144720-c90aef5713b6 h1:O/A5ITs8sqw6xFKYzOus8r/XAmnFTj7neuj8bnFX0KQ=
+github.com/canonical/edgex-snap-hooks/v2 v2.2.1-0.20220614144720-c90aef5713b6/go.mod h1:rOxrwdYL7hJDhxFH3uV+nVgLPjWOhJWgM5PRD5YG1jI=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/monicaisher/edgex-snap-hooks/v2 v2.2.0-beta.0.20220614133704-b7fa354638f2 h1:xaKs7pPl005Y3/e6WP+sVo8lP6QOqN/AcGqOnZDCDgI=
-github.com/monicaisher/edgex-snap-hooks/v2 v2.2.0-beta.0.20220614133704-b7fa354638f2/go.mod h1:rOxrwdYL7hJDhxFH3uV+nVgLPjWOhJWgM5PRD5YG1jI=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
