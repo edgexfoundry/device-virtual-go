@@ -26,5 +26,5 @@ jobs:
         uses: canonical/edgex-snap-testing/test@v2
         with:
           name: device-virtual
-
+          snap: ${{needs.build.outputs.snap}}
           
