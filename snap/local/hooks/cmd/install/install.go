@@ -26,14 +26,9 @@ import (
 
 // installProfiles copies the profile configuration.toml files from $SNAP to $SNAP_DATA.
 func installConfig() error {
-	resPath := "/config/device-virtual/res"
-	err := os.MkdirAll(env.SnapData+resPath, 0755)
-	if err != nil {
-		return err
-	}
+	path := "/config/device-virtual/res"
 
-	path := resPath + "/configuration.toml"
-	err = hooks.CopyFile(
+	err := hooks.CopyDir(
 		env.Snap+path,
 		env.SnapData+path)
 	if err != nil {
@@ -44,16 +39,11 @@ func installConfig() error {
 }
 
 func installDevices() error {
-	devicesDir := "/config/device-virtual/res/devices"
+	path := "/config/device-virtual/res/devices"
 
-	err := os.MkdirAll(env.SnapData+devicesDir, 0755)
-	if err != nil {
-		return err
-	}
-
-	err = hooks.CopyFile(
-		hooks.Snap+devicesDir+"/devices.toml",
-		hooks.SnapData+devicesDir+"/devices.toml")
+	err := hooks.CopyDir(
+		hooks.Snap+path,
+		hooks.SnapData+path)
 	if err != nil {
 		return err
 	}
@@ -62,21 +52,13 @@ func installDevices() error {
 }
 
 func installDevProfiles() error {
-	profs := [...]string{"binary", "bool", "float", "int", "uint"}
-	profilesDir := "/config/device-virtual/res/profiles/"
+	path := "/config/device-virtual/res/profiles"
 
-	err := os.MkdirAll(env.SnapData+profilesDir, 0755)
+	err := hooks.CopyDir(
+		hooks.Snap+path,
+		hooks.SnapData+path)
 	if err != nil {
 		return err
-	}
-
-	for _, v := range profs {
-		err = hooks.CopyFile(
-			hooks.Snap+profilesDir+"device.virtual."+v+".yaml",
-			hooks.SnapData+profilesDir+"device.virtual."+v+".yaml")
-		if err != nil {
-			return err
-		}
 	}
 
 	return nil
