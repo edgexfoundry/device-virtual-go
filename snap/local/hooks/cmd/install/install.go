@@ -69,19 +69,16 @@ func main() {
 
 	err := installConfig()
 	if err != nil {
-		log.Errorf("error installing config file: %s", err)
-		os.Exit(1)
+		log.Fatalf("error installing config file: %s", err)
 	}
 
 	err = installDevices()
 	if err != nil {
-		log.Errorf("error installing devices config: %s", err)
-		os.Exit(1)
+		log.Fatalf("error installing devices config: %s", err)
 	}
 
 	err = installDevProfiles()
 	if err != nil {
-		log.Errorf("error installing device profiles config: %s", err)
-		os.Exit(1)
+		log.Fatalf("error installing device profiles config: %s", err)
 	}
 }

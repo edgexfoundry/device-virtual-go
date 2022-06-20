@@ -17,7 +17,6 @@
 package main
 
 import (
-	"os"
 	"strings"
 
 	"github.com/canonical/edgex-snap-hooks/v2/log"
@@ -31,15 +30,13 @@ func main() {
 	log.Info("Enabling config options")
 	err := snapctl.Set("app-options", "true").Run()
 	if err != nil {
-		log.Errorf("could not enable config options: %v", err)
-		os.Exit(1)
+		log.Fatalf("could not enable config options: %v", err)
 	}
 
 	log.Info("Processing options")
 	err = options.ProcessAppConfig("device-virtual")
 	if err != nil {
-		log.Errorf("could not process options: %v", err)
-		os.Exit(1)
+		log.Fatalf("could not process options: %v", err)
 	}
 
 	// If autostart is not explicitly set, default to "no"
@@ -47,8 +44,7 @@ func main() {
 	// are provided by default.
 	autostart, err := snapctl.Get("autostart").Run()
 	if err != nil {
-		log.Errorf("Reading config 'autostart' failed: %v", err)
-		os.Exit(1)
+		log.Fatalf("Reading config 'autostart' failed: %v", err)
 	}
 	if autostart == "" {
 		log.Debug("autostart is NOT set, initializing to 'no'")
@@ -62,13 +58,11 @@ func main() {
 	case "true", "yes":
 		err = snapctl.Start("device-virtual").Enable().Run()
 		if err != nil {
-			log.Errorf("Can't start service: %s", err)
-			os.Exit(1)
+			log.Fatalf("Can't start service: %s", err)
 		}
 	case "false", "no":
 		// no action necessary
 	default:
-		log.Errorf("Invalid value for 'autostart': %s", autostart)
-		os.Exit(1)
+		log.Fatalf("Invalid value for 'autostart': %s", autostart)
 	}
 }
