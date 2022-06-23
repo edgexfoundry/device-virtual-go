@@ -38,15 +38,14 @@ apps:
     plugs: [network, network-bind]
 
 parts:      
-  hooks:
-    source: snap/local/hooks
+  helper-go:
+    source: snap/local/helper-go
     plugin: make
     build-snaps: [go/1.17/stable]
     override-build: |
       cd $SNAPCRAFT_PART_SRC
       make build
-      install -DT ./cmd/configure/configure $SNAPCRAFT_PART_INSTALL/snap/hooks/configure
-      install -DT ./cmd/install/install $SNAPCRAFT_PART_INSTALL/snap/hooks/install
+      install -DT ./helper-go $SNAPCRAFT_PART_INSTALL/bin/helper-go
 
   device-virtual:
     after: [metadata]
