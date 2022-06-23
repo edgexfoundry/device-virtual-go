@@ -24,7 +24,8 @@ import (
 	"github.com/canonical/edgex-snap-hooks/v2/snapctl"
 )
 
-func main() {
+// configure is called by the main function
+func configure() {
 	log.SetComponentName("configure")
 
 	log.Info("Enabling config options")

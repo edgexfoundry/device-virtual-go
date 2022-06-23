@@ -27,4 +27,5 @@ jobs:
         with:
           name: device-virtual
           snap: ${{needs.build.outputs.snap}}
+
           

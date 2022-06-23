@@ -62,7 +62,8 @@ func installDevProfiles() error {
 	return nil
 }
 
-func main() {
+// install is called by the main function
+func install() {
 	log.SetComponentName("install")
 
 	err := installConfig()
