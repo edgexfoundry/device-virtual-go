@@ -1,5 +1,5 @@
 name: edgex-device-virtual
-base: core22
+base: core20
 license: Apache-2.0
 adopt-info: metadata
 
