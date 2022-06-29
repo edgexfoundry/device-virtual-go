@@ -25,7 +25,7 @@ apps:
   device-virtual:
     command: bin/device-virtual $CONFIG_PRO_ARG $CONF_ARG $REGISTRY_ARG
     command-chain:
-      - bin/startup-env-var.sh
+      - bin/source-env-file.sh
     environment:
       CONFIG_PRO_ARG: "--cp=consul.http://localhost:8500"
       CONF_ARG: "--confdir=$SNAP_DATA/config/device-virtual/res"
@@ -76,9 +76,11 @@ parts:
       cp Attribution.txt $DOC/Attribution.txt
       cp LICENSE $DOC/LICENSE
 
-  runtime-helpers:
+  local-bin:
     plugin: dump
-    source: snap/local/runtime-helpers
+    source: snap/local/bin
+    organize:
+      source-env-file.sh: bin/source-env-file.sh
 
   metadata:
     plugin: nil
