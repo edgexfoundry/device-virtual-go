@@ -41,7 +41,7 @@ parts:
   helper-go:
     source: snap/local/helper-go
     plugin: make
-    build-snaps: [go/1.17/stable]
+    build-snaps: [go/1.18/stable]
     override-build: |
       cd $SNAPCRAFT_PART_SRC
       make build
@@ -52,7 +52,7 @@ parts:
     source: .
     plugin: make
     build-packages: [git, libzmq3-dev, pkg-config]
-    build-snaps: [go/1.17/stable]
+    build-snaps: [go/1.18/stable]
     stage-packages: [libzmq5]
     override-build: |
       cd $SNAPCRAFT_PART_SRC

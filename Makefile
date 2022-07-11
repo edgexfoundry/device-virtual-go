@@ -34,10 +34,10 @@ else
 	CGOFLAGS=-ldflags "-linkmode=external -X github.com/edgexfoundry/device-virtual-go.Version=$(VERSION)" -trimpath -mod=readonly -buildmode=pie
 endif
 
+build: $(MICROSERVICES)
+
 tidy:
 	go mod tidy
-
-build: $(MICROSERVICES)
 
 cmd/device-virtual:
 	$(GO) build $(CGOFLAGS) -o $@ ./cmd
