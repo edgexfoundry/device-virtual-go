@@ -1,5 +1,5 @@
 name: edgex-device-virtual
-base: core20
+base: core22
 license: Apache-2.0
 adopt-info: metadata
 
@@ -43,9 +43,9 @@ parts:
     plugin: make
     build-snaps: [go/1.18/stable]
     override-build: |
-      cd $SNAPCRAFT_PART_SRC
+      cd $CRAFT_PART_SRC
       make build
-      install -DT ./helper-go $SNAPCRAFT_PART_INSTALL/bin/helper-go
+      install -DT ./helper-go $CRAFT_PART_INSTALL/bin/helper-go
 
   device-virtual:
     after: [metadata]
@@ -55,23 +55,22 @@ parts:
     build-snaps: [go/1.18/stable]
     stage-packages: [libzmq5]
     override-build: |
-      cd $SNAPCRAFT_PART_SRC
+      cd $CRAFT_PART_SRC
 
       # the version is needed for the build
-      cat VERSION
+      cp $CRAFT_STAGE/version.txt VERSION
 
-      make tidy
       make build
 
-      install -DT "./cmd/device-virtual" "$SNAPCRAFT_PART_INSTALL/bin/device-virtual"
+      install -DT "./cmd/device-virtual" "$CRAFT_PART_INSTALL/bin/device-virtual"
 
-      RES=$SNAPCRAFT_PART_INSTALL/config/device-virtual/res/
+      RES=$CRAFT_PART_INSTALL/config/device-virtual/res/
       mkdir -p $RES
       cp    cmd/res/configuration.toml $RES
       cp -r cmd/res/devices $RES
       cp -r cmd/res/profiles $RES
       
-      DOC=$SNAPCRAFT_PART_INSTALL/usr/share/doc/device-virtual
+      DOC=$CRAFT_PART_INSTALL/usr/share/doc/device-virtual
       mkdir -p $DOC
       cp Attribution.txt $DOC/Attribution.txt
       cp LICENSE $DOC/LICENSE
@@ -90,10 +89,10 @@ parts:
     override-build: |
       # install the icon at the default internal path
       install -DT edgex-snap-icon.png \
-        $SNAPCRAFT_PART_INSTALL/meta/gui/icon.png
+        $CRAFT_PART_INSTALL/meta/gui/icon.png
       
       # change to this project's repo to get the version
-      cd $SNAPCRAFT_PROJECT_DIR
+      cd $CRAFT_PROJECT_DIR
       if git describe ; then
         VERSION=$(git describe --tags --abbrev=0 | sed 's/v//')
       else
@@ -101,9 +100,10 @@ parts:
       fi
       
       # write version to file for the build
-      echo $VERSION > ./VERSION
+      echo $VERSION > $CRAFT_STAGE/version.txt
+
       # set the version of this snap
-      snapcraftctl set-version $VERSION
+      craftctl set version=$VERSION
     parse-info: [edgex-device-virtual.metainfo.xml]
 
     
