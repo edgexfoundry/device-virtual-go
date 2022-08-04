@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Build and upload snap
         id: build
-        uses: canonical/edgex-snap-testing/build@v2
+        uses: MonicaisHer/edgex-snap-testing/build@EDGEX-400-upgrade-snap-bases-to-core-22
     outputs:
       snap: ${{steps.build.outputs.snap}}
 
