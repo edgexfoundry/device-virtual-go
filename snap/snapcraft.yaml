@@ -17,7 +17,7 @@ slots:
       write: [$SNAP_DATA/device-virtual]
 
 plugs:
-  device-config:
+  device-virtual-config:
     interface: content 
     target: $SNAP_DATA/config/device-virtual
 
