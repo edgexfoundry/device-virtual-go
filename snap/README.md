@@ -34,5 +34,5 @@ Please refer [here][secret-store-token] for further information.
 
 [edgex-device-virtual]: https://snapcraft.io/edgex-device-virtual
 [docs]: https://docs.edgexfoundry.org/2.3/getting-started/Ch-GettingStartedSnapUsers/#device-virtual
-[secret-store-token]: https://docs.edgexfoundry.org/latest/getting-started/Ch-GettingStartedSnapUsers/#secret-store-token
+[secret-store-token]: https://docs.edgexfoundry.org/2.3/getting-started/Ch-GettingStartedSnapUsers/#secret-store-token
 
