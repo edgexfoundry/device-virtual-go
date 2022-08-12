@@ -24,7 +24,7 @@ import (
 
 // configure is called by the main function
 func configure() {
-	const service = "device-virtual"
+	const app = "device-virtual"
 
 	log.SetComponentName("configure")
 
@@ -35,13 +35,13 @@ func configure() {
 	}
 
 	log.Info("Processing config options")
-	err = options.ProcessConfig(service)
+	err = options.ProcessConfig(app)
 	if err != nil {
 		log.Fatalf("could not process config options: %v", err)
 	}
 
 	log.Info("Processing autostart options")
-	err = options.ProcessAutostart(service)
+	err = options.ProcessAutostart(app)
 	if err != nil {
 		log.Fatalf("could not process autostart options: %v", err)
 	}
