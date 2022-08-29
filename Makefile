@@ -36,11 +36,14 @@ endif
 
 build: $(MICROSERVICES)
 
+build-nats:
+	make -e ADD_BUILD_TAGS=include_nats_messaging build
+
 tidy:
 	go mod tidy
 
 cmd/device-virtual:
-	$(GO) build $(CGOFLAGS) -o $@ ./cmd
+	$(GO) build -tags "$(ADD_BUILD_TAGS)" $(CGOFLAGS) -o $@ ./cmd
 
 
 unittest:
@@ -63,10 +66,14 @@ docker: $(DOCKERS)
 
 docker_device_virtual_go:
 	docker build \
+		--build-arg ADD_BUILD_TAGS=$(ADD_BUILD_TAGS) \
 		--label "git_sha=$(GIT_SHA)" \
 		-t edgexfoundry/device-virtual:$(GIT_SHA) \
 		-t edgexfoundry/device-virtual:$(VERSION)-dev \
 		.
+
+docker-nats:
+	make -e ADD_BUILD_TAGS=include_nats_messaging docker
 
 vendor:
 	CGO_ENABLED=0 GO111MODULE=on go mod vendor

@@ -19,6 +19,7 @@ FROM ${BASE} AS builder
 
 ARG ALPINE_PKG_BASE="make git openssh-client gcc libc-dev zeromq-dev libsodium-dev"
 ARG ALPINE_PKG_EXTRA=""
+ARG ADD_BUILD_TAGS=""
 
 # set the working directory
 WORKDIR /device-virtual-go
@@ -36,7 +37,7 @@ COPY . .
 # To run tests in the build container:
 #   docker build --build-arg 'MAKE=build test' .
 # This is handy of you do your Docker business on a Mac
-ARG MAKE='make build'
+ARG MAKE="make -e ADD_BUILD_TAGS=$ADD_BUILD_TAGS build"
 RUN $MAKE
 
 FROM alpine:3.16
