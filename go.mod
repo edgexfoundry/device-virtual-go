@@ -3,7 +3,7 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.18
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v2 v2.3.0-dev.20
+	github.com/edgexfoundry/device-sdk-go/v2 v2.3.0-dev.21
 	github.com/edgexfoundry/go-mod-core-contracts/v2 v2.2.0
 )
 
@@ -15,7 +15,7 @@ require (
 	github.com/eclipse/paho.mqtt.golang v1.4.1 // indirect
 	github.com/edgexfoundry/go-mod-bootstrap/v2 v2.2.0 // indirect
 	github.com/edgexfoundry/go-mod-configuration/v2 v2.2.0 // indirect
-	github.com/edgexfoundry/go-mod-messaging/v2 v2.3.0-dev.14 // indirect
+	github.com/edgexfoundry/go-mod-messaging/v2 v2.3.0-dev.15 // indirect
 	github.com/edgexfoundry/go-mod-registry/v2 v2.2.0 // indirect
 	github.com/edgexfoundry/go-mod-secrets/v2 v2.2.0 // indirect
 	github.com/fatih/color v1.9.0 // indirect
