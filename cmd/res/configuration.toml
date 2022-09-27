@@ -71,6 +71,9 @@ PublishTopicPrefix = "edgex/events/device" # /<device-profile-name>/<device-name
   AutoProvision = "true"
   Deliver = "new"
   DefaultPubRetryAttempts = "2"
+  [MessageQueue.Topics]
+  CommandRequestTopic = "edgex/command/request/#"         # subscribing for inbound command requests
+  CommandResponseTopicPrefix = "edgex/command/response"   # publishing outbound command responses; <device-service>/<device-name>/<command-name>/<method> will be added to this publish topic prefix
 
 # Only used when EDGEX_SECURITY_SECRET_STORE=true which is now required for secure Consul
 [SecretStore]
