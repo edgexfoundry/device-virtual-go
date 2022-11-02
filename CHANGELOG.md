@@ -12,7 +12,30 @@
 - [go-mod-secrets](https://github.com/edgexfoundry/go-mod-secrets/blob/main/CHANGELOG.md) (indirect dependency)
 - [go-mod-configuration](https://github.com/edgexfoundry/go-mod-configuration/blob/main/CHANGELOG.md) (indirect dependency)
 
-## [v2.2.0] Kamakura - 2022-05-11  (Not Compatible with 1.x releases)
+## [v2.3.0] Levski - 2022-11-09  (Only compatible with the 2.x releases)
+
+### Features ✨
+
+- Add new Service Metrics configuration ([#08ba88b](https://github.com/edgexfoundry/device-virtual-go/commits/08ba88b))
+- Add NATS configuration and build option ([#302](https://github.com/edgexfoundry/device-virtual-go/issues/302)) ([#6354348](https://github.com/edgexfoundry/device-virtual-go/commits/6354348))
+- Add commanding via message configuration ([#0b45d56](https://github.com/edgexfoundry/device-virtual-go/commits/0b45d56))
+- Add go-winio to attribution (new SPIFFE dependency) ([#a7b7b7f](https://github.com/edgexfoundry/device-virtual-go/commits/a7b7b7f))
+- **snap:** Add snap packaging ([#287](https://github.com/edgexfoundry/device-virtual-go/issues/287)) ([#dce4ce0](https://github.com/edgexfoundry/device-virtual-go/commits/dce4ce0))
+
+### Bug Fixes 🐛
+
+- **snap:** Remove duplicate file copying in install hook ([#311](https://github.com/edgexfoundry/device-virtual-go/issues/311)) ([#38745b3](https://github.com/edgexfoundry/device-virtual-go/commits/38745b3))
+- **snap:** Set unique name for config interface ([#299](https://github.com/edgexfoundry/device-virtual-go/issues/299)) ([#b155924](https://github.com/edgexfoundry/device-virtual-go/commits/b155924))
+
+### Code Refactoring ♻
+
+- **snap:** edgex-snap-hooks related upgrade ([#290](https://github.com/edgexfoundry/device-virtual-go/issues/290)) ([#1d4e8f4](https://github.com/edgexfoundry/device-virtual-go/commits/1d4e8f4))
+
+### Build 👷
+
+- Upgrade to Go 1.18 and alpine 3.16 ([#294](https://github.com/edgexfoundry/device-virtual-go/issues/294)) ([#92de881](https://github.com/edgexfoundry/device-virtual-go/commits/92de881))
+
+## [v2.2.0] Kamakura - 2022-05-11  (Only compatible with the 2.x releases)
 
 ### Features ✨
 - Add MaxEventSize and ReadingUnits to configuration ([#1d794d6](https://github.com/edgexfoundry/device-virtual-go/commits/1d794d6))
@@ -38,7 +61,7 @@
 - gomod changes related for Go 1.17 ([#257b1e4](https://github.com/edgexfoundry/device-virtual-go/commits/257b1e4))
 - Go 1.17 related changes ([#bf2a4df](https://github.com/edgexfoundry/device-virtual-go/commits/bf2a4df))
 
-## [v2.1.0] Jakarta - 2021-11-18  (Not Compatible with 1.x releases)
+## [v2.1.0] Jakarta - 2021-11-18  (Only compatible with the 2.x releases)
 
 ### Features ✨
 - Update configuration for new CORS and Secrets File settings ([#c0ef7e9](https://github.com/edgexfoundry/device-virtual-go/commits/c0ef7e9))
@@ -56,7 +79,7 @@
 ### Continuous Integration 🔄
 - Remove need for CI specific Dockerfile ([#085dd40](https://github.com/edgexfoundry/device-virtual-go/commits/085dd40))
 
-## [v2.0.0] Ireland - 2021-06-30  (Not Compatible with 1.x releases)
+## [v2.0.0] Ireland - 2021-06-30  (Only compatible with the 2.x releases)
 
 ### Features ✨
 - Enable using MessageBus as the default ([#dee740d](https://github.com/edgexfoundry/device-virtual-go/commits/dee740d))
