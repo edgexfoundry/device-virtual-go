@@ -3,7 +3,7 @@ package driver
 import (
 	"sync"
 
-	"github.com/edgexfoundry/go-mod-core-contracts/v2/errors"
+	"github.com/edgexfoundry/go-mod-core-contracts/v3/errors"
 )
 
 type data struct {
