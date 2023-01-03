@@ -52,4 +52,4 @@ COPY --from=builder /device-virtual-go/cmd /
 EXPOSE 59900
 
 ENTRYPOINT ["/device-virtual"]
-CMD ["--cp=consul.http://edgex-core-consul:8500", "--registry", "--confdir=/res"]
+CMD ["--cp=consul.http://edgex-core-consul:8500", "--registry"]
