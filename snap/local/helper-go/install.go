@@ -22,9 +22,8 @@ import (
 	"github.com/canonical/edgex-snap-hooks/v2/log"
 )
 
-// installConfig copies all config files from $SNAP to $SNAP_DATA.
 func installConfig() error {
-	path := "/config/device-virtual/res"
+	path := "/config/" + app + "/res"
 
 	err := hooks.CopyDir(
 		env.Snap+path,
@@ -36,12 +35,10 @@ func installConfig() error {
 	return nil
 }
 
-// install is called by the main function
 func install() {
 	log.SetComponentName("install")
 
-	err := installConfig()
-	if err != nil {
-		log.Fatalf("error installing config file: %s", err)
+	if err := installConfig(); err != nil {
+		log.Fatalf("Error installing config files: %s", err)
 	}
 }
