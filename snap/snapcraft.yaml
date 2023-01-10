@@ -51,9 +51,8 @@ parts:
     after: [metadata]
     source: .
     plugin: make
-    build-packages: [git, libzmq3-dev, pkg-config]
+    build-packages: [git, pkg-config]
     build-snaps: [go/1.18/stable]
-    stage-packages: [libzmq5]
     override-build: |
       cd $CRAFT_PART_SRC
 

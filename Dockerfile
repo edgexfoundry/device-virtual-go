@@ -17,7 +17,7 @@
 ARG BASE=golang:1.18-alpine3.16
 FROM ${BASE} AS builder
 
-ARG ALPINE_PKG_BASE="make git openssh-client gcc libc-dev zeromq-dev libsodium-dev"
+ARG ALPINE_PKG_BASE="make git openssh-client"
 ARG ALPINE_PKG_EXTRA=""
 ARG ADD_BUILD_TAGS=""
 
@@ -42,7 +42,7 @@ FROM alpine:3.16
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
   copyright='Copyright (c) 2019-2021: IOTech'
 
-RUN apk add --update --no-cache zeromq dumb-init
+RUN apk add --update --no-cache dumb-init
 
 WORKDIR /
 COPY --from=builder /device-virtual-go/Attribution.txt /
