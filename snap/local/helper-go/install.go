@@ -17,9 +17,9 @@
 package main
 
 import (
-	hooks "github.com/canonical/edgex-snap-hooks/v2"
-	"github.com/canonical/edgex-snap-hooks/v2/env"
-	"github.com/canonical/edgex-snap-hooks/v2/log"
+	hooks "github.com/canonical/edgex-snap-hooks/v3"
+	"github.com/canonical/edgex-snap-hooks/v3/env"
+	"github.com/canonical/edgex-snap-hooks/v3/log"
 )
 
 func installConfig() error {

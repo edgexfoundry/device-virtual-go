@@ -17,8 +17,8 @@
 package main
 
 import (
-	"github.com/canonical/edgex-snap-hooks/v2/log"
-	"github.com/canonical/edgex-snap-hooks/v2/options"
+	"github.com/canonical/edgex-snap-hooks/v3/log"
+	"github.com/canonical/edgex-snap-hooks/v3/options"
 )
 
 func configure() {
