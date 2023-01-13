@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/edgexfoundry/device-sdk-go/v3 v3.0.0-dev.8
-	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.0.0-dev.2
+	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.0.0-dev.3
 )
 
 require (
