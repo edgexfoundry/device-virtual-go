@@ -2,23 +2,10 @@ MaxEventSize = 0 # value 0 unlimit the maximum event size that can be sent to me
 
 [Writable]
 LogLevel = "INFO"
-  [Writable.Reading]
-  ReadingUnits = true
-  [Writable.Telemetry]
-    [Writable.Telemetry.Metrics] # All service's metric names must be present in this list.
-    # Device SDK provided Metrics
-    EventsSent = false
-    ReadingsSent = false
 
 [Service]
 Port = 59900
 StartupMsg = "device virtual started"
-
-[Clients]
-  [Clients.core-data]
-  Protocol = "http"
-  Host = "localhost"
-  Port = 59880
 
 [MessageBus]
   [MessageBus.Topics]
@@ -30,4 +17,4 @@ StartupMsg = "device virtual started"
   ClientId = "device-virtual"
 
 [Device]
-UseMessageBus = true
+  ProvisionWatchersDir = ""
