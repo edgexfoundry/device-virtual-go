@@ -15,6 +15,3 @@ StartupMsg = "device virtual started"
   MetadataSystemEventTopic = "edgex/system-events/core-metadata/+/+/device-virtual/#"
   [MessageBus.Optional]
   ClientId = "device-virtual"
-
-[Device]
-  ProvisionWatchersDir = ""
