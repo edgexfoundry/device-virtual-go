@@ -131,7 +131,8 @@ func (d *VirtualDriver) AddDevice(deviceName string, protocols map[string]models
 
 func (d *VirtualDriver) UpdateDevice(deviceName string, protocols map[string]models.ProtocolProperties, adminState models.AdminState) error {
 	d.lc.Debugf("Device %s is updated", deviceName)
-	return nil
+	err := prepareVirtualResources(d, deviceName)
+	return err
 }
 
 func (d *VirtualDriver) RemoveDevice(deviceName string, protocols map[string]models.ProtocolProperties) error {
