@@ -1,11 +1,10 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2022 IOTech Ltd
+// Copyright (C) 2019-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
-// This package provides a implementation of a ProtocolDriver interface.
-//
+// Package driver provides an implementation of a ProtocolDriver interface.
 package driver
 
 import (
@@ -13,8 +12,8 @@ import (
 	"reflect"
 	"sync"
 
+	"github.com/edgexfoundry/device-sdk-go/v3/pkg/interfaces"
 	dsModels "github.com/edgexfoundry/device-sdk-go/v3/pkg/models"
-	sdk "github.com/edgexfoundry/device-sdk-go/v3/pkg/service"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/clients/logger"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/common"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/models"
@@ -26,13 +25,13 @@ type VirtualDriver struct {
 	virtualDevices sync.Map
 	db             *db
 	locker         sync.Mutex
+	sdk            interfaces.DeviceServiceSDK
 }
 
 var once sync.Once
 var driver *VirtualDriver
-var sdkService sdk.DeviceService
 
-func NewVirtualDeviceDriver() dsModels.ProtocolDriver {
+func NewVirtualDeviceDriver() interfaces.ProtocolDriver {
 	once.Do(func() {
 		driver = new(VirtualDriver)
 	})
@@ -49,9 +48,10 @@ func (d *VirtualDriver) retrieveVirtualDevice(deviceName string) (vdv *virtualDe
 	return vdv, err
 }
 
-func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsModels.AsyncValues, deviceCh chan<- []dsModels.DiscoveredDevice) error {
-	d.lc = lc
-	d.asyncCh = asyncCh
+func (d *VirtualDriver) Initialize(sdk interfaces.DeviceServiceSDK) error {
+	d.sdk = sdk
+	d.lc = sdk.LoggingClient()
+	d.asyncCh = sdk.AsyncValuesChannel()
 
 	d.db = getDb()
 
@@ -59,8 +59,7 @@ func (d *VirtualDriver) Initialize(lc logger.LoggingClient, asyncCh chan<- *dsMo
 		return fmt.Errorf("failed to initial virtual resource table: %v", err)
 	}
 
-	service := sdk.RunningService()
-	devices := service.Devices()
+	devices := sdk.Devices()
 	for _, device := range devices {
 		err := prepareVirtualResources(d, device.Name)
 		if err != nil {
@@ -83,7 +82,7 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 	res = make([]*dsModels.CommandValue, len(reqs))
 
 	for i, req := range reqs {
-		if dr, ok := sdkService.DeviceResource(deviceName, req.DeviceResourceName); ok {
+		if dr, ok := d.sdk.DeviceResource(deviceName, req.DeviceResourceName); ok {
 			if v, err := vd.read(deviceName, req.DeviceResourceName, dr.Properties.ValueType, dr.Properties.Minimum, dr.Properties.Maximum, d.db); err != nil {
 				return nil, err
 			} else {
@@ -154,12 +153,11 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 	driver.locker.Lock()
 	defer driver.locker.Unlock()
 
-	service := sdk.RunningService()
-	device, err := service.GetDeviceByName(deviceName)
+	device, err := driver.sdk.GetDeviceByName(deviceName)
 	if err != nil {
 		return err
 	}
-	profile, err := service.GetProfileByName(device.ProfileName)
+	profile, err := driver.sdk.GetProfileByName(device.ProfileName)
 	if err != nil {
 		return err
 	}
