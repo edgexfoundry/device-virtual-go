@@ -3,8 +3,8 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.18
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v3 v3.0.0-dev.43
-	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.0.0-dev.24
+	github.com/edgexfoundry/device-sdk-go/v3 v3.0.0-dev.49
+	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.0.0-dev.26
 )
 
 require (
@@ -13,9 +13,9 @@ require (
 	github.com/armon/go-metrics v0.3.10 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/eclipse/paho.mqtt.golang v1.4.2 // indirect
-	github.com/edgexfoundry/go-mod-bootstrap/v3 v3.0.0-dev.36 // indirect
-	github.com/edgexfoundry/go-mod-configuration/v3 v3.0.0-dev.6 // indirect
-	github.com/edgexfoundry/go-mod-messaging/v3 v3.0.0-dev.13 // indirect
+	github.com/edgexfoundry/go-mod-bootstrap/v3 v3.0.0-dev.42 // indirect
+	github.com/edgexfoundry/go-mod-configuration/v3 v3.0.0-dev.7 // indirect
+	github.com/edgexfoundry/go-mod-messaging/v3 v3.0.0-dev.16 // indirect
 	github.com/edgexfoundry/go-mod-registry/v3 v3.0.0-dev.5 // indirect
 	github.com/edgexfoundry/go-mod-secrets/v3 v3.0.0-dev.8 // indirect
 	github.com/fatih/color v1.9.0 // indirect
@@ -55,7 +55,7 @@ require (
 	github.com/spiffe/go-spiffe/v2 v2.1.2 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	github.com/zeebo/errs v1.3.0 // indirect
-	golang.org/x/crypto v0.5.0 // indirect
+	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/mod v0.7.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
