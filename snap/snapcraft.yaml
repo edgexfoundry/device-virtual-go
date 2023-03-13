@@ -18,18 +18,15 @@ slots:
 
 plugs:
   device-virtual-config:
-    interface: content 
+    interface: content
     target: $SNAP_DATA/config/device-virtual
 
 apps:
   device-virtual:
-    command: bin/device-virtual $CONFIG_PRO_ARG $CONF_ARG $REGISTRY_ARG
+    command: bin/device-virtual --configDir $SNAP_DATA/config/device-virtual/res --configProvider --registry
     command-chain:
       - bin/source-env-file.sh
     environment:
-      CONFIG_PRO_ARG: "--cp=consul.http://localhost:8500"
-      CONF_ARG: "--configDir=$SNAP_DATA/config/device-virtual/res"
-      REGISTRY_ARG: "--registry"
       DEVICE_PROFILESDIR: "$SNAP_DATA/config/device-virtual/res/profiles"
       DEVICE_DEVICESDIR: "$SNAP_DATA/config/device-virtual/res/devices"
       SECRETSTORE_TOKENFILE: $SNAP_DATA/device-virtual/secrets-token.json
@@ -37,7 +34,7 @@ apps:
     install-mode: disable
     plugs: [network, network-bind]
 
-parts:      
+parts:
   helper-go:
     source: snap/local/helper-go
     plugin: make
@@ -51,7 +48,6 @@ parts:
     after: [metadata]
     source: .
     plugin: make
-    build-packages: [git, pkg-config]
     build-snaps: [go/1.18/stable]
     override-build: |
       cd $CRAFT_PART_SRC
@@ -60,15 +56,14 @@ parts:
       cp $CRAFT_STAGE/version.txt VERSION
 
       make build
-
-      install -DT "./cmd/device-virtual" "$CRAFT_PART_INSTALL/bin/device-virtual"
+      install -DT ./cmd/device-virtual $CRAFT_PART_INSTALL/bin/device-virtual
 
       RES=$CRAFT_PART_INSTALL/config/device-virtual/res/
       mkdir -p $RES
       cp    cmd/res/configuration.toml $RES
       cp -r cmd/res/devices $RES
       cp -r cmd/res/profiles $RES
-      
+
       DOC=$CRAFT_PART_INSTALL/usr/share/doc/device-virtual
       mkdir -p $DOC
       cp Attribution.txt $DOC/Attribution.txt
@@ -89,7 +84,7 @@ parts:
       # install the icon at the default internal path
       install -DT edgex-snap-icon.png \
         $CRAFT_PART_INSTALL/meta/gui/icon.png
-      
+
       # change to this project's repo to get the version
       cd $CRAFT_PROJECT_DIR
       if git describe ; then
@@ -97,12 +92,10 @@ parts:
       else
         VERSION="0.0.0"
       fi
-      
+
       # write version to file for the build
       echo $VERSION > $CRAFT_STAGE/version.txt
 
       # set the version of this snap
       craftctl set version=$VERSION
     parse-info: [edgex-device-virtual.metainfo.xml]
-
-    
