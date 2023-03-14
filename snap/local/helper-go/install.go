@@ -40,7 +40,7 @@ func install() {
 	log.SetComponentName("install")
 
 	// Install default config files only if no config provider is connected
-	isConnected, err := snapctl.IsConnected("device-virtual-config").Run()
+	isConnected, err := snapctl.IsConnected(app + "-config").Run()
 	if err != nil {
 		log.Fatalf("Error checking interface connection: %s", err)
 	}
