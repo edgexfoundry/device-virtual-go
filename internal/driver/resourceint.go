@@ -29,6 +29,7 @@ func (ri *resourceInt) value(db *db, deviceName, deviceResourceName, minimum,
 		return result, err
 	}
 
+	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
 	signHelper := []int64{-1, 1}
 	var newValueInt int64

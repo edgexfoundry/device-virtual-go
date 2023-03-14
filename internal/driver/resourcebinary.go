@@ -20,8 +20,13 @@ type resourceBinary struct{}
 func (rb *resourceBinary) value(deviceResourceName string) (*models.CommandValue, error) {
 	newValueB := make([]byte, models.MaxBinaryBytes/1000)
 
+	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
-	rand.Read(newValueB) //nolint:gosec
+	//nolint // G404: Use of weak random number generator
+	_, err := rand.Read(newValueB)
+	if err != nil {
+		return nil, err
+	}
 
 	result, err := models.NewCommandValue(deviceResourceName, common.ValueTypeBinary, newValueB)
 	if err != nil {

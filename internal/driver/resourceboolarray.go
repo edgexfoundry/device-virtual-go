@@ -29,6 +29,7 @@ func (rb *resourceBoolArray) value(db *db, deviceName, deviceResourceName string
 
 	var newArrayBoolValue []bool
 	if enableRandomization {
+		//nolint // SA1019: rand.Seed has been deprecated
 		rand.Seed(time.Now().UnixNano())
 		for i := 0; i < defaultArrayValueSize; i++ {
 			newArrayBoolValue = append(newArrayBoolValue, rand.Int()%2 == 0) //nolint:gosec

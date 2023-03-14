@@ -86,6 +86,7 @@ func randomInt(min, max int64) int64 {
 }
 
 func randomUint(min, max uint64) uint64 {
+	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
 	if max-min < uint64(math.MaxInt64) {
 		return uint64(rand.Int63n(int64(max-min+1))) + min //nolint:gosec
@@ -139,6 +140,7 @@ func parseUintMinimumMaximum(minimum, maximum, dataType string) (uint64, uint64,
 }
 
 func randomFloat(min, max float64) float64 {
+	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
 	if max > 0 && min < 0 {
 		var negativePart float64
