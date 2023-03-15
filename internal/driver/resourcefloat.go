@@ -29,6 +29,7 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 		return result, err
 	}
 
+	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
 	var newValueFloat float64
 	var bitSize int

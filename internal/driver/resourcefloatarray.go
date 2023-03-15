@@ -30,6 +30,7 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 		return result, err
 	}
 
+	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
 	min, max, err := parseFloatMinimumMaximum(minimum, maximum, dataType)
 
