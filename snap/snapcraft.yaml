@@ -47,7 +47,6 @@ parts:
       install -DT ./helper-go $CRAFT_PART_INSTALL/bin/helper-go
 
   device-virtual:
-    after: [metadata]
     source: .
     plugin: make
     build-snaps: [go/1.20/stable]
