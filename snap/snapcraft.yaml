@@ -1,7 +1,9 @@
 name: edgex-device-virtual
 base: core22
 license: Apache-2.0
-adopt-info: metadata
+summary: EdgeX Virtual Device Service
+description: Refer to https://snapcraft.io/edgex-device-virtual
+adopt-info: device-virtual
 
 architectures:
   - build-on: amd64
@@ -18,18 +20,15 @@ slots:
 
 plugs:
   device-virtual-config:
-    interface: content 
+    interface: content
     target: $SNAP_DATA/config/device-virtual
 
 apps:
   device-virtual:
-    command: bin/device-virtual $CONFIG_PRO_ARG $CONF_ARG $REGISTRY_ARG
+    command: bin/device-virtual --configDir $SNAP_DATA/config/device-virtual/res --configProvider --registry
     command-chain:
       - bin/source-env-file.sh
     environment:
-      CONFIG_PRO_ARG: "--cp=consul.http://localhost:8500"
-      CONF_ARG: "--configDir=$SNAP_DATA/config/device-virtual/res"
-      REGISTRY_ARG: "--registry"
       DEVICE_PROFILESDIR: "$SNAP_DATA/config/device-virtual/res/profiles"
       DEVICE_DEVICESDIR: "$SNAP_DATA/config/device-virtual/res/devices"
       SECRETSTORE_TOKENFILE: $SNAP_DATA/device-virtual/secrets-token.json
@@ -37,7 +36,7 @@ apps:
     install-mode: disable
     plugs: [network, network-bind]
 
-parts:      
+parts:
   helper-go:
     source: snap/local/helper-go
     plugin: make
@@ -48,27 +47,33 @@ parts:
       install -DT ./helper-go $CRAFT_PART_INSTALL/bin/helper-go
 
   device-virtual:
-    after: [metadata]
     source: .
     plugin: make
-    build-packages: [git, pkg-config]
     build-snaps: [go/1.20/stable]
     override-build: |
       cd $CRAFT_PART_SRC
 
-      # the version is needed for the build
-      cp $CRAFT_STAGE/version.txt VERSION
+      if git describe ; then
+        VERSION=$(git describe --tags --abbrev=0 | sed 's/v//')
+      else
+        VERSION="0.0.0"
+      fi
+
+      # set the version of the snap
+      craftctl set version=$VERSION
+
+      # write version to file for the build
+      echo $VERSION > VERSION
 
       make build
-
-      install -DT "./cmd/device-virtual" "$CRAFT_PART_INSTALL/bin/device-virtual"
+      install -DT ./cmd/device-virtual $CRAFT_PART_INSTALL/bin/device-virtual
 
       RES=$CRAFT_PART_INSTALL/config/device-virtual/res/
       mkdir -p $RES
       cp    cmd/res/configuration.toml $RES
       cp -r cmd/res/devices $RES
       cp -r cmd/res/profiles $RES
-      
+
       DOC=$CRAFT_PART_INSTALL/usr/share/doc/device-virtual
       mkdir -p $DOC
       cp Attribution.txt $DOC/Attribution.txt
@@ -79,30 +84,3 @@ parts:
     source: snap/local/bin
     organize:
       source-env-file.sh: bin/source-env-file.sh
-
-  metadata:
-    plugin: nil
-    source: https://github.com/canonical/edgex-snap-metadata.git
-    source-branch: appstream
-    source-depth: 1
-    override-build: |
-      # install the icon at the default internal path
-      install -DT edgex-snap-icon.png \
-        $CRAFT_PART_INSTALL/meta/gui/icon.png
-      
-      # change to this project's repo to get the version
-      cd $CRAFT_PROJECT_DIR
-      if git describe ; then
-        VERSION=$(git describe --tags --abbrev=0 | sed 's/v//')
-      else
-        VERSION="0.0.0"
-      fi
-      
-      # write version to file for the build
-      echo $VERSION > $CRAFT_STAGE/version.txt
-
-      # set the version of this snap
-      craftctl set version=$VERSION
-    parse-info: [edgex-device-virtual.metainfo.xml]
-
-    
