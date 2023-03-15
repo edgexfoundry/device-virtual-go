@@ -29,6 +29,7 @@ func (rb *resourceBool) value(db *db, deviceName, deviceResourceName string) (*m
 
 	var newValueBool bool
 	if enableRandomization {
+		//nolint // SA1019: rand.Seed has been deprecated
 		rand.Seed(time.Now().UnixNano())
 		newValueBool = rand.Int()%2 == 0 //nolint:gosec
 	} else {

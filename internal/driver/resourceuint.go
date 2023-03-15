@@ -29,6 +29,7 @@ func (ru *resourceUint) value(db *db, deviceName, deviceResourceName, minimum,
 	}
 
 	var newValueUint uint64
+	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
 	min, max, err := parseUintMinimumMaximum(minimum, maximum, dataType)
 

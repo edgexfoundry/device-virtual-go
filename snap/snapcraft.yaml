@@ -40,7 +40,7 @@ parts:
   helper-go:
     source: snap/local/helper-go
     plugin: make
-    build-snaps: [go/1.18/stable]
+    build-snaps: [go/1.20/stable]
     override-build: |
       cd $CRAFT_PART_SRC
       make build
@@ -50,7 +50,7 @@ parts:
     after: [metadata]
     source: .
     plugin: make
-    build-snaps: [go/1.18/stable]
+    build-snaps: [go/1.20/stable]
     override-build: |
       cd $CRAFT_PART_SRC
 
