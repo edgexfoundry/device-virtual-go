@@ -1,0 +1,88 @@
+# Pre-define Devices
+DeviceList:
+  - Name: Random-Boolean-Device
+    ProfileName: Random-Boolean-Device
+    Description: Example of Device Virtual
+    Labels:
+      - device-virtual-example
+    Protocols:
+      other:
+        Address: device-virtual-bool-01
+        Port: 300
+    AutoEvents:
+      - Interval: 10s
+        OnChange: false
+        SourceName: Bool
+  - Name: Random-Integer-Device
+    ProfileName: Random-Integer-Device
+    Description: Example of Device Virtual
+    Labels:
+      - device-virtual-example
+    Protocols:
+      other:
+        Address: device-virtual-int-01
+        Protocol: 300
+    AutoEvents:
+      - Interval: 15s
+        OnChange: false
+        SourceName: Int8
+      - Interval: 15s
+        OnChange: false
+        SourceName: Int16
+      - Interval: 15s
+        OnChange: false
+        SourceName: Int32
+      - Interval: 15s
+        OnChange: false
+        SourceName: Int64
+  - Name: Random-UnsignedInteger-Device
+    ProfileName: Random-UnsignedInteger-Device
+    Description: Example of Device Virtual
+    Labels:
+      - device-virtual-example
+    Protocols:
+      other:
+        Address: device-virtual-uint-01
+        Protocol: 300
+    AutoEvents:
+      - Interval: 20s
+        OnChange: false
+        SourceName: Uint8
+      - Interval: 20s
+        OnChange: false
+        SourceName: Uint16
+      - Interval: 20s
+        OnChange: false
+        SourceName: Uint32
+      - Interval: 20s
+        OnChange: false
+        SourceName: Uint64
+  - Name: Random-Float-Device
+    ProfileName: Random-Float-Device
+    Description: Example of Device Virtual
+    Labels:
+      - device-virtual-example
+    Protocols:
+      other:
+        Address: device-virtual-float-01
+        Protocol: 300
+    AutoEvents:
+      - Interval: 30s
+        OnChange: false
+        SourceName: Float32
+      - Interval: 30s
+        OnChange: false
+        SourceName: Float64
+  - Name: Random-Binary-Device
+    ProfileName: Random-Binary-Device
+    Description: Example of Device Virtual
+    Labels:
+      - device-virtual-example
+    Protocols:
+      other:
+        Address: device-virtual-binary-01
+        Port: 300
+    # AutoEvents:
+    #   - Interval: 30s
+    #     OnChange: false
+    #     SourceName: Binary
