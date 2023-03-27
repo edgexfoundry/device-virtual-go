@@ -40,7 +40,7 @@
 ### Features ✨
 - Add MaxEventSize and ReadingUnits to configuration ([#1d794d6](https://github.com/edgexfoundry/device-virtual-go/commits/1d794d6))
 - Enable security hardening ([#5ba56e1](https://github.com/edgexfoundry/device-virtual-go/commits/5ba56e1))
-- **security:** Roll out delayed start configuration.yaml scaffolding ([#01bd024](https://github.com/edgexfoundry/device-virtual-go/commits/01bd024))
+- **security:** Roll out delayed start configuration.toml scaffolding ([#01bd024](https://github.com/edgexfoundry/device-virtual-go/commits/01bd024))
 
 ### Bug Fixes 🐛
 - **security:** Dependency version bump for device-sdk and go-mod-core-contracts ([#cf90458](https://github.com/edgexfoundry/device-virtual-go/commits/cf90458))
