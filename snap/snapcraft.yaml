@@ -70,7 +70,7 @@ parts:
 
       RES=$CRAFT_PART_INSTALL/config/device-virtual/res/
       mkdir -p $RES
-      cp    cmd/res/configuration.toml $RES
+      cp    cmd/res/configuration.yaml $RES
       cp -r cmd/res/devices $RES
       cp -r cmd/res/profiles $RES
 
