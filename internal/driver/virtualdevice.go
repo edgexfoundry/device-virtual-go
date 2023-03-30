@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2022 IOTech Ltd
+// Copyright (C) 2019-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -29,7 +29,7 @@ type virtualDevice struct {
 	resourceBinary     *resourceBinary
 }
 
-func (d *virtualDevice) read(deviceName, deviceResourceName, typeName, minimum, maximum string, db *db) (*models.CommandValue, error) {
+func (d *virtualDevice) read(deviceName, deviceResourceName, typeName string, minimum, maximum float64, db *db) (*models.CommandValue, error) {
 	result := &models.CommandValue{}
 	switch typeName {
 	case common.ValueTypeBool:

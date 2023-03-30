@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2022 IOTech Ltd
+// Copyright (C) 2019-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -19,8 +19,8 @@ import (
 
 type resourceFloat struct{}
 
-func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
-	maximum string) (*models.CommandValue, error) {
+func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName string, minimum,
+	maximum float64) (*models.CommandValue, error) {
 
 	result := &models.CommandValue{}
 
@@ -33,7 +33,7 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName, minimum,
 	rand.Seed(time.Now().UnixNano())
 	var newValueFloat float64
 	var bitSize int
-	min, max, err := parseFloatMinimumMaximum(minimum, maximum, dataType)
+	min, max, err := isValidFloatMinimumMaximum(minimum, maximum)
 
 	switch dataType {
 	case common.ValueTypeFloat32:

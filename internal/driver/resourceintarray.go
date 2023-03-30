@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2020-2022 IOTech Ltd
+// Copyright (C) 2020-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -20,8 +20,8 @@ import (
 
 type resourceIntArray struct{}
 
-func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimum,
-	maximum string) (*models.CommandValue, error) {
+func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName string, minimum,
+	maximum float64) (*models.CommandValue, error) {
 
 	result := &models.CommandValue{}
 
@@ -34,7 +34,7 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 	rand.Seed(time.Now().UnixNano())
 	signHelper := []int64{-1, 1}
 	var newArrayIntValue []int64
-	min, max, err := parseIntMinimumMaximum(minimum, maximum, dataType)
+	min, max, err := isValidIntMinimumMaximum(minimum, maximum)
 
 	switch dataType {
 	case common.ValueTypeInt8Array:

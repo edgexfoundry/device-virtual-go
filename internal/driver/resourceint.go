@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2022 IOTech Ltd
+// Copyright (C) 2019-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -19,8 +19,8 @@ import (
 
 type resourceInt struct{}
 
-func (ri *resourceInt) value(db *db, deviceName, deviceResourceName, minimum,
-	maximum string) (*models.CommandValue, error) {
+func (ri *resourceInt) value(db *db, deviceName, deviceResourceName string, minimum,
+	maximum float64) (*models.CommandValue, error) {
 
 	result := &models.CommandValue{}
 
@@ -33,7 +33,7 @@ func (ri *resourceInt) value(db *db, deviceName, deviceResourceName, minimum,
 	rand.Seed(time.Now().UnixNano())
 	signHelper := []int64{-1, 1}
 	var newValueInt int64
-	min, max, err := parseIntMinimumMaximum(minimum, maximum, dataType)
+	min, max, err := isValidIntMinimumMaximum(minimum, maximum)
 
 	switch dataType {
 	case common.ValueTypeInt8:

@@ -83,7 +83,15 @@ func (d *VirtualDriver) HandleReadCommands(deviceName string, protocols map[stri
 
 	for i, req := range reqs {
 		if dr, ok := d.sdk.DeviceResource(deviceName, req.DeviceResourceName); ok {
-			if v, err := vd.read(deviceName, req.DeviceResourceName, dr.Properties.ValueType, dr.Properties.Minimum, dr.Properties.Maximum, d.db); err != nil {
+			min := float64(0)
+			if dr.Properties.Minimum != nil {
+				min = *dr.Properties.Minimum
+			}
+			max := float64(0)
+			if dr.Properties.Maximum != nil {
+				min = *dr.Properties.Maximum
+			}
+			if v, err := vd.read(deviceName, req.DeviceResourceName, dr.Properties.ValueType, min, max, d.db); err != nil {
 				return nil, err
 			} else {
 				res[i] = v

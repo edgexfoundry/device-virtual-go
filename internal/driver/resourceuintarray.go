@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2020-2022 IOTech Ltd
+// Copyright (C) 2020-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -20,8 +20,8 @@ import (
 
 type resourceUintArray struct{}
 
-func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName, minimum,
-	maximum string) (*models.CommandValue, error) {
+func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName string, minimum,
+	maximum float64) (*models.CommandValue, error) {
 	result := &models.CommandValue{}
 
 	enableRandomization, currentValue, dataType, err := db.getVirtualResourceData(deviceName, deviceResourceName) //nolint:gosec
@@ -32,7 +32,7 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName, minim
 	var newArrayValueUint []uint64
 	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
-	min, max, err := parseUintMinimumMaximum(minimum, maximum, dataType)
+	min, max, err := isValidUintMinimumMaximum(minimum, maximum)
 
 	switch dataType {
 	case common.ValueTypeUint8Array:
