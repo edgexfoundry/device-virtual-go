@@ -29,7 +29,7 @@ type virtualDevice struct {
 	resourceBinary     *resourceBinary
 }
 
-func (d *virtualDevice) read(deviceName, deviceResourceName, typeName string, minimum, maximum float64, db *db) (*models.CommandValue, error) {
+func (d *virtualDevice) read(deviceName, deviceResourceName, typeName string, minimum, maximum *float64, db *db) (*models.CommandValue, error) {
 	result := &models.CommandValue{}
 	switch typeName {
 	case common.ValueTypeBool:

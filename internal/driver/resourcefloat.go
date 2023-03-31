@@ -8,10 +8,7 @@ package driver
 
 import (
 	"fmt"
-	"math"
-	"math/rand"
 	"strconv"
-	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v3/pkg/models"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/common"
@@ -20,7 +17,7 @@ import (
 type resourceFloat struct{}
 
 func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName string, minimum,
-	maximum float64) (*models.CommandValue, error) {
+	maximum *float64) (*models.CommandValue, error) {
 
 	result := &models.CommandValue{}
 
@@ -29,21 +26,13 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName string, mi
 		return result, err
 	}
 
-	//nolint // SA1019: rand.Seed has been deprecated
-	rand.Seed(time.Now().UnixNano())
 	var newValueFloat float64
 	var bitSize int
-	min, max, err := isValidFloatMinimumMaximum(minimum, maximum)
-
 	switch dataType {
 	case common.ValueTypeFloat32:
 		bitSize = 32
 		if enableRandomization {
-			if err == nil {
-				newValueFloat = randomFloat(min, max)
-			} else {
-				newValueFloat = randomFloat(float64(-math.MaxFloat32), float64(math.MaxFloat32))
-			}
+			newValueFloat = randomFloat(dataType, minimum, maximum)
 		} else if newValueFloat, err = strconv.ParseFloat(currentValue, 32); err != nil {
 			return result, err
 		}
@@ -51,11 +40,7 @@ func (rf *resourceFloat) value(db *db, deviceName, deviceResourceName string, mi
 	case common.ValueTypeFloat64:
 		bitSize = 64
 		if enableRandomization {
-			if err == nil {
-				newValueFloat = randomFloat(min, max)
-			} else {
-				newValueFloat = randomFloat(float64(-math.MaxFloat64), float64(math.MaxFloat64))
-			}
+			newValueFloat = randomFloat(dataType, minimum, maximum)
 		} else if newValueFloat, err = strconv.ParseFloat(currentValue, 64); err != nil {
 			return result, err
 		}

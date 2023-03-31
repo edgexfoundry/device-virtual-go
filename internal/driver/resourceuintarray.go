@@ -8,11 +8,8 @@ package driver
 
 import (
 	"fmt"
-	"math"
-	"math/rand"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v3/pkg/models"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/common"
@@ -21,7 +18,7 @@ import (
 type resourceUintArray struct{}
 
 func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName string, minimum,
-	maximum float64) (*models.CommandValue, error) {
+	maximum *float64) (*models.CommandValue, error) {
 	result := &models.CommandValue{}
 
 	enableRandomization, currentValue, dataType, err := db.getVirtualResourceData(deviceName, deviceResourceName) //nolint:gosec
@@ -30,19 +27,11 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName string
 	}
 
 	var newArrayValueUint []uint64
-	//nolint // SA1019: rand.Seed has been deprecated
-	rand.Seed(time.Now().UnixNano())
-	min, max, err := isValidUintMinimumMaximum(minimum, maximum)
-
 	switch dataType {
 	case common.ValueTypeUint8Array:
 		if enableRandomization {
-			if err != nil {
-				min = uint64(0)
-				max = uint64(math.MaxUint8)
-			}
 			for i := 0; i < defaultArrayValueSize; i++ {
-				newArrayValueUint = append(newArrayValueUint, randomUint(min, max))
+				newArrayValueUint = append(newArrayValueUint, randomUint(common.ValueTypeUint8, minimum, maximum))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
@@ -61,12 +50,8 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName string
 		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint8Array, uint8Array)
 	case common.ValueTypeUint16Array:
 		if enableRandomization {
-			if err != nil {
-				min = uint64(0)
-				max = uint64(math.MaxUint16)
-			}
 			for i := 0; i < defaultArrayValueSize; i++ {
-				newArrayValueUint = append(newArrayValueUint, randomUint(min, max))
+				newArrayValueUint = append(newArrayValueUint, randomUint(common.ValueTypeUint16, minimum, maximum))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
@@ -85,14 +70,8 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName string
 		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint16Array, uint16Array)
 	case common.ValueTypeUint32Array:
 		if enableRandomization {
-			var newValueUint uint64
-			if err == nil {
-				newValueUint = randomUint(min, max)
-			} else {
-				newValueUint = uint64(rand.Uint32()) //nolint:gosec
-			}
 			for i := 0; i < defaultArrayValueSize; i++ {
-				newArrayValueUint = append(newArrayValueUint, newValueUint)
+				newArrayValueUint = append(newArrayValueUint, randomUint(common.ValueTypeUint32, minimum, maximum))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
@@ -111,14 +90,8 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName string
 		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint32Array, uint32Array)
 	case common.ValueTypeUint64Array:
 		if enableRandomization {
-			var newValueUint uint64
-			if err == nil {
-				newValueUint = randomUint(min, max)
-			} else {
-				newValueUint = rand.Uint64() //nolint:gosec
-			}
 			for i := 0; i < defaultArrayValueSize; i++ {
-				newArrayValueUint = append(newArrayValueUint, newValueUint)
+				newArrayValueUint = append(newArrayValueUint, randomUint(common.ValueTypeUint64, minimum, maximum))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
