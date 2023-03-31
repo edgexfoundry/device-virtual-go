@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2022 IOTech Ltd
+// Copyright (C) 2019-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -105,7 +105,9 @@ func TestValueBool(t *testing.T) {
 	}()
 
 	vd := newVirtualDevice()
-	v1, err := vd.read(deviceName, nameBool, nameBool, "", "", db)
+	min := float64(0)
+	max := float64(0)
+	v1, err := vd.read(deviceName, nameBool, nameBool, &min, &max, db)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -118,7 +120,7 @@ func TestValueBool(t *testing.T) {
 
 	//EnableRandomization = true
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, nameBool, nameBool, "", "", db)
+		v2, _ := vd.read(deviceName, nameBool, nameBool, &min, &max, db)
 		b2, _ := v2.BoolValue()
 		if b1 != b2 {
 			break
@@ -133,10 +135,10 @@ func TestValueBool(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	v1, _ = vd.read(deviceName, nameBool, nameBool, "", "", db)
+	v1, _ = vd.read(deviceName, nameBool, nameBool, &min, &max, db)
 	b1, _ = v1.BoolValue()
 	for x := 0; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, nameBool, nameBool, "", "", db)
+		v2, _ := vd.read(deviceName, nameBool, nameBool, &min, &max, db)
 		b2, _ := v2.BoolValue()
 		if b1 != b2 {
 			t.Fatalf("EnableRandomization is false, but got different read")
@@ -152,8 +154,10 @@ func TestValueBoolArray(t *testing.T) {
 		}
 	}()
 
+	min := float64(0)
+	max := float64(0)
 	vd := newVirtualDevice()
-	v1, err := vd.read(deviceName, nameBoolArray, nameBoolArray, "", "", db)
+	v1, err := vd.read(deviceName, nameBoolArray, nameBoolArray, &min, &max, db)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -166,7 +170,7 @@ func TestValueBoolArray(t *testing.T) {
 
 	// EnableRandomization = true
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, nameBoolArray, nameBoolArray, "", "", db)
+		v2, _ := vd.read(deviceName, nameBoolArray, nameBoolArray, &min, &max, db)
 		b2, _ := v2.BoolArrayValue()
 		if !reflect.DeepEqual(b1, b2) {
 			break
@@ -181,10 +185,10 @@ func TestValueBoolArray(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	v1, _ = vd.read(deviceName, nameBoolArray, nameBoolArray, "", "", db)
+	v1, _ = vd.read(deviceName, nameBoolArray, nameBoolArray, &min, &max, db)
 	b1, _ = v1.BoolArrayValue()
 	for x := 0; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, nameBoolArray, nameBoolArray, "", "", db)
+		v2, _ := vd.read(deviceName, nameBoolArray, nameBoolArray, &min, &max, db)
 		b2, _ := v2.BoolArrayValue()
 		if !reflect.DeepEqual(b1, b2) {
 			t.Fatalf("EnableRandomization is false, but got different reading")
@@ -193,66 +197,68 @@ func TestValueBoolArray(t *testing.T) {
 }
 
 func TestValueIntx(t *testing.T) {
-	ValueIntx(t, nameInt8, nameInt8, "-128", "127")
-	ValueIntx(t, nameInt8, nameInt8, "", "")
-	ValueIntx(t, nameInt16, nameInt16, "-32768", "32767")
-	ValueIntx(t, nameInt16, nameInt16, "", "")
-	ValueIntx(t, nameInt32, nameInt32, "-2147483648", "2147483647")
-	ValueIntx(t, nameInt32, nameInt32, "", "")
-	ValueIntx(t, nameInt64, nameInt64, "-9223372036854775808", "9223372036854775807")
-	ValueIntx(t, nameInt64, nameInt64, "", "")
+	ValueIntx(t, nameInt8, nameInt8, -128, 127)
+	ValueIntx(t, nameInt8, nameInt8, 0, 0)
+	ValueIntx(t, nameInt16, nameInt16, -32768, 32767)
+	ValueIntx(t, nameInt16, nameInt16, 0, 0)
+	ValueIntx(t, nameInt32, nameInt32, -2147483648, 2147483647)
+	ValueIntx(t, nameInt32, nameInt32, 0, 0)
+	ValueIntx(t, nameInt64, nameInt64, -9223372036854775808, 9223372036854770000)
+	ValueIntx(t, nameInt64, nameInt64, 0, 0)
 }
 
 func TestValueIntxArray(t *testing.T) {
-	ValueIntxArray(t, nameInt8Array, nameInt8Array, "-128", "127")
-	ValueIntxArray(t, nameInt8Array, nameInt8Array, "", "")
-	ValueIntxArray(t, nameInt16Array, nameInt16Array, "-32768", "32767")
-	ValueIntxArray(t, nameInt16Array, nameInt16Array, "", "")
-	ValueIntxArray(t, nameInt32Array, nameInt32Array, "-2147483648", "2147483647")
-	ValueIntxArray(t, nameInt32Array, nameInt32Array, "", "")
-	ValueIntxArray(t, nameInt64Array, nameInt64Array, "-9223372036854775808", "9223372036854775807")
-	ValueIntxArray(t, nameInt64Array, nameInt64Array, "", "")
+	ValueIntxArray(t, nameInt8Array, nameInt8Array, -128, 127)
+	ValueIntxArray(t, nameInt8Array, nameInt8Array, 0, 0)
+	ValueIntxArray(t, nameInt16Array, nameInt16Array, -32768, 32767)
+	ValueIntxArray(t, nameInt16Array, nameInt16Array, 0, 0)
+	ValueIntxArray(t, nameInt32Array, nameInt32Array, -2147483648, 2147483647)
+	ValueIntxArray(t, nameInt32Array, nameInt32Array, 0, 0)
+	ValueIntxArray(t, nameInt64Array, nameInt64Array, -9223372036854775808, 9223372036854770000)
+	ValueIntxArray(t, nameInt64Array, nameInt64Array, 0, 0)
 }
 
 func TestValueUintx(t *testing.T) {
-	ValueUintx(t, nameUint8, nameUint8, "0", "255")
-	ValueUintx(t, nameUint8, nameUint8, "", "")
-	ValueUintx(t, nameUint16, nameUint16, "0", "65535")
-	ValueUintx(t, nameUint16, nameUint16, "", "")
-	ValueUintx(t, nameUint32, nameUint32, "0", "4294967295")
-	ValueUintx(t, nameUint32, nameUint32, "", "")
-	ValueUintx(t, nameUint64, nameUint64, "0", "18446744073709551615")
-	ValueUintx(t, nameUint64, nameUint64, "", "")
+	ValueUintx(t, nameUint8, nameUint8, 0, 255)
+	ValueUintx(t, nameUint8, nameUint8, 0, 0)
+	ValueUintx(t, nameUint16, nameUint16, 0, 65535)
+	ValueUintx(t, nameUint16, nameUint16, 0, 0)
+	ValueUintx(t, nameUint32, nameUint32, 0, 4294967295)
+	ValueUintx(t, nameUint32, nameUint32, 0, 0)
+	ValueUintx(t, nameUint64, nameUint64, 0, 18446744073709551615)
+	ValueUintx(t, nameUint64, nameUint64, 0, 0)
 }
 
 func TestValueUintxArray(t *testing.T) {
-	ValueUintxArray(t, nameUint8Array, nameUint8Array, "0", "255")
-	ValueUintxArray(t, nameUint8Array, nameUint8Array, "", "")
-	ValueUintxArray(t, nameUint16Array, nameUint16Array, "0", "65535")
-	ValueUintxArray(t, nameUint16Array, nameUint16Array, "", "")
-	ValueUintxArray(t, nameUint32Array, nameUint32Array, "0", "4294967295")
-	ValueUintxArray(t, nameUint32Array, nameUint32Array, "", "")
-	ValueUintxArray(t, nameUint64Array, nameUint64Array, "0", "18446744073709551615")
-	ValueUintxArray(t, nameUint64Array, nameUint64Array, "", "")
+	ValueUintxArray(t, nameUint8Array, nameUint8Array, 0, 255)
+	ValueUintxArray(t, nameUint8Array, nameUint8Array, 0, 0)
+	ValueUintxArray(t, nameUint16Array, nameUint16Array, 0, 65535)
+	ValueUintxArray(t, nameUint16Array, nameUint16Array, 0, 0)
+	ValueUintxArray(t, nameUint32Array, nameUint32Array, 0, 4294967295)
+	ValueUintxArray(t, nameUint32Array, nameUint32Array, 0, 0)
+	ValueUintxArray(t, nameUint64Array, nameUint64Array, 0, 18446744073709551615)
+	ValueUintxArray(t, nameUint64Array, nameUint64Array, 0, 0)
 }
 
 func TestValueFloatx(t *testing.T) {
-	ValueFloatx(t, nameFloat32, nameFloat32, "-3.40282346638528859811704183484516925440e+38", "3.40282346638528859811704183484516925440e+38")
-	ValueFloatx(t, nameFloat32, nameFloat32, "", "")
-	ValueFloatx(t, nameFloat64, nameFloat64, "-1.797693134862315708145274237317043567981e+308", "1.797693134862315708145274237317043567981e+308")
-	ValueFloatx(t, nameFloat64, nameFloat64, "", "")
+	ValueFloatx(t, nameFloat32, nameFloat32, -3.40282346638528859811704183484516925440e+38, 3.40282346638528859811704183484516925440e+38)
+	ValueFloatx(t, nameFloat32, nameFloat32, 0, 0)
+	ValueFloatx(t, nameFloat64, nameFloat64, -1.797693134862315708145274237317043567981e+308, 1.797693134862315708145274237317043567981e+308)
+	ValueFloatx(t, nameFloat64, nameFloat64, 0, 0)
 }
 
 func TestValueFloatxArray(t *testing.T) {
-	ValueFloatxArray(t, nameFloat32Array, nameFloat32Array, "-3.40282346638528859811704183484516925440e+38", "3.40282346638528859811704183484516925440e+38")
-	ValueFloatxArray(t, nameFloat32Array, nameFloat32Array, "", "")
-	ValueFloatxArray(t, nameFloat64Array, nameFloat64Array, "-1.797693134862315708145274237317043567981e+308", "1.797693134862315708145274237317043567981e+308")
-	ValueFloatxArray(t, nameFloat64Array, nameFloat64Array, "", "")
+	ValueFloatxArray(t, nameFloat32Array, nameFloat32Array, -3.40282346638528859811704183484516925440e+38, 3.40282346638528859811704183484516925440e+38)
+	ValueFloatxArray(t, nameFloat32Array, nameFloat32Array, 0, 0)
+	ValueFloatxArray(t, nameFloat64Array, nameFloat64Array, -1.797693134862315708145274237317043567981e+308, 1.797693134862315708145274237317043567981e+308)
+	ValueFloatxArray(t, nameFloat64Array, nameFloat64Array, 0, 0)
 }
 
 func TestValueBinary(t *testing.T) {
 	vd := newVirtualDevice()
-	v1, err := vd.read(deviceName, nameBinary, nameBinary, "", "", nil)
+	min := float64(0)
+	max := float64(0)
+	v1, err := vd.read(deviceName, nameBinary, nameBinary, &min, &max, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -264,7 +270,7 @@ func TestValueBinary(t *testing.T) {
 	}
 }
 
-func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
+func ValueIntx(t *testing.T, dr, typeName string, min, max float64) {
 	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
@@ -279,12 +285,9 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 	vd := newVirtualDevice()
 
-	min, _ := parseStrToInt(minStr, 64)
-	max, _ := parseStrToInt(maxStr, 64)
-
 	var i1 int64
 	for x := 1; x <= rounds; x++ {
-		vn, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		vn, err := vd.read(deviceName, dr, typeName, &min, &max, db)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -292,6 +295,13 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 		if x == 1 {
 			i1 = in
+		}
+		if min == max {
+			if i1 != in {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
 		}
 		if i1 != in {
 			break
@@ -302,7 +312,7 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	for x := 1; x <= rounds; x++ {
-		v, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v, err := vd.read(deviceName, dr, typeName, &min, &max, db)
 
 		if err != nil {
 			t.Fatal(err)
@@ -311,9 +321,9 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if minStr != "" && maxStr != "" {
-			if i < min || i > max {
-				t.Fatalf("the random reading: %d is out of range: %s ~ %s", i, minStr, maxStr)
+		if min != 0 && max != 0 {
+			if float64(i) < min || float64(i) > max {
+				t.Fatalf("the random reading: %d is out of range: %f ~ %f", i, min, max)
 			}
 		}
 	}
@@ -323,10 +333,10 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 		t.Fatal(err)
 	}
 
-	v1, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+	v1, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 	i1 = getIntValue(v1)
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v2, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		i2 := getIntValue(v2)
 		if i1 != i2 {
 			t.Fatalf("EnableRandomization is false, but got different read")
@@ -334,7 +344,7 @@ func ValueIntx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 }
 
-func ValueIntxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
+func ValueIntxArray(t *testing.T, dr, typeName string, min, max float64) {
 	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
@@ -349,12 +359,9 @@ func ValueIntxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 	vd := newVirtualDevice()
 
-	min, _ := parseStrToInt(minStr, 64)
-	max, _ := parseStrToInt(maxStr, 64)
-
 	var intArr1 []int64
 	for x := 1; x <= rounds; x++ {
-		vn, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		vn, err := vd.read(deviceName, dr, typeName, &min, &max, db)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -362,6 +369,13 @@ func ValueIntxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 		if x == 1 {
 			intArr1 = intArrN
+		}
+		if min == max {
+			if !reflect.DeepEqual(intArr1, intArrN) {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
 		}
 		if !reflect.DeepEqual(intArr1, intArrN) {
 			break
@@ -372,7 +386,7 @@ func ValueIntxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	for x := 1; x <= rounds; x++ {
-		v, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v, err := vd.read(deviceName, dr, typeName, &min, &max, db)
 
 		if err != nil {
 			t.Fatal(err)
@@ -381,10 +395,10 @@ func ValueIntxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if minStr != "" && maxStr != "" {
+		if min != 0 && max != 0 {
 			for _, i := range intArr {
-				if i < min || i > max {
-					t.Fatalf("the random reading: %d is out of range: %s ~ %s", i, minStr, maxStr)
+				if float64(i) < min || float64(i) > max {
+					t.Fatalf("the random reading: %d is out of range: %f ~ %f", i, min, max)
 				}
 			}
 		}
@@ -395,10 +409,10 @@ func ValueIntxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 		t.Fatal(err)
 	}
 
-	v1, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+	v1, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 	intArr1 = getIntArrayValue(v1)
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v2, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		intArr2 := getIntArrayValue(v2)
 		if !reflect.DeepEqual(intArr1, intArr2) {
 			t.Fatalf("EnableRandomization is false, but got different reading")
@@ -406,7 +420,7 @@ func ValueIntxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 }
 
-func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
+func ValueUintx(t *testing.T, dr, typeName string, min, max float64) {
 	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
@@ -421,16 +435,20 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 	vd := newVirtualDevice()
 
-	min, _ := parseStrToUint(minStr, 64)
-	max, _ := parseStrToUint(maxStr, 64)
-
 	var i1 uint64
 	for x := 1; x <= rounds; x++ {
-		vn, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		vn, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		in := getUintValue(vn)
 
 		if x == 1 {
 			i1 = in
+		}
+		if min == max {
+			if i1 != in {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
 		}
 		if i1 != in {
 			break
@@ -441,7 +459,7 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	for x := 1; x <= rounds; x++ {
-		v, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v, err := vd.read(deviceName, dr, typeName, &min, &max, db)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -449,9 +467,9 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if minStr != "" && maxStr != "" {
-			if i < min || i > max {
-				t.Fatalf("the random reading: %d is out of range: %d ~ %d", i, min, max)
+		if min != 0 && max != 0 {
+			if float64(i) < min || float64(i) > max {
+				t.Fatalf("the random reading: %d is out of range: %f ~ %f", i, min, max)
 			}
 		}
 	}
@@ -461,10 +479,10 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 		t.Fatal(err)
 	}
 
-	v1, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+	v1, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 	i1 = getUintValue(v1)
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v2, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		i2 := getUintValue(v2)
 		if i1 != i2 {
 			t.Fatalf("EnableRandomization is false, but got different reading")
@@ -472,7 +490,7 @@ func ValueUintx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 }
 
-func ValueUintxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
+func ValueUintxArray(t *testing.T, dr, typeName string, min, max float64) {
 	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
@@ -487,16 +505,20 @@ func ValueUintxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 	vd := newVirtualDevice()
 
-	min, _ := parseStrToUint(minStr, 64)
-	max, _ := parseStrToUint(maxStr, 64)
-
 	var uintArr1 []uint64
 	for x := 1; x <= rounds; x++ {
-		vn, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		vn, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		uintArrN := getUintArrayValue(vn)
 
 		if x == 1 {
 			uintArr1 = uintArrN
+		}
+		if min == max {
+			if !reflect.DeepEqual(uintArr1, uintArrN) {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
 		}
 		if !reflect.DeepEqual(uintArr1, uintArrN) {
 			break
@@ -507,7 +529,7 @@ func ValueUintxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	for x := 1; x <= rounds; x++ {
-		v, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v, err := vd.read(deviceName, dr, typeName, &min, &max, db)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -515,10 +537,10 @@ func ValueUintxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if minStr != "" && maxStr != "" {
+		if min != 0 && max != 0 {
 			for _, i := range uintArr {
-				if i < min || i > max {
-					t.Fatalf("the random reading: %d is out of range: %s ~ %s", i, minStr, maxStr)
+				if float64(i) < min || float64(i) > max {
+					t.Fatalf("the random reading: %d is out of range: %f ~ %f", i, min, max)
 				}
 			}
 		}
@@ -529,10 +551,10 @@ func ValueUintxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 		t.Fatal(err)
 	}
 
-	v1, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+	v1, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 	uintArr1 = getUintArrayValue(v1)
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v2, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		uintArr2 := getUintArrayValue(v2)
 		if !reflect.DeepEqual(uintArr1, uintArr2) {
 			t.Fatalf("EnableRandomization is false, but got different reading")
@@ -540,7 +562,7 @@ func ValueUintxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 }
 
-func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
+func ValueFloatx(t *testing.T, dr, typeName string, min, max float64) {
 	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
@@ -555,15 +577,19 @@ func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 	vd := newVirtualDevice()
 
-	min, _ := parseStrToFloat(minStr, 64)
-	max, _ := parseStrToFloat(maxStr, 64)
-
 	var f1 float64
 	for x := 1; x <= rounds; x++ {
-		vn, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		vn, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		fn := getFloatValue(vn)
 		if x == 1 {
 			f1 = fn
+		}
+		if min == max {
+			if f1 != fn {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
 		}
 		if f1 != fn {
 			break
@@ -574,7 +600,7 @@ func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	for x := 1; x <= rounds; x++ {
-		v, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v, err := vd.read(deviceName, dr, typeName, &min, &max, db)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -582,7 +608,7 @@ func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if minStr != "" && maxStr != "" {
+		if min != 0 && max != 0 {
 			if f < min || f > max {
 				t.Fatalf("the random reading: %f is out of range: %f ~ %f", f, min, max)
 			}
@@ -594,10 +620,10 @@ func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
 		t.Fatal(err)
 	}
 
-	v1, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+	v1, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 	f1 = getFloatValue(v1)
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v2, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		f2 := getFloatValue(v2)
 		if f1 != f2 {
 			t.Fatalf("EnableRandomization is false, but got different reading")
@@ -605,7 +631,7 @@ func ValueFloatx(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 }
 
-func ValueFloatxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
+func ValueFloatxArray(t *testing.T, dr, typeName string, min, max float64) {
 	db := prepareDB()
 	defer func() {
 		if err := db.closeDb(); err != nil {
@@ -620,16 +646,20 @@ func ValueFloatxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 
 	vd := newVirtualDevice()
 
-	min, _ := parseStrToFloat(minStr, 64)
-	max, _ := parseStrToFloat(maxStr, 64)
-
 	var floatArr1 []float64
 	for x := 1; x <= rounds; x++ {
-		vn, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		vn, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		floatArrN := getFloatArrayValue(vn)
 
 		if x == 1 {
 			floatArr1 = floatArrN
+		}
+		if min == max {
+			if !reflect.DeepEqual(floatArr1, floatArrN) {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
 		}
 		if !reflect.DeepEqual(floatArr1, floatArrN) {
 			break
@@ -640,7 +670,7 @@ func ValueFloatxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 	}
 
 	for x := 1; x <= rounds; x++ {
-		v, err := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v, err := vd.read(deviceName, dr, typeName, &min, &max, db)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -648,10 +678,10 @@ func ValueFloatxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if minStr != "" && maxStr != "" {
+		if min != 0 && max != 0 {
 			for _, f := range floatArr {
 				if f < min || f > max {
-					t.Fatalf("the random reading: %f is out of range: %s ~ %s", f, minStr, maxStr)
+					t.Fatalf("the random reading: %f is out of range: %f ~ %f", f, min, max)
 				}
 			}
 		}
@@ -662,10 +692,10 @@ func ValueFloatxArray(t *testing.T, dr, typeName, minStr, maxStr string) {
 		t.Fatal(err)
 	}
 
-	v1, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+	v1, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 	floatArr1 = getFloatArrayValue(v1)
 	for x := 1; x <= rounds; x++ {
-		v2, _ := vd.read(deviceName, dr, typeName, minStr, maxStr, db)
+		v2, _ := vd.read(deviceName, dr, typeName, &min, &max, db)
 		floatArr2 := getFloatArrayValue(v2)
 		if !reflect.DeepEqual(floatArr1, floatArr2) {
 			t.Fatalf("EnableRandomization is false, but got different reading")

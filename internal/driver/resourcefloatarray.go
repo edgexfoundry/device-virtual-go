@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2020-2022 IOTech Ltd
+// Copyright (C) 2020-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -8,11 +8,8 @@ package driver
 
 import (
 	"fmt"
-	"math"
-	"math/rand"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v3/pkg/models"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/common"
@@ -20,8 +17,8 @@ import (
 
 type resourceFloatArray struct{}
 
-func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, minimum,
-	maximum string) (*models.CommandValue, error) {
+func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName string, minimum,
+	maximum *float64) (*models.CommandValue, error) {
 
 	result := &models.CommandValue{}
 
@@ -30,20 +27,12 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 		return result, err
 	}
 
-	//nolint // SA1019: rand.Seed has been deprecated
-	rand.Seed(time.Now().UnixNano())
-	min, max, err := parseFloatMinimumMaximum(minimum, maximum, dataType)
-
 	switch dataType {
 	case common.ValueTypeFloat32Array:
 		var newValueFloat32Array []float32
 		if enableRandomization {
-			if err != nil {
-				min = -math.MaxFloat32
-				max = math.MaxFloat32
-			}
 			for i := 0; i < defaultArrayValueSize; i++ {
-				newValueFloat32Array = append(newValueFloat32Array, float32(randomFloat(min, max)))
+				newValueFloat32Array = append(newValueFloat32Array, float32(randomFloat(common.ValueTypeFloat32, minimum, maximum)))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
@@ -59,12 +48,8 @@ func (rf *resourceFloatArray) value(db *db, deviceName, deviceResourceName, mini
 	case common.ValueTypeFloat64Array:
 		var newValueFloat64Array []float64
 		if enableRandomization {
-			if err != nil {
-				min = -math.MaxFloat64
-				max = math.MaxFloat64
-			}
 			for i := 0; i < defaultArrayValueSize; i++ {
-				newValueFloat64Array = append(newValueFloat64Array, randomFloat(min, max))
+				newValueFloat64Array = append(newValueFloat64Array, randomFloat(common.ValueTypeFloat64, minimum, maximum))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")

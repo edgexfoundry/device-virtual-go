@@ -1,63 +1,68 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2020-2022 IOTech Ltd
+// Copyright (C) 2020-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
 package driver
 
 import (
-	"fmt"
 	"math"
 	"math/rand"
-	"strconv"
 	"time"
 
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/common"
 )
 
-func parseStrToInt(str string, bitSize int) (int64, error) {
-	if i, err := strconv.ParseInt(str, 10, bitSize); err != nil {
-		return i, err
-	} else {
-		return i, nil
-	}
-}
-
-func parseIntMinimumMaximum(minimum, maximum, dataType string) (int64, int64, error) {
-	var err, err1, err2 error
+func randomInt(dataType string, minimum, maximum *float64) int64 {
+	valid := isValid(minimum, maximum)
+	signHelper := []int64{-1, 1}
 	var min, max int64
-
+	if minimum != nil {
+		min = int64(*minimum)
+	}
+	if maximum != nil {
+		max = int64(*maximum)
+	}
+	//nolint // SA1019: rand.Seed has been deprecated
+	rand.Seed(time.Now().UnixNano())
 	switch dataType {
-	case common.ValueTypeInt8, common.ValueTypeInt8Array:
-		min, err1 = parseStrToInt(minimum, 8)
-		max, err2 = parseStrToInt(maximum, 8)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
+	case common.ValueTypeInt8:
+		if !valid || minimum == nil {
+			min = math.MinInt8
 		}
-	case common.ValueTypeInt16, common.ValueTypeInt16Array:
-		min, err1 = parseStrToInt(minimum, 16)
-		max, err2 = parseStrToInt(maximum, 16)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
+		if !valid || maximum == nil {
+			max = math.MaxInt8
 		}
-	case common.ValueTypeInt32, common.ValueTypeInt32Array:
-		min, err1 = parseStrToInt(minimum, 32)
-		max, err2 = parseStrToInt(maximum, 32)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
+	case common.ValueTypeInt16:
+		if !valid || minimum == nil {
+			min = math.MinInt16
 		}
-	case common.ValueTypeInt64, common.ValueTypeInt64Array:
-		min, err1 = parseStrToInt(minimum, 64)
-		max, err2 = parseStrToInt(maximum, 64)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
+		if !valid || maximum == nil {
+			max = math.MaxInt16
+		}
+	case common.ValueTypeInt32:
+		if !valid {
+			return int64(rand.Int31()) * signHelper[rand.Int()%2] //nolint:gosec
+		}
+		if minimum == nil {
+			min = math.MinInt32
+		}
+		if maximum == nil {
+			max = math.MaxInt32
+		}
+	case common.ValueTypeInt64:
+		if !valid {
+			return rand.Int63() * signHelper[rand.Int()%2] //nolint:gosec
+		}
+		if minimum == nil {
+			min = math.MinInt64
+		}
+		if maximum == nil {
+			max = math.MaxInt64
 		}
 	}
-	return min, max, err
-}
 
-func randomInt(min, max int64) int64 {
 	if max > 0 && min < 0 {
 		var negativePart int64
 		var positivePart int64
@@ -85,9 +90,54 @@ func randomInt(min, max int64) int64 {
 	}
 }
 
-func randomUint(min, max uint64) uint64 {
+func randomUint(dataType string, minimum, maximum *float64) uint64 {
+	valid := isValid(minimum, maximum)
+	var min, max uint64
+	if minimum != nil {
+		min = uint64(*minimum)
+	}
+	if maximum != nil {
+		max = uint64(*maximum)
+	}
 	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
+	switch dataType {
+	case common.ValueTypeUint8:
+		if !valid || minimum == nil {
+			min = 0
+		}
+		if !valid || maximum == nil {
+			max = math.MaxUint8
+		}
+	case common.ValueTypeUint16:
+		if !valid || minimum == nil {
+			min = 0
+		}
+		if !valid || maximum == nil {
+			max = math.MaxUint16
+		}
+	case common.ValueTypeUint32:
+		if !valid {
+			return uint64(rand.Uint32()) //nolint:gosec
+		}
+		if minimum == nil {
+			min = 0
+		}
+		if maximum == nil {
+			max = math.MaxUint32
+		}
+	case common.ValueTypeUint64:
+		if !valid {
+			return rand.Uint64() //nolint:gosec
+		}
+		if minimum == nil {
+			min = 0
+		}
+		if maximum == nil {
+			max = math.MaxUint64
+		}
+	}
+
 	if max-min < uint64(math.MaxInt64) {
 		return uint64(rand.Int63n(int64(max-min+1))) + min //nolint:gosec
 	}
@@ -98,50 +148,34 @@ func randomUint(min, max uint64) uint64 {
 	return x + min
 }
 
-func parseStrToUint(str string, bitSize int) (uint64, error) {
-	if i, err := strconv.ParseUint(str, 10, bitSize); err != nil {
-		return i, err
-	} else {
-		return i, nil
+func randomFloat(dataType string, minimum, maximum *float64) float64 {
+	valid := isValid(minimum, maximum)
+	var min, max float64
+	if minimum != nil {
+		min = *minimum
 	}
-}
-
-func parseUintMinimumMaximum(minimum, maximum, dataType string) (uint64, uint64, error) {
-	var err, err1, err2 error
-	var min, max uint64
-
-	switch dataType {
-	case common.ValueTypeUint8, common.ValueTypeUint8Array:
-		min, err1 = parseStrToUint(minimum, 8)
-		max, err2 = parseStrToUint(maximum, 8)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	case common.ValueTypeUint16, common.ValueTypeUint16Array:
-		min, err1 = parseStrToUint(minimum, 16)
-		max, err2 = parseStrToUint(maximum, 16)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	case common.ValueTypeUint32, common.ValueTypeUint32Array:
-		min, err1 = parseStrToUint(minimum, 32)
-		max, err2 = parseStrToUint(maximum, 32)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	case common.ValueTypeUint64, common.ValueTypeUint64Array:
-		min, err1 = parseStrToUint(minimum, 64)
-		max, err2 = parseStrToUint(maximum, 64)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
+	if maximum != nil {
+		max = *maximum
 	}
-	return min, max, err
-}
-
-func randomFloat(min, max float64) float64 {
 	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
+	switch dataType {
+	case common.ValueTypeFloat32:
+		if !valid || minimum == nil {
+			min = -math.MaxFloat32
+		}
+		if !valid || maximum == nil {
+			max = math.MaxFloat32
+		}
+	case common.ValueTypeFloat64:
+		if !valid || minimum == nil {
+			min = -math.MaxFloat64
+		}
+		if !valid || maximum == nil {
+			max = math.MaxFloat64
+		}
+	}
+
 	if max > 0 && min < 0 {
 		var negativePart float64
 		var positivePart float64
@@ -153,30 +187,10 @@ func randomFloat(min, max float64) float64 {
 	}
 }
 
-func parseStrToFloat(str string, bitSize int) (float64, error) {
-	if f, err := strconv.ParseFloat(str, bitSize); err != nil {
-		return f, err
-	} else {
-		return f, nil
+func isValid(minimum, maximum *float64) bool {
+	valid := true
+	if minimum != nil && maximum != nil && *maximum < *minimum {
+		valid = false
 	}
-}
-
-func parseFloatMinimumMaximum(minimum, maximum, dataType string) (float64, float64, error) {
-	var err, err1, err2 error
-	var min, max float64
-	switch dataType {
-	case common.ValueTypeFloat32, common.ValueTypeFloat32Array:
-		min, err1 = parseStrToFloat(minimum, 32)
-		max, err2 = parseStrToFloat(maximum, 32)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	case common.ValueTypeFloat64, common.ValueTypeFloat64Array:
-		min, err1 = parseStrToFloat(minimum, 64)
-		max, err2 = parseStrToFloat(maximum, 64)
-		if max <= min || err1 != nil || err2 != nil {
-			err = fmt.Errorf("minimum:%s maximum:%s not in valid range, use default value", minimum, maximum)
-		}
-	}
-	return min, max, err
+	return valid
 }

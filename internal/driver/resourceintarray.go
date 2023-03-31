@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2020-2022 IOTech Ltd
+// Copyright (C) 2020-2023 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -8,7 +8,6 @@ package driver
 
 import (
 	"fmt"
-	"math"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -20,8 +19,8 @@ import (
 
 type resourceIntArray struct{}
 
-func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimum,
-	maximum string) (*models.CommandValue, error) {
+func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName string, minimum,
+	maximum *float64) (*models.CommandValue, error) {
 
 	result := &models.CommandValue{}
 
@@ -32,19 +31,13 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 
 	//nolint // SA1019: rand.Seed has been deprecated
 	rand.Seed(time.Now().UnixNano())
-	signHelper := []int64{-1, 1}
 	var newArrayIntValue []int64
-	min, max, err := parseIntMinimumMaximum(minimum, maximum, dataType)
 
 	switch dataType {
 	case common.ValueTypeInt8Array:
 		if enableRandomization {
-			if err != nil {
-				min = int64(math.MinInt8)
-				max = int64(math.MaxInt8)
-			}
 			for i := 0; i < defaultArrayValueSize; i++ {
-				newArrayIntValue = append(newArrayIntValue, randomInt(min, max))
+				newArrayIntValue = append(newArrayIntValue, randomInt(common.ValueTypeInt8, minimum, maximum))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
@@ -63,12 +56,8 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt8Array, int8Array)
 	case common.ValueTypeInt16Array:
 		if enableRandomization {
-			if err != nil {
-				min = int64(math.MinInt16)
-				max = int64(math.MaxInt16)
-			}
 			for i := 0; i < defaultArrayValueSize; i++ {
-				newArrayIntValue = append(newArrayIntValue, randomInt(min, max))
+				newArrayIntValue = append(newArrayIntValue, randomInt(common.ValueTypeInt16, minimum, maximum))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
@@ -87,14 +76,8 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt16Array, int16Array)
 	case common.ValueTypeInt32Array:
 		if enableRandomization {
-			if err == nil {
-				for i := 0; i < defaultArrayValueSize; i++ {
-					newArrayIntValue = append(newArrayIntValue, randomInt(min, max))
-				}
-			} else {
-				for i := 0; i < defaultArrayValueSize; i++ {
-					newArrayIntValue = append(newArrayIntValue, int64(rand.Int31())*signHelper[rand.Int()%2]) //nolint:gosec
-				}
+			for i := 0; i < defaultArrayValueSize; i++ {
+				newArrayIntValue = append(newArrayIntValue, randomInt(common.ValueTypeInt32, minimum, maximum))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
@@ -113,14 +96,8 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName, minimu
 		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt32Array, int32Array)
 	case common.ValueTypeInt64Array:
 		if enableRandomization {
-			if err == nil {
-				for i := 0; i < defaultArrayValueSize; i++ {
-					newArrayIntValue = append(newArrayIntValue, randomInt(min, max))
-				}
-			} else {
-				for i := 0; i < defaultArrayValueSize; i++ {
-					newArrayIntValue = append(newArrayIntValue, rand.Int63()*signHelper[rand.Int()%2]) //nolint:gosec
-				}
+			for i := 0; i < defaultArrayValueSize; i++ {
+				newArrayIntValue = append(newArrayIntValue, randomInt(common.ValueTypeInt64, minimum, maximum))
 			}
 		} else {
 			strArr := strings.Split(strings.Trim(currentValue, "[]"), " ")
