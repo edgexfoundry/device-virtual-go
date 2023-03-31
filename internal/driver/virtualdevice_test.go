@@ -296,6 +296,13 @@ func ValueIntx(t *testing.T, dr, typeName string, min, max float64) {
 		if x == 1 {
 			i1 = in
 		}
+		if min == max {
+			if i1 != in {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
+		}
 		if i1 != in {
 			break
 		}
@@ -363,6 +370,13 @@ func ValueIntxArray(t *testing.T, dr, typeName string, min, max float64) {
 		if x == 1 {
 			intArr1 = intArrN
 		}
+		if min == max {
+			if !reflect.DeepEqual(intArr1, intArrN) {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
+		}
 		if !reflect.DeepEqual(intArr1, intArrN) {
 			break
 		}
@@ -429,6 +443,13 @@ func ValueUintx(t *testing.T, dr, typeName string, min, max float64) {
 		if x == 1 {
 			i1 = in
 		}
+		if min == max {
+			if i1 != in {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
+		}
 		if i1 != in {
 			break
 		}
@@ -491,6 +512,13 @@ func ValueUintxArray(t *testing.T, dr, typeName string, min, max float64) {
 
 		if x == 1 {
 			uintArr1 = uintArrN
+		}
+		if min == max {
+			if !reflect.DeepEqual(uintArr1, uintArrN) {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
 		}
 		if !reflect.DeepEqual(uintArr1, uintArrN) {
 			break
@@ -556,6 +584,13 @@ func ValueFloatx(t *testing.T, dr, typeName string, min, max float64) {
 		if x == 1 {
 			f1 = fn
 		}
+		if min == max {
+			if f1 != fn {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
+		}
 		if f1 != fn {
 			break
 		}
@@ -618,6 +653,13 @@ func ValueFloatxArray(t *testing.T, dr, typeName string, min, max float64) {
 
 		if x == 1 {
 			floatArr1 = floatArrN
+		}
+		if min == max {
+			if !reflect.DeepEqual(floatArr1, floatArrN) {
+				t.Fatalf("min equal to max, the generated value should be smae")
+			} else {
+				continue
+			}
 		}
 		if !reflect.DeepEqual(floatArr1, floatArrN) {
 			break

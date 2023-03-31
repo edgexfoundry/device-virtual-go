@@ -189,8 +189,7 @@ func randomFloat(dataType string, minimum, maximum *float64) float64 {
 
 func isValid(minimum, maximum *float64) bool {
 	valid := true
-	if minimum != nil && maximum != nil &&
-		((*maximum < *minimum) || (*minimum == 0 && *maximum == 0)) {
+	if minimum != nil && maximum != nil && *maximum < *minimum {
 		valid = false
 	}
 	return valid
