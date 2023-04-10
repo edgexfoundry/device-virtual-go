@@ -8,10 +8,8 @@ package driver
 
 import (
 	"fmt"
-	"math/rand"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/edgexfoundry/device-sdk-go/v3/pkg/models"
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/common"
@@ -29,8 +27,6 @@ func (ri *resourceIntArray) value(db *db, deviceName, deviceResourceName string,
 		return result, err
 	}
 
-	//nolint // SA1019: rand.Seed has been deprecated
-	rand.Seed(time.Now().UnixNano())
 	var newArrayIntValue []int64
 
 	switch dataType {

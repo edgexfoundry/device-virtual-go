@@ -9,7 +9,6 @@ package driver
 import (
 	"math"
 	"math/rand"
-	"time"
 
 	"github.com/edgexfoundry/go-mod-core-contracts/v3/common"
 )
@@ -24,8 +23,6 @@ func randomInt(dataType string, minimum, maximum *float64) int64 {
 	if maximum != nil {
 		max = int64(*maximum)
 	}
-	//nolint // SA1019: rand.Seed has been deprecated
-	rand.Seed(time.Now().UnixNano())
 	switch dataType {
 	case common.ValueTypeInt8:
 		if !valid || minimum == nil {
@@ -99,8 +96,6 @@ func randomUint(dataType string, minimum, maximum *float64) uint64 {
 	if maximum != nil {
 		max = uint64(*maximum)
 	}
-	//nolint // SA1019: rand.Seed has been deprecated
-	rand.Seed(time.Now().UnixNano())
 	switch dataType {
 	case common.ValueTypeUint8:
 		if !valid || minimum == nil {
@@ -157,8 +152,6 @@ func randomFloat(dataType string, minimum, maximum *float64) float64 {
 	if maximum != nil {
 		max = *maximum
 	}
-	//nolint // SA1019: rand.Seed has been deprecated
-	rand.Seed(time.Now().UnixNano())
 	switch dataType {
 	case common.ValueTypeFloat32:
 		if !valid || minimum == nil {
