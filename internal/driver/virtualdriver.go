@@ -198,3 +198,12 @@ func deleteVirtualResources(driver *VirtualDriver, deviceName string) error {
 		return nil
 	}
 }
+
+func (d *VirtualDriver) Discover() error {
+	return fmt.Errorf("Driver's Discover function isn't implemented")
+}
+
+func (d *VirtualDriver) ValidateDevice(device models.Device) error {
+	d.lc.Debug("Driver's ValidateDevice function isn't implemented")
+	return nil
+}
