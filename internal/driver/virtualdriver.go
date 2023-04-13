@@ -200,7 +200,7 @@ func deleteVirtualResources(driver *VirtualDriver, deviceName string) error {
 }
 
 func (d *VirtualDriver) Discover() error {
-	return fmt.Errorf("Driver's Discover function isn't implemented")
+	return fmt.Errorf("driver's Discover function isn't implemented")
 }
 
 func (d *VirtualDriver) ValidateDevice(device models.Device) error {
