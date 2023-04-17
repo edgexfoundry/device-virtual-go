@@ -63,9 +63,6 @@ https://github.com/go-yaml/yaml/blob/v3/LICENSE
 google/uuid (BSD-3) https://github.com/google/uuid
 https://github.com/google/uuid/blob/master/LICENSE
 
-pelletier/go-toml (MIT) https://github.com/pelletier/go-toml
-https://github.com/pelletier/go-toml/blob/master/LICENSE
-
 golang.org/x/sys (Unspecified) https://github.com/golang/sys
 https://github.com/golang/sys/blob/master/LICENSE
 
@@ -194,3 +191,6 @@ https://github.com/golang/mod/blob/master/LICENSE
 
 golang.org/x/tools (BSD-3) https://github.com/golang/tools
 https://github.com/golang/tools/blob/master/LICENSE
+
+github.com/go-jose/go-jose/v3 (Apache-2.0) https://github.com/go-jose/go-jose
+https://github.com/go-jose/go-jose/blob/v3/LICENSE
