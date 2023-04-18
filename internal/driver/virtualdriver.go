@@ -59,7 +59,11 @@ func (d *VirtualDriver) Initialize(sdk interfaces.DeviceServiceSDK) error {
 		return fmt.Errorf("failed to initial virtual resource table: %v", err)
 	}
 
-	devices := sdk.Devices()
+	return nil
+}
+
+func (d *VirtualDriver) Start() error {
+	devices := d.sdk.Devices()
 	for _, device := range devices {
 		err := prepareVirtualResources(d, device.Name)
 		if err != nil {
