@@ -27,7 +27,7 @@ The locally built Docker image can then be used in place of the published Docker
 See [Compose Builder](https://github.com/edgexfoundry/edgex-compose/tree/main/compose-builder#gen) `nat-bus` option to generate compose file for NATS and local dev images.
 
 ## Community
-- Chat: https://edgexfoundry.slack.com
+- Discussion: https://github.com/orgs/edgexfoundry/discussions
 - Mailing lists: https://lists.edgexfoundry.org/mailman/listinfo
 
 ## License
