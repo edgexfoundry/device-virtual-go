@@ -12,6 +12,49 @@
 - [go-mod-secrets](https://github.com/edgexfoundry/go-mod-secrets/blob/main/CHANGELOG.md) (indirect dependency)
 - [go-mod-configuration](https://github.com/edgexfoundry/go-mod-configuration/blob/main/CHANGELOG.md) (indirect dependency)
 
+## [v3.0.0] Minnesota - 2023-05-31 (Only compatible with the 3.x releases)
+
+### Features ✨
+- Allow min equal to max when generating random value ([#0fb4799](https://github.com/edgexfoundry/device-virtual-go/commits/0fb4799))
+- Update for common config ([#339](https://github.com/edgexfoundry/device-virtual-go/pull/339))
+    ```text
+    BREAKING CHANGE: Configuration file is changed to remove common config settings
+    ```
+- Use latest SDK for MessageBus Request API ([#337](https://github.com/edgexfoundry/device-virtual-go/pull/337))
+    ```text
+    BREAKING CHANGE: Commands via MessageBus topic configuration are changed
+    ```
+- Remove ZeroMQ MessageBus capability ([#325](https://github.com/edgexfoundry/device-virtual-go/pull/325))
+    ```text
+    BREAKING CHANGE: ZeroMQ MessageBus capability no longer available
+    ```
+
+### Bug Fixes 🐛
+- Update Discover func error message ([#915c2b7](https://github.com/edgexfoundry/device-virtual-go/commits/915c2b7))
+- Update deviceprofile resources for UpdateDevice ([#2d7e124](https://github.com/edgexfoundry/device-virtual-go/commits/2d7e124))
+- **snap:** Refactor to avoid conflicts with readonly config provider directory ([#354](https://github.com/edgexfoundry/device-virtual-go/issues/354)) ([#96a5dbd](https://github.com/edgexfoundry/device-virtual-go/commits/96a5dbd))
+
+### Code Refactoring ♻
+- Remove deprecated rand.Seed function ([#c9d512d](https://github.com/edgexfoundry/device-virtual-go/commits/c9d512d))
+- Use integer for minimum and maximum properties ([#374](https://github.com/edgexfoundry/device-virtual-go/pull/374))
+    ```text
+    BREAKING CHANGE: Use integer for minimum and maximum properties
+    ```
+- Change configuration and devices files format to YAML ([#368](https://github.com/edgexfoundry/device-virtual-go/pull/368))
+    ```text
+    BREAKING CHANGE: Configuration files are now in YAML format, Default file name is now configuration.yaml
+    ```
+- Remove unused topic configuration ([#345](https://github.com/edgexfoundry/device-virtual-go/issues/345)) ([#d88ec88](https://github.com/edgexfoundry/device-virtual-go/commits/d88ec88))
+- Refactor random value generation function ([#d35a6d7](https://github.com/edgexfoundry/device-virtual-go/commits/d35a6d7))
+- **snap:** Update command and metadata sourcing ([#355](https://github.com/edgexfoundry/device-virtual-go/issues/355)) ([#34458d9](https://github.com/edgexfoundry/device-virtual-go/commits/34458d9))
+- **snap:** Refactor and upgrade to edgex-snap-hooks v3 ([#328](https://github.com/edgexfoundry/device-virtual-go/issues/328)) ([#ade53ff](https://github.com/edgexfoundry/device-virtual-go/commits/ade53ff))
+
+### Documentation 📖
+- Add main branch Warning ([#405](https://github.com/edgexfoundry/device-virtual-go/issues/405)) ([#d55cfd1](https://github.com/edgexfoundry/device-virtual-go/commits/d55cfd1))
+
+### Build 👷
+- Update to Go 1.20, Alpine 3.17 and linter v1.51.2 ([#534be7e](https://github.com/edgexfoundry/device-virtual-go/commits/534be7e))
+
 ## [v2.3.0] Levski - 2022-11-09  (Only compatible with the 2.x releases)
 
 ### Features ✨
