@@ -165,6 +165,12 @@ https://github.com/protocolbuffers/protobuf-go/blob/master/LICENSE
 gopkg.in/square/go-jose.v2 (Apache-2.0) https://github.com/square/go-jose/tree/v2.6.0
 https://github.com/square/go-jose/blob/v2.6.0/LICENSE
 
+github.com/klauspost/compress (Apache-2.0) https://github.com/klauspost/compress
+https://github.com/klauspost/compress/blob/master/LICENSE
+
+github.com/gabriel-vasile/mimetype (MIT) https://github.com/gabriel-vasile/mimetype
+https://github.com/gabriel-vasile/mimetype/blob/master/LICENSE
+
 gopkg.in/yaml.v2 (MIT) https://github.com/go-yaml/yaml/
 https://github.com/go-yaml/yaml/blob/v2/LICENSE
 
@@ -176,6 +182,9 @@ https://github.com/microsoft/go-winio/blob/master/LICENSE
 
 golang.org/x/sync (Unspecified) https://cs.opensource.google/go/x/sync
 https://cs.opensource.google/go/x/sync/+/master:LICENSE
+
+golang.org/x/exp (BSD-3) https://github.com/golang/tools
+https://github.com/golang/tools/blob/master/LICENSE
 
 github.com/nats-io/nats.go (Apache-2.0) https://github.com/nats-io/nats.go
 https://github.com/nats-io/nats.go/blob/main/LICENSE
