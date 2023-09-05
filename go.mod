@@ -3,7 +3,7 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.20
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v3 v3.1.0-dev.17
+	github.com/edgexfoundry/device-sdk-go/v3 v3.1.0-dev.18
 	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.1.0-dev.8
 )
 
