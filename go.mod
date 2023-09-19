@@ -3,8 +3,8 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.21
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v3 v3.1.0-dev.24
-	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.1.0-dev.11
+	github.com/edgexfoundry/device-sdk-go/v3 v3.1.0-dev.25
+	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.1.0-dev.12
 )
 
 require (
@@ -13,7 +13,7 @@ require (
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/eclipse/paho.mqtt.golang v1.4.3 // indirect
-	github.com/edgexfoundry/go-mod-bootstrap/v3 v3.1.0-dev.34 // indirect
+	github.com/edgexfoundry/go-mod-bootstrap/v3 v3.1.0-dev.36 // indirect
 	github.com/edgexfoundry/go-mod-configuration/v3 v3.1.0-dev.5 // indirect
 	github.com/edgexfoundry/go-mod-messaging/v3 v3.1.0-dev.20 // indirect
 	github.com/edgexfoundry/go-mod-registry/v3 v3.1.0-dev.5 // indirect
