@@ -3,8 +3,8 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.21
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v3 v3.1.0-dev.25
-	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.1.0-dev.12
+	github.com/edgexfoundry/device-sdk-go/v3 v3.1.0-dev.28
+	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.1.0-dev.15
 )
 
 require (
@@ -13,10 +13,10 @@ require (
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/eclipse/paho.mqtt.golang v1.4.3 // indirect
-	github.com/edgexfoundry/go-mod-bootstrap/v3 v3.1.0-dev.36 // indirect
-	github.com/edgexfoundry/go-mod-configuration/v3 v3.1.0-dev.5 // indirect
-	github.com/edgexfoundry/go-mod-messaging/v3 v3.1.0-dev.20 // indirect
-	github.com/edgexfoundry/go-mod-registry/v3 v3.1.0-dev.5 // indirect
+	github.com/edgexfoundry/go-mod-bootstrap/v3 v3.1.0-dev.40 // indirect
+	github.com/edgexfoundry/go-mod-configuration/v3 v3.1.0-dev.6 // indirect
+	github.com/edgexfoundry/go-mod-messaging/v3 v3.1.0-dev.21 // indirect
+	github.com/edgexfoundry/go-mod-registry/v3 v3.1.0-dev.6 // indirect
 	github.com/edgexfoundry/go-mod-secrets/v3 v3.1.0-dev.6 // indirect
 	github.com/fatih/color v1.14.1 // indirect
 	github.com/fxamacker/cbor/v2 v2.5.0 // indirect
@@ -26,7 +26,7 @@ require (
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.15.1 // indirect
+	github.com/go-playground/validator/v10 v10.15.4 // indirect
 	github.com/go-redis/redis/v7 v7.3.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
