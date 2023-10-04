@@ -3,8 +3,8 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.21
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v3 v3.1.0-dev.32
-	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.1.0-dev.15
+	github.com/edgexfoundry/device-sdk-go/v3 v3.1.0-dev.33
+	github.com/edgexfoundry/go-mod-core-contracts/v3 v3.1.0-dev.16
 )
 
 require (
@@ -13,9 +13,9 @@ require (
 	github.com/armon/go-metrics v0.4.1 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/eclipse/paho.mqtt.golang v1.4.3 // indirect
-	github.com/edgexfoundry/go-mod-bootstrap/v3 v3.1.0-dev.44 // indirect
+	github.com/edgexfoundry/go-mod-bootstrap/v3 v3.1.0-dev.46 // indirect
 	github.com/edgexfoundry/go-mod-configuration/v3 v3.1.0-dev.7 // indirect
-	github.com/edgexfoundry/go-mod-messaging/v3 v3.1.0-dev.24 // indirect
+	github.com/edgexfoundry/go-mod-messaging/v3 v3.1.0-dev.25 // indirect
 	github.com/edgexfoundry/go-mod-registry/v3 v3.1.0-dev.7 // indirect
 	github.com/edgexfoundry/go-mod-secrets/v3 v3.1.0-dev.9 // indirect
 	github.com/fatih/color v1.14.1 // indirect
@@ -26,7 +26,7 @@ require (
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.15.4 // indirect
+	github.com/go-playground/validator/v10 v10.15.5 // indirect
 	github.com/go-redis/redis/v7 v7.3.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -52,7 +52,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
-	github.com/nats-io/nats.go v1.30.1 // indirect
+	github.com/nats-io/nats.go v1.30.2 // indirect
 	github.com/nats-io/nkeys v0.4.5 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475 // indirect
