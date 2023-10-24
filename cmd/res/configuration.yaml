@@ -2,21 +2,12 @@ MaxEventSize: 0 # value 0 unlimit the maximum event size that can be sent to mes
 Writable:
   LogLevel: INFO
 
-# # uncomment when running from command-line in hybrid mode with -cp -o flags
-#Registry:
-# Host: localhost
-#
-#Clients:
-# core-metadata:
-#   Host: localhost # uncomment when running from command-line in hybrid mode
-
 Service:
   Host: localhost
   Port: 59900
   StartupMsg: device virtual started
 
 MessageBus:
-#  Host: localhost # uncomment when running from command-line in hybrid mode
   Optional:
     ClientId: device-virtual
 
