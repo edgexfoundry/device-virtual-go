@@ -12,6 +12,39 @@
 - [go-mod-secrets](https://github.com/edgexfoundry/go-mod-secrets/blob/main/CHANGELOG.md) (indirect dependency)
 - [go-mod-configuration](https://github.com/edgexfoundry/go-mod-configuration/blob/main/CHANGELOG.md) (indirect dependency)
 
+## [v3.1.0] Napa - 2023-11-15 (Only compatible with the 3.x releases)
+
+### ✨  Features
+
+- Remove snap packaging ([#440](https://github.com/edgexfoundry/device-virtual-go/issues/440)) ([a824126…](https://github.com/edgexfoundry/device-virtual-go/commit/a824126fc7aa73da39901a16544d301861d29328))
+```text
+
+BREAKING CHANGE: Remove snap packaging ([#440](https://github.com/edgexfoundry/device-virtual-go/issues/440))
+
+```
+
+
+### ♻ Code Refactoring
+
+- Remove obsolete comments from config file ([#442](https://github.com/edgexfoundry/device-virtual-go/issues/442)) ([105c2ff…](https://github.com/edgexfoundry/device-virtual-go/commit/105c2ff86687b61d63b26fbbe95b93aee24690dc))
+- Remove github.com/pkg/errors from Attribution.txt ([fdc055d…](https://github.com/edgexfoundry/device-virtual-go/commit/fdc055dafb82b7d393639588b2b3ea660dae6311))
+
+
+### 🐛 Bug Fixes
+
+- Add missing SDKVERSION variable in Makefile for version API ([#415](https://github.com/edgexfoundry/device-virtual-go/issues/415)) ([8bac9b2…](https://github.com/edgexfoundry/device-virtual-go/commit/8bac9b22eb31fd3371358eef67a168645ee27d12))
+
+
+### 👷 Build
+
+- Upgrade to go-1.21, Linter1.54.2 and Alpine 3.18 ([#427](https://github.com/edgexfoundry/device-virtual-go/issues/427)) ([b41150d…](https://github.com/edgexfoundry/device-virtual-go/commit/b41150d8f29f1474a4d4d35e5cf0bbe8d5784310))
+
+
+### 🤖 Continuous Integration
+
+- Add automated release workflow on tag creation ([0531bee…](https://github.com/edgexfoundry/device-virtual-go/commit/0531beef1411d7a1dfe9a18ad2a8589293894050))
+
+
 ## [v3.0.0] Minnesota - 2023-05-31 (Only compatible with the 3.x releases)
 
 ### Features ✨
