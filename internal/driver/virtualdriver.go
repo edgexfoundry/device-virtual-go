@@ -161,6 +161,9 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 	if err != nil {
 		return err
 	}
+	if device.ProfileName == "" {
+		return nil
+	}
 	profile, err := driver.sdk.GetProfileByName(device.ProfileName)
 	if err != nil {
 		return err
