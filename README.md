@@ -26,6 +26,16 @@ make docker-nats
 The locally built Docker image can then be used in place of the published Docker image in your compose file.
 See [Compose Builder](https://github.com/edgexfoundry/edgex-compose/tree/main/compose-builder#gen) `nat-bus` option to generate compose file for NATS and local dev images.
 
+## Build without OpenZiti zerotrust
+Currently, the OpenZiti zerotrust capability is opt-out at build time. This means that the published Docker images include the OpenZiti zerotrust capability.
+
+The following make commands will build the local binaries or local Docker images without OpenZiti zerotrust capability.
+
+```makefile
+make build-noziti
+make docker-noziti
+```
+
 ## Community
 - Discussion: https://github.com/orgs/edgexfoundry/discussions
 - Mailing lists: https://lists.edgexfoundry.org/mailman/listinfo

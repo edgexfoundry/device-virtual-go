@@ -13,7 +13,7 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.5.0 // indirect
-	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.0.0-dev.8 // indirect
+	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.0.0-dev.9 // indirect
 	github.com/edgexfoundry/go-mod-configuration/v4 v4.0.0-dev.4 // indirect
 	github.com/edgexfoundry/go-mod-messaging/v4 v4.0.0-dev.5 // indirect
 	github.com/edgexfoundry/go-mod-registry/v4 v4.0.0-dev.2 // indirect
