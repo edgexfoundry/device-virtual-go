@@ -3,7 +3,7 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.23
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v4 v4.0.0-dev.16
+	github.com/edgexfoundry/device-sdk-go/v4 v4.0.0-dev.17
 	github.com/edgexfoundry/go-mod-core-contracts/v4 v4.0.0-dev.19
 )
 
@@ -83,7 +83,7 @@ require (
 	github.com/openziti/secretstream v0.1.25 // indirect
 	github.com/openziti/transport/v2 v2.0.146 // indirect
 	github.com/orcaman/concurrent-map/v2 v2.0.1 // indirect
-	github.com/panjf2000/ants/v2 v2.10.0 // indirect
+	github.com/panjf2000/ants/v2 v2.11.0 // indirect
 	github.com/parallaxsecond/parsec-client-go v0.0.0-20221025095442-f0a77d263cf9 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
