@@ -12,6 +12,30 @@
 - [go-mod-secrets](https://github.com/edgexfoundry/go-mod-secrets/blob/main/CHANGELOG.md) (indirect dependency)
 - [go-mod-configuration](https://github.com/edgexfoundry/go-mod-configuration/blob/main/CHANGELOG.md) (indirect dependency)
 
+## [4.0.0] Odessa - 2025-03-12 (Only compatible with the 4.x releases)
+
+### ✨  Features
+
+- Add new build-noziti and docker-noziti targets into Makefile ([ca17556…](https://github.com/edgexfoundry/device-virtual-go/commit/ca17556e0757fa9eca4f5e6146377f7c67c5ecb3))
+- Enable PIE support for ASLR and full RELRO ([3f31901…](https://github.com/edgexfoundry/device-virtual-go/commit/3f319016f8e11170ce0158ca92a15177c41c5652))
+- Allow empty profileName in Device ([ad92c84…](https://github.com/edgexfoundry/device-virtual-go/commit/ad92c84b73dbd8840292c1a592621e653de09e3c))
+- Update device-sdk to support openziti ([#467](https://github.com/edgexfoundry/device-virtual-go/issues/467)) ([14494e7…](https://github.com/edgexfoundry/device-virtual-go/commit/14494e7562879e41062c7461f1813d33e0fc95a7))
+
+### ♻ Code Refactoring
+
+- Update module to v4 ([6bfdd3f…](https://github.com/edgexfoundry/device-rest-go/commit/6bfdd3ff5f3e792eafad2b4c95b01495d5837e2e))
+```text
+BREAKING CHANGE: update go module to v4
+```
+
+### 🐛 Bug Fixes
+
+- Only one ldflags flag is allowed ([ec1ec23…](https://github.com/edgexfoundry/device-rest-go/commit/ec1ec23295ae906f939fdcce9f1e5a4eef1babde))
+
+### 👷 Build
+
+- Upgrade to go-1.23, Linter1.61.0 and Alpine 3.20 ([21d3830…](https://github.com/edgexfoundry/device-rest-go/commit/21d3830f1720a37f1895b62ff4ca15d755f1aed1))
+
 ## [v3.1.0] Napa - 2023-11-15 (Only compatible with the 3.x releases)
 
 ### ✨  Features
