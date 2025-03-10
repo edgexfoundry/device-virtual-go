@@ -3,8 +3,8 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.23
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v4 v4.0.0-dev.26
-	github.com/edgexfoundry/go-mod-core-contracts/v4 v4.0.0-dev.30
+	github.com/edgexfoundry/device-sdk-go/v4 v4.0.0-dev.31
+	github.com/edgexfoundry/go-mod-core-contracts/v4 v4.0.0
 )
 
 require (
@@ -13,11 +13,11 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.5.0 // indirect
-	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.0.0-dev.29 // indirect
-	github.com/edgexfoundry/go-mod-configuration/v4 v4.0.0-dev.14 // indirect
-	github.com/edgexfoundry/go-mod-messaging/v4 v4.0.0-dev.18 // indirect
-	github.com/edgexfoundry/go-mod-registry/v4 v4.0.0-dev.4 // indirect
-	github.com/edgexfoundry/go-mod-secrets/v4 v4.0.0-dev.12 // indirect
+	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.0.2 // indirect
+	github.com/edgexfoundry/go-mod-configuration/v4 v4.0.0 // indirect
+	github.com/edgexfoundry/go-mod-messaging/v4 v4.0.0 // indirect
+	github.com/edgexfoundry/go-mod-registry/v4 v4.0.0 // indirect
+	github.com/edgexfoundry/go-mod-secrets/v4 v4.0.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/fullsailor/pkcs7 v0.0.0-20190404230743-d7302db945fa // indirect
 	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
@@ -68,7 +68,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/muhlemmer/gu v0.3.1 // indirect
-	github.com/nats-io/nats.go v1.39.0 // indirect
+	github.com/nats-io/nats.go v1.39.1 // indirect
 	github.com/nats-io/nkeys v0.4.9 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
@@ -82,7 +82,7 @@ require (
 	github.com/openziti/secretstream v0.1.28 // indirect
 	github.com/openziti/transport/v2 v2.0.160 // indirect
 	github.com/orcaman/concurrent-map/v2 v2.0.1 // indirect
-	github.com/panjf2000/ants/v2 v2.11.1 // indirect
+	github.com/panjf2000/ants/v2 v2.11.2 // indirect
 	github.com/parallaxsecond/parsec-client-go v0.0.0-20221025095442-f0a77d263cf9 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
