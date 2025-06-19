@@ -1,0 +1,13 @@
+name: "Fixed-Object-Device"
+manufacturer: "IOTech"
+model: "Device-Virtual-01"
+labels:
+  - "device-virtual-example"
+description: "Example of Device-Virtual"
+
+deviceResources:
+  - name: "Object"
+    properties:
+      valueType: "Object"
+      readWrite: "RW"
+      defaultValue: '{"key1": "value1", "key2": 123}'
