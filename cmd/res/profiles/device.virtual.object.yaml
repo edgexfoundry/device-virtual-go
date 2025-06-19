@@ -13,3 +13,10 @@ deviceResources:
       valueType: "Object"
       readWrite: "RW"
       defaultValue: '{"key1": "value1", "key2": 123}'
+  - name: "ObjectArray"
+    isHidden: false
+    description: "Generate a fixed object array value"
+    properties:
+      valueType: "ObjectArray"
+      readWrite: "RW"
+      defaultValue: '[{"key1": "value1", "key2": 123}, {"key1": "value2", "key2": 456}]'
