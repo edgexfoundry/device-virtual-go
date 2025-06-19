@@ -7,6 +7,8 @@ description: "Example of Device-Virtual"
 
 deviceResources:
   - name: "Object"
+    isHidden: false
+    description: "Generate a fixed object value"
     properties:
       valueType: "Object"
       readWrite: "RW"
