@@ -1,0 +1,22 @@
+name: "Fixed-Object-Device"
+manufacturer: "IOTech"
+model: "Device-Virtual-01"
+labels:
+  - "device-virtual-example"
+description: "Example of Device-Virtual"
+
+deviceResources:
+  - name: "Object"
+    isHidden: false
+    description: "Generate a fixed object value"
+    properties:
+      valueType: "Object"
+      readWrite: "RW"
+      defaultValue: '{"key1": "value1", "key2": 123}'
+  - name: "ObjectArray"
+    isHidden: false
+    description: "Generate a fixed object array value"
+    properties:
+      valueType: "ObjectArray"
+      readWrite: "RW"
+      defaultValue: '[{"key1": "value1", "key2": 123}, {"key1": "value2", "key2": 456}]'

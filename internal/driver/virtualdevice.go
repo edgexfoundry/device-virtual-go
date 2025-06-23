@@ -1,6 +1,6 @@
 // -*- Mode: Go; indent-tabs-mode: t -*-
 //
-// Copyright (C) 2019-2023 IOTech Ltd
+// Copyright (C) 2019-2025 IOTech Ltd
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -18,15 +18,17 @@ const (
 )
 
 type virtualDevice struct {
-	resourceBool       *resourceBool
-	resourceBoolArray  *resourceBoolArray
-	resourceInt        *resourceInt
-	resourceIntArray   *resourceIntArray
-	resourceUint       *resourceUint
-	resourceUintArray  *resourceUintArray
-	resourceFloat      *resourceFloat
-	resourceFloatArray *resourceFloatArray
-	resourceBinary     *resourceBinary
+	resourceBool        *resourceBool
+	resourceBoolArray   *resourceBoolArray
+	resourceInt         *resourceInt
+	resourceIntArray    *resourceIntArray
+	resourceUint        *resourceUint
+	resourceUintArray   *resourceUintArray
+	resourceFloat       *resourceFloat
+	resourceFloatArray  *resourceFloatArray
+	resourceBinary      *resourceBinary
+	resourceObject      *resourceObject
+	resourceObjectArray *resourceObjectArray
 }
 
 func (d *virtualDevice) read(deviceName, deviceResourceName, typeName string, minimum, maximum *float64, db *db) (*models.CommandValue, error) {
@@ -50,6 +52,10 @@ func (d *virtualDevice) read(deviceName, deviceResourceName, typeName string, mi
 		return d.resourceFloatArray.value(db, deviceName, deviceResourceName, minimum, maximum)
 	case common.ValueTypeBinary:
 		return d.resourceBinary.value(deviceResourceName)
+	case common.ValueTypeObject:
+		return d.resourceObject.value(db, deviceName, deviceResourceName)
+	case common.ValueTypeObjectArray:
+		return d.resourceObjectArray.value(db, deviceName, deviceResourceName)
 	default:
 		return result, fmt.Errorf("virtualDevice.read: wrong read type: %s", deviceResourceName)
 	}
@@ -75,6 +81,10 @@ func (d *virtualDevice) write(param *models.CommandValue, deviceName string, db 
 		return d.resourceFloatArray.write(param, deviceName, db)
 	case common.ValueTypeBinary:
 		return d.resourceBinary.write(param, deviceName, db)
+	case common.ValueTypeObject:
+		return d.resourceObject.write(param, deviceName, db)
+	case common.ValueTypeObjectArray:
+		return d.resourceObjectArray.write(param, deviceName, db)
 	default:
 		return fmt.Errorf("VirtualDriver.HandleWriteCommands: there is no matched device resource for %s", param.String())
 	}
@@ -82,14 +92,16 @@ func (d *virtualDevice) write(param *models.CommandValue, deviceName string, db 
 
 func newVirtualDevice() *virtualDevice {
 	return &virtualDevice{
-		resourceBool:       &resourceBool{},
-		resourceBoolArray:  &resourceBoolArray{},
-		resourceInt:        &resourceInt{},
-		resourceIntArray:   &resourceIntArray{},
-		resourceUint:       &resourceUint{},
-		resourceUintArray:  &resourceUintArray{},
-		resourceFloat:      &resourceFloat{},
-		resourceFloatArray: &resourceFloatArray{},
-		resourceBinary:     &resourceBinary{},
+		resourceBool:        &resourceBool{},
+		resourceBoolArray:   &resourceBoolArray{},
+		resourceInt:         &resourceInt{},
+		resourceIntArray:    &resourceIntArray{},
+		resourceUint:        &resourceUint{},
+		resourceUintArray:   &resourceUintArray{},
+		resourceFloat:       &resourceFloat{},
+		resourceFloatArray:  &resourceFloatArray{},
+		resourceBinary:      &resourceBinary{},
+		resourceObject:      &resourceObject{},
+		resourceObjectArray: &resourceObjectArray{},
 	}
 }

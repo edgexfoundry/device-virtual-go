@@ -86,3 +86,12 @@ deviceList:
     #   - interval: 30s
     #     onChange: false
     #     sourceName: Binary
+  - name: Fixed-Object-Device
+    profileName: Fixed-Object-Device
+    description: Example of Device Virtual
+    labels:
+      - device-virtual-example
+    protocols:
+      other:
+        Address: device-virtual-object-01
+        Port: 300
