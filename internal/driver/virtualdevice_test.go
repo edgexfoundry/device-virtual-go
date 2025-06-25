@@ -47,6 +47,7 @@ const (
 	nameFloat64Array = common.ValueTypeFloat64Array
 	nameBinary       = common.ValueTypeBinary
 	nameObject       = common.ValueTypeObject
+	nameObjectArray  = common.ValueTypeObjectArray
 )
 
 type resourceDef struct {
@@ -90,6 +91,7 @@ func prepareDB() *db {
 		{deviceName, nameFloat64, nameFloat64, enableRandomizationTrue, nameFloat64, "0"},
 		{deviceName, nameFloat64Array, nameFloat64Array, enableRandomizationTrue, nameFloat64Array, "[0]"},
 		{deviceName, nameObject, nameObject, false, nameObject, `{"key1":"value1", "key2": 123}`},
+		{deviceName, nameObjectArray, nameObjectArray, false, nameObjectArray, `[{"key1":"value1", "key2":123}, {"key1":"value2", "key2":456}]`},
 	}
 	for _, d := range ds {
 		if err := db.addResource(d.devName, d.cmdName, d.resName, d.randEnable, d.dataType, d.initValue); err != nil {
@@ -883,5 +885,65 @@ func TestValueObject(t *testing.T) {
 	}
 	if !bytes.Equal(objValue2JSON, newValueJSON) {
 		t.Fatalf("written value does not match: got %s, want %s", objValue2, newValue)
+	}
+}
+
+func TestValueObjectArray(t *testing.T) {
+	db := prepareDB()
+	defer func() {
+		if err := db.closeDb(); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	vd := newVirtualDevice()
+	min, max := float64(0), float64(0)
+
+	// Read and verify initial object array value
+	v1, err := vd.read(deviceName, nameObjectArray, nameObjectArray, &min, &max, db)
+	if err != nil {
+		t.Fatal(err)
+	}
+	objArr, err := v1.ObjectArrayValue()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(objArr) != 2 || objArr[0]["key1"] != "value1" || objArr[0]["key2"].(float64) != 123 ||
+		objArr[1]["key1"] != "value2" || objArr[1]["key2"].(float64) != 456 {
+		t.Fatalf("unexpected initial object array value: %v", objArr)
+	}
+
+	// Write new object array value
+	newValue := []map[string]any{
+		{"key1": "newValue1", "key2": 789, "key3": true},
+		{"key1": "newValue2", "key2": 1011, "key3": false},
+	}
+	cv, err := models.NewCommandValue(nameObjectArray, nameObjectArray, newValue)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := vd.write(cv, deviceName, db); err != nil {
+		t.Fatal(err)
+	}
+
+	// Verify written object array value
+	v2, err := vd.read(deviceName, nameObjectArray, nameObjectArray, &min, &max, db)
+	if err != nil {
+		t.Fatal(err)
+	}
+	objArr2, err := v2.ObjectArrayValue()
+	if err != nil {
+		t.Fatal(err)
+	}
+	newValueJSON, err := json.Marshal(newValue)
+	if err != nil {
+		t.Fatal(err)
+	}
+	objArrValue2JSON, err := json.Marshal(objArr2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(objArrValue2JSON, newValueJSON) {
+		t.Fatalf("written value does not match: got %s, want %s", objArr2, newValue)
 	}
 }
