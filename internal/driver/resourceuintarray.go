@@ -45,7 +45,7 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName string
 		}
 		var uint8Array []uint8
 		for _, i := range newArrayValueUint {
-			uint8Array = append(uint8Array, uint8(i))
+			uint8Array = append(uint8Array, uint8(i)) // #nosec G115
 		}
 		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint8Array, uint8Array)
 	case common.ValueTypeUint16Array:
@@ -65,7 +65,7 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName string
 		}
 		var uint16Array []uint16
 		for _, i := range newArrayValueUint {
-			uint16Array = append(uint16Array, uint16(i))
+			uint16Array = append(uint16Array, uint16(i)) // #nosec G115
 		}
 		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint16Array, uint16Array)
 	case common.ValueTypeUint32Array:
@@ -85,7 +85,7 @@ func (ru *resourceUintArray) value(db *db, deviceName, deviceResourceName string
 		}
 		var uint32Array []uint32
 		for _, i := range newArrayValueUint {
-			uint32Array = append(uint32Array, uint32(i))
+			uint32Array = append(uint32Array, uint32(i)) // #nosec G115
 		}
 		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeUint32Array, uint32Array)
 	case common.ValueTypeUint64Array:
