@@ -33,21 +33,21 @@ func (ri *resourceInt) value(db *db, deviceName, deviceResourceName string, mini
 		} else if newValueInt, err = strconv.ParseInt(currentValue, 10, 8); err != nil {
 			return result, err
 		}
-		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt8, int8(newValueInt))
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt8, int8(newValueInt)) // #nosec G115
 	case common.ValueTypeInt16:
 		if enableRandomization {
 			newValueInt = randomInt(dataType, minimum, maximum)
 		} else if newValueInt, err = strconv.ParseInt(currentValue, 10, 16); err != nil {
 			return result, err
 		}
-		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt16, int16(newValueInt))
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt16, int16(newValueInt)) // #nosec G115
 	case common.ValueTypeInt32:
 		if enableRandomization {
 			newValueInt = randomInt(dataType, minimum, maximum)
 		} else if newValueInt, err = strconv.ParseInt(currentValue, 10, 32); err != nil {
 			return result, err
 		}
-		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt32, int32(newValueInt))
+		result, err = models.NewCommandValue(deviceResourceName, common.ValueTypeInt32, int32(newValueInt)) // #nosec G115
 	case common.ValueTypeInt64:
 		if enableRandomization {
 			newValueInt = randomInt(dataType, minimum, maximum)
