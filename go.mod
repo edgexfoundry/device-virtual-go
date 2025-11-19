@@ -3,7 +3,7 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.25.0
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v4 v4.1.0-dev.45
+	github.com/edgexfoundry/device-sdk-go/v4 v4.1.0-dev.46
 	github.com/edgexfoundry/go-mod-core-contracts/v4 v4.1.0-dev.21
 )
 
@@ -13,10 +13,10 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.5.1 // indirect
-	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.1.0-dev.44 // indirect
+	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.1.0-dev.45 // indirect
 	github.com/edgexfoundry/go-mod-configuration/v4 v4.1.0-dev.17 // indirect
 	github.com/edgexfoundry/go-mod-messaging/v4 v4.1.0-dev.18 // indirect
-	github.com/edgexfoundry/go-mod-registry/v4 v4.1.0-dev.7 // indirect
+	github.com/edgexfoundry/go-mod-registry/v4 v4.1.0-dev.8 // indirect
 	github.com/edgexfoundry/go-mod-secrets/v4 v4.1.0-dev.7 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
