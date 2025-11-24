@@ -170,22 +170,20 @@ func prepareVirtualResources(driver *VirtualDriver, deviceName string) error {
 	}
 
 	for _, dr := range profile.DeviceResources {
-		if dr.Properties.ReadWrite == common.ReadWrite_R || dr.Properties.ReadWrite == common.ReadWrite_RW {
-			/*
-				d.Name <-> VIRTUAL_RESOURCE.deviceName
-				dr.Name <-> VIRTUAL_RESOURCE.CommandName, VIRTUAL_RESOURCE.ResourceName
-				ro.DeviceResource <-> VIRTUAL_RESOURCE.DeviceResourceName
-				dr.Properties.Value.Type <-> VIRTUAL_RESOURCE.DataType
-				dr.Properties.Value.DefaultValue <-> VIRTUAL_RESOURCE.Value
-			*/
-			if dr.Properties.ValueType == common.ValueTypeBinary {
-				continue
-			}
-			if err := driver.db.addResource(device.Name, dr.Name, dr.Name, true, dr.Properties.ValueType,
-				dr.Properties.DefaultValue); err != nil {
-				driver.lc.Errorf("failed to add resource: %v", err)
-				return err
-			}
+		/*
+			d.Name <-> VIRTUAL_RESOURCE.deviceName
+			dr.Name <-> VIRTUAL_RESOURCE.CommandName, VIRTUAL_RESOURCE.ResourceName
+			ro.DeviceResource <-> VIRTUAL_RESOURCE.DeviceResourceName
+			dr.Properties.Value.Type <-> VIRTUAL_RESOURCE.DataType
+			dr.Properties.Value.DefaultValue <-> VIRTUAL_RESOURCE.Value
+		*/
+		if dr.Properties.ValueType == common.ValueTypeBinary {
+			continue
+		}
+		if err := driver.db.addResource(device.Name, dr.Name, dr.Name, true, dr.Properties.ValueType,
+			dr.Properties.DefaultValue); err != nil {
+			driver.lc.Errorf("failed to add resource: %v", err)
+			return err
 		}
 		// TODO another for loop to update the ENABLE_RANDOMIZATION field of virtual resource by device resource
 		//  "EnableRandomization_{ResourceName}"
