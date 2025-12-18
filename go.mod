@@ -3,7 +3,7 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.25.0
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v4 v4.1.0-dev.47
+	github.com/edgexfoundry/device-sdk-go/v4 v4.1.0-dev.49
 	github.com/edgexfoundry/go-mod-core-contracts/v4 v4.1.0-dev.21
 )
 
@@ -13,7 +13,7 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.5.1 // indirect
-	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.1.0-dev.45 // indirect
+	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.1.0-dev.47 // indirect
 	github.com/edgexfoundry/go-mod-configuration/v4 v4.1.0-dev.17 // indirect
 	github.com/edgexfoundry/go-mod-messaging/v4 v4.1.0-dev.18 // indirect
 	github.com/edgexfoundry/go-mod-registry/v4 v4.1.0-dev.8 // indirect
@@ -87,7 +87,7 @@ require (
 	github.com/openziti/foundation/v2 v2.0.79 // indirect
 	github.com/openziti/identity v1.0.118 // indirect
 	github.com/openziti/metrics v1.4.2 // indirect
-	github.com/openziti/sdk-golang v1.3.0 // indirect
+	github.com/openziti/sdk-golang v1.3.1 // indirect
 	github.com/openziti/secretstream v0.1.42 // indirect
 	github.com/openziti/transport/v2 v2.0.198 // indirect
 	github.com/orcaman/concurrent-map/v2 v2.0.1 // indirect
