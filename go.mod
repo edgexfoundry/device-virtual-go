@@ -3,8 +3,8 @@ module github.com/edgexfoundry/device-virtual-go
 go 1.25.0
 
 require (
-	github.com/edgexfoundry/device-sdk-go/v4 v4.1.0-dev.59
-	github.com/edgexfoundry/go-mod-core-contracts/v4 v4.1.0-dev.28
+	github.com/edgexfoundry/device-sdk-go/v4 v4.1.0-dev.60
+	github.com/edgexfoundry/go-mod-core-contracts/v4 v4.1.0-dev.32
 )
 
 require (
@@ -13,17 +13,17 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/eclipse/paho.mqtt.golang v1.5.1 // indirect
-	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.1.0-dev.59 // indirect
-	github.com/edgexfoundry/go-mod-configuration/v4 v4.1.0-dev.17 // indirect
-	github.com/edgexfoundry/go-mod-messaging/v4 v4.1.0-dev.18 // indirect
-	github.com/edgexfoundry/go-mod-registry/v4 v4.1.0-dev.8 // indirect
-	github.com/edgexfoundry/go-mod-secrets/v4 v4.1.0-dev.10 // indirect
+	github.com/edgexfoundry/go-mod-bootstrap/v4 v4.1.0-dev.63 // indirect
+	github.com/edgexfoundry/go-mod-configuration/v4 v4.1.0-dev.18 // indirect
+	github.com/edgexfoundry/go-mod-messaging/v4 v4.1.0-dev.23 // indirect
+	github.com/edgexfoundry/go-mod-registry/v4 v4.1.0-dev.9 // indirect
+	github.com/edgexfoundry/go-mod-secrets/v4 v4.1.0-dev.13 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/fullsailor/pkcs7 v0.0.0-20190404230743-d7302db945fa // indirect
-	github.com/fxamacker/cbor/v2 v2.9.0 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.12 // indirect
-	github.com/go-jose/go-jose/v4 v4.1.3 // indirect
+	github.com/fxamacker/cbor/v2 v2.9.1 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.13 // indirect
+	github.com/go-jose/go-jose/v4 v4.1.4 // indirect
 	github.com/go-kit/log v0.2.1 // indirect
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
@@ -52,7 +52,7 @@ require (
 	github.com/go-openapi/validate v0.25.2 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.30.1 // indirect
+	github.com/go-playground/validator/v10 v10.30.2 // indirect
 	github.com/go-resty/resty/v2 v2.17.2 // indirect
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
@@ -63,7 +63,7 @@ require (
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/kataras/go-events v0.0.3 // indirect
-	github.com/klauspost/compress v1.18.0 // indirect
+	github.com/klauspost/compress v1.18.5 // indirect
 	github.com/labstack/echo/v4 v4.15.1 // indirect
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
@@ -78,8 +78,8 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/muhlemmer/gu v0.3.1 // indirect
-	github.com/nats-io/nats.go v1.47.0 // indirect
-	github.com/nats-io/nkeys v0.4.11 // indirect
+	github.com/nats-io/nats.go v1.50.0 // indirect
+	github.com/nats-io/nkeys v0.4.15 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/oklog/ulid/v2 v2.1.1 // indirect
 	github.com/openziti/channel/v4 v4.3.9 // indirect
