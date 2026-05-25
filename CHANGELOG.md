@@ -12,6 +12,20 @@
 - [go-mod-secrets](https://github.com/edgexfoundry/go-mod-secrets/blob/main/CHANGELOG.md) (indirect dependency)
 - [go-mod-configuration](https://github.com/edgexfoundry/go-mod-configuration/blob/main/CHANGELOG.md) (indirect dependency)
 
+## [4.0.2] - 2026-05-31 
+
+### ✨ Features 
+- Add support for object-typed readings ([#535](https://github.com/edgexfoundry/device-virtual-go/issues/535)) ([#010fbd8](https://github.com/edgexfoundry/device-virtual-go/commits/010fbd8))
+
+### 🐛 Bug Fixes 
+- Include W and WR variables in virtual resources map ([#8db0930](https://github.com/edgexfoundry/device-virtual-go/commits/8db0930))
+- Add unit test for `ObjectArray` resource ([#536](https://github.com/edgexfoundry/device-virtual-go/issues/536)) ([#68b21e4](https://github.com/edgexfoundry/device-virtual-go/commits/68b21e4))
+
+### 👷 Build 
+- Update goVersion to 1.25 and golangci-lint to 2.5.0([#3c85fa5](https://github.com/edgexfoundry/device-virtual-go/commits/3c85fa5))
+
+
+
 ## [4.0.0] Odessa - 2025-03-12 (Only compatible with the 4.x releases)
 
 ### ✨  Features
